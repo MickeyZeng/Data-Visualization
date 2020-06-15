@@ -1,0 +1,226 @@
+{
+%
+load
+static
+%
+}
+body {
+    background-image: url('./image/space1.jpg');
+}
+
+/*https://www.w3schools.com/css/css3_images.asp*/
+
+
+.main-area {
+    -webkit-box-shadow: -1px 6px 50px -10px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 6px 50px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: -1px 6px 50px -10px rgba(0, 0, 0, 0.75);
+    width: 80%;
+    margin: 0 auto;
+    margin: 0 auto;
+    background-color: #84817e;
+    min-height: 100vh;
+    /*opacity: ;*/
+}
+
+.main-alter {
+    display: none;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    font-size: 2em;
+    text-align: center;
+    min-height: 90vw;
+    /*background-color: blue;*/
+}
+
+.main-alter > div {
+    /*background-color: red;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+.first-row {
+    display: grid;
+    display: flex;
+    flex-direction: row;
+    grid-template-columns: repeat(1fr, 3);
+    justify-content: space-around;
+    min-height: 40vh;
+
+    /*background-color: red;*/
+}
+
+#upload-image-area img {
+    border: 3px solid #eee;
+    border-radius: 4px;
+    padding: 5px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.tool-box-area {
+    /*background-color: orange;*/
+    width: 50%;
+    border: 1px #eee solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#upload-image-area {
+    display: flex;
+    width: 50%;
+    border: 1px #eee solid;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.display-image-detail {
+    width: 50%;
+    border: 1px #eee solid;
+}
+
+/*.display-image-detail .display-detail {*/
+/*    border-top: 5px #eee solid;*/
+/*    margin: 1.2em 1em;*/
+/*}*/
+
+.upload-image-button {
+    margin-top: 0.5em;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.test-button {
+    margin: 1em;
+    /*padding: 2rem 1.5rem;*/
+    font: 1rem/1.5 "PT Sans", Arial, sans-serif;
+    color: #5a5a5a;
+}
+
+.second-row {
+    display: grid;
+    display: flex;
+    flex-direction: row;
+    /*justify-content: space-between;*/
+    grid-template-columns: repeat(1fr, 2);
+    border: 1px #eee solid;
+    border-top: none;
+    /*background-color: yellow;*/
+}
+
+.two-d-network {
+    /*background-color: blue;*/
+    min-width: 60%;
+    min-height: 40em;
+    max-height: 40em;
+}
+
+.right-col {
+    min-width: 40%;
+    /*min-height: 50em;*/
+    max-height: 50em;
+    /*min-width: 32.5em;*/
+    /*background-color: red;*/
+    /*display: grid;
+    grid-template-columns: (1fr, 2)*/
+}
+
+.display-network-image {
+    display: flex;
+    /*background-color: red;*/
+    /*min-height: 350px;*/
+    border: 1px #eee solid;
+    border-top: none;
+}
+
+#heatMap {
+    /*background-color: #0f9d58;*/
+    width: 50%;
+}
+
+#tempResult {
+    min-height: 15em;
+    max-height: 15em;
+    width: 50%;
+    border: 1px #eee solid;
+    border-top: none;
+    /*width: 100%;*/
+    /*background-color: yellow;*/
+}
+
+/*#imgElement {*/
+/*    !*min-height: 100%;*!*/
+/*    height: inherit;*/
+/*    width: 100%;*/
+/*}*/
+
+.three-d-network {
+    display: flex;
+    flex-direction: column;
+    /*min-height: 35vw;*/
+    justify-content: stretch;
+    min-height: 25em;
+    /*max-height: 25em;*/
+    /*height: inherit;*/
+    /*background-color: #c1b699;*/
+    border: 1px solid #eee;
+    border-top: none;
+    /*max-height: 35vw;*/
+}
+
+#diagramContainer {
+    min-height: 30em;
+    background-color: #000;
+}
+
+footer {
+    background-color: black;
+    min-height: 15vh;
+    color: #eee;
+    text-align: center;
+}
+
+footer div {
+    padding-top: 5em;
+}
+
+footer img {
+    border: 3px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#my-canvas {
+    height: 30em;
+    width: 30em;
+    display: none;
+    /*background-color: red;*/
+}
+
+@media (max-width: 945px) {
+    .main-area {
+        width: 100%
+    }
+}
+
+@media (max-width: 750px) {
+    .main-area {
+        display: none;
+    }
+
+    .main-alter {
+        display: block;
+    }
+}

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cec74050-2eea-4d45-8f46-eb0f14bac6ac" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Actionscript.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Actionscript.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ResNet50/test_back_end.py" beforeDir="false" afterPath="$PROJECT_DIR$/ResNet50/test_back_end.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demoConnect/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/demoConnect/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/custom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/display.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/display.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ZvjXtSg6YtV3mLA5Pgpqioa4uQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/heatmap" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/heatmap" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/static/image" />
+      <recent name="$PROJECT_DIR$/static/js" />
+      <recent name="$PROJECT_DIR$/static/css" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/css" />
+      <recent name="$PROJECT_DIR$/static/js" />
+      <recent name="$PROJECT_DIR$/demoConnect" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django server.demoConnect">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="demoConnect" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="manage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="demoConnect" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_back_end" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="demoConnect" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ResNet50" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ResNet50/test_back_end.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="demoConnect" type="Python.DjangoServer" factoryName="Django server">
+      <module name="demoConnect" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="demoConnect.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.test_back_end" />
+        <item itemvalue="Python.manage" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cec74050-2eea-4d45-8f46-eb0f14bac6ac" name="Default Changelist" comment="" />
+      <created>1585726504744</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585726504744</updated>
+      <workItem from="1585726516134" duration="932000" />
+      <workItem from="1586828685727" duration="13783000" />
+      <workItem from="1587029080745" duration="386000" />
+      <workItem from="1587041374686" duration="78954000" />
+      <workItem from="1588043000668" duration="76205000" />
+      <workItem from="1589192110193" duration="11197000" />
+      <workItem from="1589296413370" duration="596000" />
+      <workItem from="1589600608698" duration="6191000" />
+      <workItem from="1589694762110" duration="16357000" />
+      <workItem from="1589858553444" duration="5608000" />
+      <workItem from="1590123937006" duration="18915000" />
+      <workItem from="1590387189283" duration="29000" />
+      <workItem from="1590387262641" duration="35227000" />
+      <workItem from="1590670865061" duration="19347000" />
+      <workItem from="1590908796772" duration="20746000" />
+      <workItem from="1591069698726" duration="4677000" />
+      <workItem from="1591281784323" duration="47000" />
+      <workItem from="1591422847947" duration="39312000" />
+      <workItem from="1591785785934" duration="12054000" />
+      <workItem from="1591882080500" duration="31335000" />
+      <workItem from="1592014351091" duration="1627000" />
+      <workItem from="1592046827565" duration="13355000" />
+    </task>
+    <task id="LOCAL-00001" summary="Send the pic to the machine learning process">
+      <created>1586840470582</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586840470582</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Import three.min.js to display the model">
+      <created>1587282126929</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1587282126929</updated>
+    </task>
+    <task id="LOCAL-00003" summary="This version can rotate in some browsers, unless Chrome">
+      <created>1587439620292</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1587439620292</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Send the pic to the machine learning process" />
+    <MESSAGE value="Import three.min.js to display the model" />
+    <MESSAGE value="This version can rotate in some browsers, unless Chrome" />
+    <option name="LAST_COMMIT_MESSAGE" value="This version can rotate in some browsers, unless Chrome" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="320" y="115" key="#Inspections" timestamp="1590824013396">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="115" key="#Inspections/0.0.1440.900@0.0.1440.900" timestamp="1590824013396" />
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592103660462">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1592103660462" />
+    <state x="431" y="260" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1591760233070">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="431" y="260" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1591760233070" />
+    <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589268345344">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="458" y="204" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1440.900@0.0.1440.900" timestamp="1589268345344" />
+    <state x="176" y="52" key="CommitChangelistDialog2" timestamp="1587439619898">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="176" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1587439619898" />
+    <state x="507" y="212" key="FileChooserDialogImpl" timestamp="1591621300505">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="507" y="212" key="FileChooserDialogImpl/0.0.1440.900@0.0.1440.900" timestamp="1591621300505" />
+    <state width="1398" height="256" key="GridCell.Tab.0.bottom" timestamp="1592105377235">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="256" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1592105377235" />
+    <state width="1398" height="256" key="GridCell.Tab.0.center" timestamp="1592105377234">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="256" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1592105377234" />
+    <state width="1398" height="256" key="GridCell.Tab.0.left" timestamp="1592105377234">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="256" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1592105377234" />
+    <state width="1398" height="256" key="GridCell.Tab.0.right" timestamp="1592105377235">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="256" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1592105377235" />
+    <state width="1398" height="270" key="GridCell.Tab.1.bottom" timestamp="1591979147283">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="270" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1591979147283" />
+    <state width="1398" height="270" key="GridCell.Tab.1.center" timestamp="1591979147282">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="270" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1591979147282" />
+    <state width="1398" height="270" key="GridCell.Tab.1.left" timestamp="1591979147282">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="270" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1591979147282" />
+    <state width="1398" height="270" key="GridCell.Tab.1.right" timestamp="1591979147282">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="270" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1591979147282" />
+    <state x="221" y="89" key="SettingsEditor" timestamp="1592103738650">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1592103738650" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1587439627512">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1587439627512" />
+    <state x="397" y="282" key="com.intellij.ide.util.TipDialog" timestamp="1592046829322">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="397" y="282" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1592046829322" />
+    <state x="301" y="37" width="837" height="825" key="find.popup" timestamp="1591978127939">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="301" y="37" width="837" height="825" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1591978127939" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1592120510202">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1592120510202" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/demoConnect$manage.coverage" NAME="manage Coverage Results" MODIFIED="1586829242591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/demoConnect$test_back_end.coverage" NAME="test_back_end Coverage Results" MODIFIED="1587122939262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ResNet50" />
+  </component>
+</project>

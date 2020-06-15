@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Machine Learning</title>
+
+    <!-- p5 js lib -->
+    <script src="{% static 'js/p5.js' %}"></script>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/materialize.min.css' %}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/custom.css' %}" media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+</head>
+<body>
+<div class="main-alter">
+    <div>Too Small, Please View on a larger devices or enlarge your browser window.</div>
+</div>
+<section class="main-area">
+    <div class="first-row">
+        <div class="tool-box-area">
+            <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
+        </div>
+        <div id="upload-image-area">
+            <div id="sketch-holder">
+                <!-- Our sketch will go here! -->
+                <!-- <img src="css/images/sport-car1.jpeg"> -->
+            </div>
+        </div>
+        <div class="display-image-detail">
+            <div class="upload-image-button">
+                <input type='file'/>
+                <div class="test-button">
+
+                </div>
+                <button class="btn-floating btn-large waves-effect waves-light red" id="disButton">
+                    <i class="material-icons">analytics</i></button>
+                <button class="btn waves-effect waves-light" type="submit" name="action" id="submitPic">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+                <button class="btn-floating btn-large waves-effect waves-light red" id="heatMapButton">
+                    <i class="material-icons">explore</i></button>
+            </div>
+            <div style="max-height:11em ;overflow-y:auto ">
+                <table id="disTbody">
+                    <tr id="head">
+                        <th width="85%">Name</th>
+                        <th width="15%">Probability</th>
+                    </tr>
+                    <tr id="nonRecord">
+                        <td colspan="10">
+                            <center>No Data, Please Upload the Pic!</center>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="second-row">
+        <div class="two-d-network" id="displayContainer"></div>
+        <div class="right-col">
+            <div class="display-network-image">
+                <div id="heatMap">
+                    <center>Score-CAM</center>
+                </div>
+                <div id="tempResult">
+                    <center>Colored Guided Backpropagation</center>
+                </div>
+            </div>
+            <div class="three-d-network">
+                <div class="image-choose">
+                    <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Choose to look
+                        other images from
+                        the network</a>
+                    <!-- Dropdown Structure -->
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li id="previous"><a href="#!">Please choose an Element</a></li>
+                    </ul>
+                </div>
+                <div id="diagramContainer">x</div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+    <div>Copy Right whatever</div>
+</footer>
+<div>
+    <canvas id="my-canvas"></canvas>
+</div>
+
+<!--JavaScript at end of body for optimized loading-->
+<script type="text/javascript" src=" {% static 'js/materialize.min.js' %}"></script>
+
+<!-- jquery -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+
+<!-- Import two js for displaying 2D -->
+<script type="text/javascript" src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"></script>
+
+<script type="text/javascript" src="https://docs.opencv.org/3.4.0/opencv.js"></script>
+
+<!-- Import TesorSpace for displaying 3D -->
+<script src="{% static 'js/three.min.js' %}"></script>
+<script src="{% static 'js/tf.min.js' %}"></script>
+<script src="{% static 'js/tween.min.js' %}"></script>
+<script src="{% static 'js/TrackballControls.js' %}"></script>
+<script src="{% static 'js/tensorspace.min.js' %}"></script>
+
+<!-- Import DIY JS method -->
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.dropdown-trigger');
+        var options = {
+            'click': true
+        };
+        var instances = M.Dropdown.init(elems, options);
+    });
+</script>
+</body>
+</html>
