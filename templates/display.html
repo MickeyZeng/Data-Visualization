@@ -26,7 +26,48 @@
 <section class="main-area">
     <div class="first-row">
         <div class="tool-box-area">
-            <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
+            <div class="upload-input-area">
+                <div>
+                    <div class="file-field input-field" >
+                        <div class="btn">
+                          <span>Single Image</span>
+                          <input type="file" id="single-upload"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text">
+                        </div>
+                      </div>
+
+                      <div class="file-field input-field" >
+                        <div class="btn">
+                          <span>Folder</span>
+                          <input type="file" id="multi-upload"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                          <input class="file-path validate" type="text" webkitdirectory directory multiple/>
+                        </div>
+                      </div>
+                </div>
+                <div></div>
+            </div>
+            <div class="upload-image-button">
+                <div class="middle-button">
+                    <button class="btn-floating btn-large waves-effect waves-light red" id="disButton">
+                        <i class="material-icons">analytics</i></button>
+                    <button class="btn waves-effect waves-light" type="submit" name="action" id="submitPic">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                    <button class="btn-floating btn-large waves-effect waves-light red" id="heatMapButton">
+                        <i class="material-icons">explore</i>
+                    </button>
+                </div>
+            </div>
+            <div class="drawing-pens">
+                <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
+                <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
+                <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
+                <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
+            </div>
         </div>
         <div id="upload-image-area">
             <div id="sketch-holder">
@@ -35,19 +76,7 @@
             </div>
         </div>
         <div class="display-image-detail">
-            <div class="upload-image-button">
-                <input type='file'/>
-                <div class="test-button">
-
-                </div>
-                <button class="btn-floating btn-large waves-effect waves-light red" id="disButton">
-                    <i class="material-icons">analytics</i></button>
-                <button class="btn waves-effect waves-light" type="submit" name="action" id="submitPic">Submit
-                    <i class="material-icons right">send</i>
-                </button>
-                <button class="btn-floating btn-large waves-effect waves-light red" id="heatMapButton">
-                    <i class="material-icons">explore</i></button>
-            </div>
+           
             <div style="max-height:11em ;overflow-y:auto ">
                 <table id="disTbody">
                     <tr id="head">
@@ -76,9 +105,8 @@
             </div>
             <div class="three-d-network">
                 <div class="image-choose">
-                    <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Choose to look
-                        other images from
-                        the network</a>
+                    <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Choose 
+                        feature map from the network</a>
                     <!-- Dropdown Structure -->
                     <ul id='dropdown1' class='dropdown-content'>
                         <li id="previous"><a href="#!">Please choose an Element</a></li>
