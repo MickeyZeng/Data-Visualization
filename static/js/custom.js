@@ -122,8 +122,10 @@ document.getElementById("trigger-canvas").addEventListener("click", () => {
 
 });
 
-window.addEventListener('load', function () {
-    document.querySelector('input[type="file"]').addEventListener('change', function () {
+window.addEventListener('load', () => {
+    // document.getElementById('single-upload')
+    // document.querySelector('input[type="file"]').addEventListener('change', function () {
+   document.getElementById('single-upload').addEventListener('change', function () {
         if (this.files && this.files[0]) {
 
             // var selectedFile = this.files[0];
