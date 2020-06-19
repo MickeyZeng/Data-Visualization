@@ -13,6 +13,8 @@ import ResNet50.json_to_dict as jtd
 from PIL import Image
 from torchsummary import summary
 import json
+import math
+
 # import matplotlib
 
 # matplotlib.use('agg')
@@ -279,12 +281,38 @@ def viz(module, input):
                 # print(">>>>>>>>")
                 picData = np.asarray(x[i])
 
+        '''
+        # 这一堆代码原始显示 Feature map
         # 这句话让图片在后台显示出来
         fig = plt.imshow(picData, origin='lower')
         # fig = plt.imshow(picData)
         plt.show()
         r = plt.gcf().canvas.get_renderer()
         picData = fig.make_image(r)
+        '''
+        # picData = misc.format_np_output(picData)
+        # print(picData)
+        picData = np.expand_dims(picData, axis=0)
+        picData = np.repeat(picData, 3, axis=0)
+        picData = picData.transpose(1, 2, 0)
+        picData = DIVColormap(picData)
+        picData = (picData * 2).astype(np.uint8)
+        # print(picData.shape)
+        print(picData)
+        picData = Image.fromarray(picData.astype('uint8'), 'RGB')
+        plt.imshow(picData)
+        plt.show()
+
+
+def DIVColormap(array):
+    # array[:, :, 0] = 0.75 * np.sin((array[:, :, 0])) + 20
+    # array[:, :, 1] = (np.sin(array[:, :, 1] + 0.3) * 20) ** 2
+    # array[:, :, 2] = (np.sin(array[:, :, 2] + 0.25) * 17) ** 2
+
+    array[:, :, 0] = 0.75 * np.sin((array[:, :, 0] * 3.5 + 0.25) * np.pi) + 0.5
+    array[:, :, 1] = np.sin(array[:, :, 1] * 3.5 * np.pi)
+    array[:, :, 2] = 0.75 * np.sin((array[:, :, 2] * 3.5 - 0.25) * np.pi) + 0.5
+    return array
 
 
 def tempOutput(num, img, index):
@@ -354,7 +382,7 @@ def tempOutput(num, img, index):
 
     # testPic = Image.fromarray(picData).convert('RGB')
     # pyArray = picData[0].tolist()
-    pyArray = picData[0].tolist()
+    pyArray = 0
 
     # 这个dict里面包含用户点击的这一层拥有多少个结果 还有返回制定的图片的array 然后到前端再进行生成显示
     resultDict = {'sum': str(numOfResult), 'picData': json.dumps(pyArray)}
