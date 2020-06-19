@@ -39,8 +39,8 @@ def mc_Resnet50(img):
     pic = Image.fromarray(img.astype('uint8'), 'RGB')
     pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)
     pic = pic.transpose(Image.FLIP_LEFT_RIGHT)
-    plt.imshow(pic)
-    plt.show()
+    # plt.imshow(pic)
+    # plt.show()
 
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
