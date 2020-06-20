@@ -123,6 +123,12 @@ colour_map.addEventListener('click', (e) => {
     console.log(e)
     colour_map_value = e.target.outerText
     console.log(colour_map_value)
+    
+    const x = document.getElementById("snackbar");
+    x.className = "show";
+    x.innerHTML = "You have selected Colour map: " + colour_map_value
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    // alert(`You have selected Colour Map: ${colour_map_value}`)
 
 });
 
