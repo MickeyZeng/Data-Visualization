@@ -179,8 +179,8 @@ body {
 /*}*/
 
 .three-d-network {
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     /*min-height: 35vw;*/
     /* justify-content: stretch; */
     min-height: 25em;
@@ -192,9 +192,11 @@ body {
     /*max-height: 35vw;*/
 }
 
-.image-choose {
-    margin: 0 auto;
+.feature-map-controls{
+    display: flex;
+    justify-content: space-evenly;
 }
+
 
 .image-choose a {
     font-size: 0.6em;
