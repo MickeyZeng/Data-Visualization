@@ -2,6 +2,10 @@ let trigger = false;
 let upload_image_flg = false;
 let upload_image;
 let new_a;
+
+let multiFiles = [] // for multi files
+let currentFileIndex = 0 // current file load on the canvas
+
 let resLabel;   // To save the label of temp result
 let modelMode = true;   // True is 2D & False is 3D
 
@@ -39,7 +43,7 @@ function draw() {
     if (trigger) {
         if (mouseIsPressed) {
             fill(0);
-            rect(mouseX, mouseY, 20, 20);
+            rect(mouseX, mouseY, 10, 10);
         }
 
     }
@@ -122,90 +126,93 @@ document.getElementById("trigger-canvas").addEventListener("click", () => {
 
 });
 
-window.addEventListener('load', () => {
-    // document.getElementById('single-upload')
-    // document.querySelector('input[type="file"]').addEventListener('change', function () {
-   document.getElementById('single-upload').addEventListener('change', function () {
-        if (this.files && this.files[0]) {
+function uploadImageToCanvas (e) {
+    multiFiles = []
+    files = e.target.files
+    for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
+        multiFiles.push(files[fileIndex])
+    } 
 
-            // var selectedFile = this.files[0];
-            // getBase64(this.files[0])
-            // console.log(this.files + ' << ' + this.files[0]);
+    //TODO: This console log needs to be deleted later
+    console.log(multiFiles)
+    loadFileToCanvas(multiFiles[0])
+}
 
-            // var img = document.querySelector('img');  // $('img')[0]
-            // img.src = URL.createObjectURL(this.files[0]); // set src to blob url
-            // upload_image = this.files[0].name;
-            // img.onload = img;
-            //upload_image_flg = true;
+function loadFileToCanvas (currentFile) {
+    var canvas = document.getElementById("my-canvas");
+    var ctx = canvas.getContext("2d");
 
-            var canvas = document.getElementById("my-canvas");
-            var ctx = canvas.getContext("2d");
+    var reader = new FileReader();
+    reader.onload = function (event) {
+        var img_1 = new Image();
+        img_1.onload = function () {
+            canvas.width = img_1.width;
+            canvas.height = img_1.height;
+            ctx.drawImage(img_1, 0, 0);
 
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                var img_1 = new Image();
-                // console.log(img_1 + '?---?---?')
-                // console.log(img_1)
-                img_1.onload = function () {
-                    canvas.width = img_1.width;
-                    canvas.height = img_1.height;
-                    ctx.drawImage(img_1, 0, 0);
+            var pix = ctx.getImageData(0, 0, img_1.width / 2, img_1.height / 2)
+            var array_data = new Array();
+            var imagesdata = ctx.getImageData(0, 0, img_1.width, img_1.height).data
 
-                    // console.log(ctx.getImageData(0, 0, img_1.width, img_1.height))
-                    var pix = ctx.getImageData(0, 0, img_1.width / 2, img_1.height / 2)
-                    // var value_array = [][];
-                    var array_data = new Array();
-                    var imagesdata = ctx.getImageData(0, 0, img_1.width, img_1.height).data
-
-                    for (var x = img_1.width - 1; x >= 0; x--) {
-
-                        array_data[x] = new Array(); // insert new vertical array
-
-                        for (var y = img_1.height - 1; y >= 0; y--) {
-
-                            array_data[x][y] = new Array(0, 0, 0, 0);
-
-                        }
-
-                    }
-
-                    for (var i = 0; i < imagesdata.length - 3; i += 4) {
-                        var x = parseInt(parseInt(i / 4) % (img_1.width));
-                        var y = parseInt(parseInt(i / 4) / (img_1.width));
-
-                        array_data[x][y][0] = imagesdata[i];
-                        array_data[x][y][1] = imagesdata[i + 1];
-                        array_data[x][y][2] = imagesdata[i + 2];
-                        array_data[x][y][3] = imagesdata[i + 3];
-                    }
-
-                    // for (var i = 0, n = pix.length; i < n; i += 4) {
-                    // array_data[]
-                    // array_data[img_1.width][img_1.height] = new Array(3)
-                    // for(var j = 0; j < array_data[count].length; j++) {
-                    // array_data[count][0] = pix[i  ];
-                    // array_data[count][1] = pix[i+1];
-                    // array_data[count][2] = pix[i+2];
-                    // }
-
-
-                    // pix[i  ] = 255 - pix[i  ]; // red
-                    // pix[i+1] = 255 - pix[i+1]; // green
-                    // pix[i+2] = 255 - pix[i+2]; // blue
-                    // i+3 is alpha (the fourth element)
-                    // count += 1
-                    // }
-                    // console.log(array_data[0][0][3] + "hahaha");
-                    upload_image = array_data
-                    upload_image_flg = true;
+            for (var x = img_1.width - 1; x >= 0; x--) {
+                array_data[x] = new Array(); // insert new vertical array
+                for (var y = img_1.height - 1; y >= 0; y--) {
+                    array_data[x][y] = new Array(0, 0, 0, 0);
                 }
-                img_1.src = event.target.result;
             }
 
-            reader.readAsDataURL(this.files[0]);
+            for (var i = 0; i < imagesdata.length - 3; i += 4) {
+                var x = parseInt(parseInt(i / 4) % (img_1.width));
+                var y = parseInt(parseInt(i / 4) / (img_1.width));
+
+                array_data[x][y][0] = imagesdata[i];
+                array_data[x][y][1] = imagesdata[i + 1];
+                array_data[x][y][2] = imagesdata[i + 2];
+                array_data[x][y][3] = imagesdata[i + 3];
+            }
+
+            upload_image = array_data
+            upload_image_flg = true;
         }
-    });
-});
+        img_1.src = event.target.result;
+    }
+    // display
+    reader.readAsDataURL(currentFile);
+}
+
+window.addEventListener('load', (e) => {
+    // Single Picture Upload
+    document.getElementById('single-upload').addEventListener('change', uploadImageToCanvas)
+
+    // Multi Images Upload
+    const multiUpload = document.querySelector('#multi-upload')
+    multiUpload.addEventListener('change', uploadImageToCanvas)
+})
+
+// This method will control to display the next image
+const nextButton = document.querySelector('#next-image')
+nextButton.addEventListener('click', (e) => {
+    if (currentFileIndex < multiFiles.length - 1) {
+        currentFileIndex++
+    } else {
+        alert('This is the last image')
+    }
+    loadFileToCanvas(multiFiles[currentFileIndex])
+})
+
+const backButton = document.querySelector('#back-image')
+backButton.addEventListener('click', () => {
+    if (currentFileIndex > 0) {
+        currentFileIndex--
+    } else {
+        alert('This is the first image')
+    }
+    loadFileToCanvas(multiFiles[currentFileIndex])
+})
+// This method will control to display the next image
+
+    // document.getElementById('single-upload')
+    // document.querySelector('input[type="file"]').addEventListener('change', function () {
 
 document.getElementById("submitPic").addEventListener("click", () => {
     // console.log("READY >>>>>> " + Date.now());
