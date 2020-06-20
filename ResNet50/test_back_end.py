@@ -281,21 +281,24 @@ def viz(module, input):
                 # print(">>>>>>>>")
                 picData = np.asarray(x[i])
 
-        '''
         # 这一堆代码原始显示 Feature map
         # 这句话让图片在后台显示出来
-        fig = plt.imshow(picData, origin='lower')
-        # fig = plt.imshow(picData)
-        plt.show()
-        r = plt.gcf().canvas.get_renderer()
-        picData = fig.make_image(r)
-        '''
-        picData = DIYColormap(picData)
-        # plt.imshow(tempPicData)
-        # plt.show()
-        picData = (picData * 255).astype(np.uint8)
-        picData = Image.fromarray(picData.astype('uint8'), 'RGB')
+        fig = plt.imshow(picData)
+        plt.axis('off')
+        # r = plt.gcf().canvas.get_renderer()
+        cm = plt.get_cmap('viridis')
+        colored_image = cm(picData)
+        picData = Image.fromarray((colored_image[:, :, :3] * 255).astype(np.uint8))
         picData = picData.resize((400, 400), Image.ANTIALIAS)
+        picData = np.array(picData)
+        # picData = fig.make_image(r)
+
+        # picData = DIYColormap(picData)
+        # # plt.imshow(tempPicData)
+        # # plt.show()
+        # picData = (picData * 255).astype(np.uint8)
+        # picData = Image.fromarray(picData.astype('uint8'), 'RGB')
+        # picData = picData.resize((400, 400), Image.ANTIALIAS)
 
 
 def DIYColormap(array):
