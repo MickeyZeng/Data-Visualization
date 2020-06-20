@@ -287,6 +287,7 @@ def viz(module, input):
         fig = plt.imshow(picData)
         plt.axis('off')
         # r = plt.gcf().canvas.get_renderer()
+        print(cmp)
         cm = plt.get_cmap(cmp)
         # cm = plt.get_cmap('viridis')
         colored_image = cm(picData)
