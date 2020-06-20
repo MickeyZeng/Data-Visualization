@@ -15,9 +15,9 @@ from torchsummary import summary
 import json
 import ResNet50.cm_listed as cm
 
-# import matplotlib
+import matplotlib
 
-# matplotlib.use('agg')
+matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
