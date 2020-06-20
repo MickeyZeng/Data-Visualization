@@ -5,6 +5,7 @@ let new_a;
 
 let multiFiles = [] // for multi files
 let currentFileIndex = 0 // current file load on the canvas
+let colour_map_value = 'twilight'
 
 let resLabel;   // To save the label of temp result
 let modelMode = true;   // True is 2D & False is 3D
@@ -114,6 +115,16 @@ function draw() {
 // 	var height = info.height;
 // 	resizeCanvas(width, height);
 // }
+
+
+const colour_map = document.querySelector(('#dropdown2'))
+console.log(colour_map)
+colour_map.addEventListener('click', (e) => {
+    console.log(e)
+    colour_map_value = e.target.outerText
+    console.log(colour_map_value)
+
+});
 
 document.getElementById("trigger-canvas").addEventListener("click", () => {
     if (trigger == false) {
@@ -637,7 +648,7 @@ function createSecond(num) {
         params.event = "[original event]";
         numLayer = this.getNodeAt(params.pointer.DOM).toString();
         if (numLayer > 0) {
-            sendRequest(numLayer, 0);
+            sendRequest(numLayer, 0 );
         } else {
             updateDisplay();
         }
@@ -660,6 +671,8 @@ function sendRequest(num, index) {
     fd.append('width', upload_image.length);
     fd.append('height', upload_image[0].length);
     fd.append('imgData', JSON.stringify(upload_image));
+
+    fd.append('colorMap', colour_map_value);
 
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/outputTest/', true);
@@ -799,8 +812,6 @@ function updateImage() {
 
 //TODO: The function to draw a pic by array || param: id (DOM element)
 function drawImage(elementID, tempObj) {
-
-    console
 
     // tempObj = JSON.parse(tempObj);
     let tempResult = document.getElementById(elementID);

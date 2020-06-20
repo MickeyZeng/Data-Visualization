@@ -22,6 +22,7 @@ matplotlib.use('agg')
 numOfResult = 0
 rank = 0
 picData = 0
+cmp = ""
 
 
 def mc_Resnet50(img):
@@ -286,7 +287,9 @@ def viz(module, input):
         fig = plt.imshow(picData)
         plt.axis('off')
         # r = plt.gcf().canvas.get_renderer()
-        cm = plt.get_cmap('viridis')
+        print(cmp)
+        cm = plt.get_cmap(cmp)
+        # cm = plt.get_cmap('viridis')
         colored_image = cm(picData)
         picData = Image.fromarray((colored_image[:, :, :3] * 255).astype(np.uint8))
         picData = picData.resize((400, 400), Image.ANTIALIAS)
@@ -301,23 +304,24 @@ def viz(module, input):
         # picData = picData.resize((400, 400), Image.ANTIALIAS)
 
 
-def DIYColormap(array):
-    array = np.sin(array) * 1000
-    index = array % 255
+# def DIYColormap(array):
+#     array = np.sin(array) * 1000
+#     index = array % 255
+#
+#     res = np.zeros((len(index), len(index[0]), 3))
+#     for i in range(len(index)):
+#         for j in range(len(index[i])):
+#             res[i][j][0] = cm._viridis_data[int(index[i][j])][0]
+#             res[i][j][1] = cm._viridis_data[int(index[i][j])][1]
+#             res[i][j][2] = cm._viridis_data[int(index[i][j])][2]
+#
+#     return res
 
-    res = np.zeros((len(index), len(index[0]), 3))
-    for i in range(len(index)):
-        for j in range(len(index[i])):
-            res[i][j][0] = cm._viridis_data[int(index[i][j])][0]
-            res[i][j][1] = cm._viridis_data[int(index[i][j])][1]
-            res[i][j][2] = cm._viridis_data[int(index[i][j])][2]
 
-    return res
-
-
-def tempOutput(num, img, index):
+def tempOutput(num, img, index, colorMap):
     """
     :TODO: 这个函数是为了获取任意一层的输出
+    :param colorMap:
     :param index:
     :param img:
     :param num:
@@ -326,6 +330,9 @@ def tempOutput(num, img, index):
     """
     global rank
     rank = index
+
+    global cmp
+    cmp = colorMap
 
     pic = Image.fromarray(img.astype('uint8'), 'RGB')
     pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)
