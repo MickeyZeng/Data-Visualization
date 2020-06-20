@@ -800,8 +800,6 @@ function updateImage() {
 //TODO: The function to draw a pic by array || param: id (DOM element)
 function drawImage(elementID, tempObj) {
 
-    console
-
     // tempObj = JSON.parse(tempObj);
     let tempResult = document.getElementById(elementID);
     tempResult.innerHTML = "";

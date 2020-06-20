@@ -90,10 +90,11 @@ def tempOutput(request):
     imgData = request.POST.get('imgData')
     width = request.POST.get('width')
     height = request.POST.get('height')
+    colorMap = request.POST.get('colorMap')
 
     picData = arrToTensor(imgData, width, height)
 
-    result = resnet.tempOutput(num, picData, index)
+    result = resnet.tempOutput(num, picData, index, colorMap)
     finales = json.dumps(result)
     # print(">>>>>>>>>>>>>>>")
     # print(type(finales))
