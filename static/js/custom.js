@@ -117,13 +117,17 @@ function draw() {
 // }
 
 
-const colour_map = document.querySelector(('#dropdown2'))
-console.log(colour_map)
+const colour_map = document.querySelector(('#dropdown2'));
+console.log(colour_map);
 colour_map.addEventListener('click', (e) => {
-    console.log(e)
-    colour_map_value = e.target.outerText
-    console.log(colour_map_value)
+    colour_map_value = e.target.outerText;
+    console.log(colour_map_value);
 
+    const x = document.getElementById("snackbar");
+    x.className = "show";
+    x.innerHTML = "You have selected Colour map: " + colour_map_value;
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    // alert(`You have selected Colour Map: ${colour_map_value}`)
 });
 
 document.getElementById("trigger-canvas").addEventListener("click", () => {

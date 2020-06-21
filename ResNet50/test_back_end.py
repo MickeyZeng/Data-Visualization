@@ -32,32 +32,16 @@ def mc_Resnet50(img):
     :return: the result in JSON
     """
     # resnet50 = torch.hub.load('pytorch/vision:v0.6.0', 'resnet152', pretrained=True)
-    resnet50 = models.resnet50(pretrained=True)
+    resNet = models.resnet50(pretrained=True)
     # resnet50.load_state_dict(torch.load('resnet152.pth'))
     # This sentence can let you have right label in final
-    resnet50.eval()
+    resNet.eval()
 
-    pic = Image.fromarray(img.astype('uint8'), 'RGB')
-    pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)
-    pic = pic.transpose(Image.FLIP_LEFT_RIGHT)
-    # plt.imshow(pic)
-    # plt.show()
-
-    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225])
-
-    t = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
-        transforms.ToTensor(),
-        normalize,
-    ])
-
-    input_image = t(pic)
+    input_image = preProcessImg(img)
     input_image = input_image.unsqueeze(0)
 
     with torch.no_grad():
-        outputs = resnet50(input_image)
+        outputs = resNet(input_image)
 
     outputs = torch.stack([nn.Softmax(dim=0)(i) for i in outputs])
 
@@ -317,7 +301,6 @@ def viz(module, input):
 #
 #     return res
 
-
 def tempOutput(num, img, index, colorMap):
     """
     :TODO: 这个函数是为了获取任意一层的输出
@@ -334,35 +317,18 @@ def tempOutput(num, img, index, colorMap):
     global cmp
     cmp = colorMap
 
-    pic = Image.fromarray(img.astype('uint8'), 'RGB')
-    pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)
-    pic = pic.transpose(Image.FLIP_LEFT_RIGHT)
-    # 成功显示图片 后面有图片编辑后还需要使用到该功能
-    # plt.imshow(img)
-    # plt.show()
-
-    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225])
-
-    t = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
-        transforms.ToTensor(),
-        normalize,
-    ])
-
-    input_image = t(pic)
+    input_image = preProcessImg(img)
     input_image = input_image.unsqueeze(dim=0)
 
     # 这个是来计算应该在用户点击的那一层放上输出标记
     i = 0
 
     # Create an neural network
-    resnet50 = models.resnet50(pretrained=True)
-    resnet50.eval()
+    resNet = models.resnet50(pretrained=True)
+    resNet.eval()
 
     # Input output the result of certain layers
-    for name, m in resnet50.named_modules():
+    for name, m in resNet.named_modules():
         if isinstance(m, torch.nn.Conv2d) or isinstance(m, torch.nn.MaxPool2d) \
                 or isinstance(m, torch.nn.AdaptiveAvgPool2d) or isinstance(m, torch.nn.Linear) \
                 or isinstance(m, torch.nn.ReLU):
@@ -377,7 +343,7 @@ def tempOutput(num, img, index, colorMap):
     # print(input_image.shape)
     # print(">>>>>>>>>>>!!!!!")
     with torch.no_grad():
-        resnet50(input_image)
+        resNet(input_image)
 
     global numOfResult
     global picData
@@ -396,7 +362,26 @@ def tempOutput(num, img, index, colorMap):
 
     return resultDict
 
-# def convertPic():
+
+def preProcessImg(img):
+    pic = Image.fromarray(img.astype('uint8'), 'RGB')
+    pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)
+    pic = pic.transpose(Image.FLIP_LEFT_RIGHT)
+    # plt.imshow(pic)
+    # plt.show()
+
+    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                     std=[0.229, 0.224, 0.225])
+    t = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        normalize,
+    ])
+
+    input_image = t(pic)
+
+    return input_image
 
 # if __name__ == "__main__":
 #     mc_Resnet50(file)
