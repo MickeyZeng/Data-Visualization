@@ -13,7 +13,7 @@ import ResNet50.json_to_dict as jtd
 from PIL import Image
 from torchsummary import summary
 import json
-import ResNet50.cm_listed as cm
+import ResNet50.get_neural_network as gnn
 
 import matplotlib
 
@@ -25,23 +25,26 @@ picData = 0
 cmp = ""
 
 
-def mc_Resnet50(img):
+def mc_Resnet(img, netName):
     """
+    :param img:
+    :param netName:
     :TODO: Process the file by resNet
-    :param img (3D array):
     :return: the result in JSON
     """
-    # resnet50 = torch.hub.load('pytorch/vision:v0.6.0', 'resnet152', pretrained=True)
-    resNet = models.resnet50(pretrained=True)
+    # This is for applying different nets to process image
+    # resnet = torch.hub.load('pytorch/vision:v0.6.0', netName, pretrained=True)
+    # resnet = models.resnet50(pretrained=True)
     # resnet50.load_state_dict(torch.load('resnet152.pth'))
-    # This sentence can let you have right label in final
-    resNet.eval()
+
+    resnet = gnn.get_neural_network(netName)
+    resnet.eval()
 
     input_image = preProcessImg(img)
     input_image = input_image.unsqueeze(0)
 
     with torch.no_grad():
-        outputs = resNet(input_image)
+        outputs = resnet(input_image)
 
     outputs = torch.stack([nn.Softmax(dim=0)(i) for i in outputs])
 
@@ -363,6 +366,7 @@ def tempOutput(num, img, index, colorMap):
     return resultDict
 
 
+# TODO: This is to process img to be a legal size
 def preProcessImg(img):
     pic = Image.fromarray(img.astype('uint8'), 'RGB')
     pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)

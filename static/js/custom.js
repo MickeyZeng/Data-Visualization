@@ -6,6 +6,7 @@ let new_a;
 let multiFiles = [] // for multi files
 let currentFileIndex = 0 // current file load on the canvas
 let colour_map_value = 'twilight'
+let neural_network_value = 'resnet50'
 
 let resLabel;   // To save the label of temp result
 let modelMode = true;   // True is 2D & False is 3D
@@ -116,6 +117,19 @@ function draw() {
 // 	resizeCanvas(width, height);
 // }
 
+
+const neural_network = document.querySelector(('#netDropDown'));
+console.log(neural_network);
+neural_network.addEventListener('click', (e) => {
+    neural_network_value = e.target.outerText;
+    console.log(neural_network_value);
+
+    const x = document.getElementById("snackbar");
+    x.className = "show";
+    x.innerHTML = "You have selected neural network: " + neural_network_value;
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    // alert(`You have selected Colour Map: ${colour_map_value}`)
+});
 
 const colour_map = document.querySelector(('#dropdown2'));
 console.log(colour_map);
@@ -243,6 +257,7 @@ document.getElementById("submitPic").addEventListener("click", () => {
     fd.append('width', upload_image.length);
     fd.append('height', upload_image[0].length);
     fd.append('imgData', JSON.stringify(upload_image));
+    fd.append('netName',neural_network_value);
 
 
     var xhr = new XMLHttpRequest();

@@ -55,11 +55,12 @@ def uploadFile(request):
     imgData = request.POST.get('imgData')
     width = request.POST.get('width')
     height = request.POST.get('height')
+    netName = request.POST.get('netName')
 
     picData = arrToTensor(imgData, width, height)
 
     # " 放入训练好的神经网络 进行训练 并返回结果 "
-    resultDict = resnet.mc_Resnet50(picData)
+    resultDict = resnet.mc_Resnet(picData, netName)
 
     return HttpResponse(json.dumps(resultDict))
 
