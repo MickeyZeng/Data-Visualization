@@ -72,9 +72,9 @@ def displayResnet(request):
     :param request:
     :return: JSON type result
     """
-    username = request.POST.get('name')
+    networkName = request.POST.get('name')
     # print(username + " this the data from font-end")
-    result = resnet.outputNet()
+    result = resnet.outputNet(networkName)
     # print(result)
     return HttpResponse(json.dumps(result))
 
@@ -92,10 +92,11 @@ def tempOutput(request):
     width = request.POST.get('width')
     height = request.POST.get('height')
     colorMap = request.POST.get('colorMap')
+    netName = request.POST.get('netName')
 
     picData = arrToTensor(imgData, width, height)
 
-    result = resnet.tempOutput(num, picData, index, colorMap)
+    result = resnet.tempOutput(num, picData, index, colorMap, netName)
     finales = json.dumps(result)
     # print(">>>>>>>>>>>>>>>")
     # print(type(finales))

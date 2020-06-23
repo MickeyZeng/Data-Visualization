@@ -127,7 +127,9 @@ neural_network.addEventListener('click', (e) => {
     const x = document.getElementById("snackbar");
     x.className = "show";
     x.innerHTML = "You have selected neural network: " + neural_network_value;
-    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 3000);
     // alert(`You have selected Colour Map: ${colour_map_value}`)
 });
 
@@ -140,7 +142,9 @@ colour_map.addEventListener('click', (e) => {
     const x = document.getElementById("snackbar");
     x.className = "show";
     x.innerHTML = "You have selected Colour map: " + colour_map_value;
-    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 3000);
     // alert(`You have selected Colour Map: ${colour_map_value}`)
 });
 
@@ -155,19 +159,19 @@ document.getElementById("trigger-canvas").addEventListener("click", () => {
 
 });
 
-function uploadImageToCanvas (e) {
+function uploadImageToCanvas(e) {
     multiFiles = []
     files = e.target.files
     for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
         multiFiles.push(files[fileIndex])
-    } 
+    }
 
     //TODO: This console log needs to be deleted later
     console.log(multiFiles)
     loadFileToCanvas(multiFiles[0])
 }
 
-function loadFileToCanvas (currentFile) {
+function loadFileToCanvas(currentFile) {
     var canvas = document.getElementById("my-canvas");
     var ctx = canvas.getContext("2d");
 
@@ -240,8 +244,8 @@ backButton.addEventListener('click', () => {
 })
 // This method will control to display the next image
 
-    // document.getElementById('single-upload')
-    // document.querySelector('input[type="file"]').addEventListener('change', function () {
+// document.getElementById('single-upload')
+// document.querySelector('input[type="file"]').addEventListener('change', function () {
 
 document.getElementById("submitPic").addEventListener("click", () => {
     // console.log("READY >>>>>> " + Date.now());
@@ -257,7 +261,7 @@ document.getElementById("submitPic").addEventListener("click", () => {
     fd.append('width', upload_image.length);
     fd.append('height', upload_image[0].length);
     fd.append('imgData', JSON.stringify(upload_image));
-    fd.append('netName',neural_network_value);
+    fd.append('netName', neural_network_value);
 
 
     var xhr = new XMLHttpRequest();
@@ -271,10 +275,11 @@ document.getElementById("submitPic").addEventListener("click", () => {
     xhr.send(fd);
 });
 
-document.getElementById("disButton").addEventListener("click", function () {
+function displayNet() {
     // TODO: Display the Structure of resNet
     var fd = new FormData(); //Like a form data
-    fd.append('name', 'resnet50');
+    // fd.append('name', 'resnet50');
+    fd.append('name', neural_network_value);
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/display/', true);
@@ -287,7 +292,35 @@ document.getElementById("disButton").addEventListener("click", function () {
                 //暂时先用update的版本
                 // displayJson(obj); // 做成2D的区域
             } else if (modelMode) {
-                modelMode = false;
+                // modelMode = false;
+                updateDisplay(obj);
+            } else {
+                modelMode = true;
+                displayThreeD(obj);
+            }
+        }
+    };
+    xhr.send(fd);      // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
+}
+/**
+document.getElementById("disButton").addEventListener("click", function () {
+    // TODO: Display the Structure of resNet
+    var fd = new FormData(); //Like a form data
+    // fd.append('name', 'resnet50');
+    fd.append('name', neural_network_value);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/display/', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+            // console.log(obj);
+            // displayThreeD(obj); //暂时不需要渲染3D的区域
+            if (false) {
+                //暂时先用update的版本
+                // displayJson(obj); // 做成2D的区域
+            } else if (modelMode) {
+                // modelMode = false;
                 updateDisplay(obj);
             } else {
                 modelMode = true;
@@ -297,6 +330,8 @@ document.getElementById("disButton").addEventListener("click", function () {
     };
     xhr.send(fd);      // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
 });
+
+ **/
 
 document.getElementById("heatMapButton").addEventListener("click", function () {
     //If the resLabel is null, the function to submit will be implemented
@@ -380,6 +415,15 @@ let container = document.getElementById("displayContainer");
 let numLayer = 0; //这个是用来存放用户点击了哪一层的element
 
 function updateDisplay(obj) {
+    console.log(obj);
+
+    nodes = new vis.DataSet([]);
+    edges = new vis.DataSet([]);
+
+    nodeSet = [];
+    edgeSet = [];
+    special = [];
+
     container.innerHTML = "";
     try {
         network.destroy();
@@ -394,6 +438,8 @@ function updateDisplay(obj) {
     //这个标记是为了记住 这个元素是不是应该连接上一层的layers
     let connectFlag = true;
 
+    let bottleFlag = false;
+    let doubleLink = true;
 
     if (nodes.length === 0) {
         for (let i = 0; i < lengthJSON; i++) {
@@ -588,6 +634,10 @@ function updateDisplay(obj) {
         }
     }
 
+    console.log(nodeSet);
+    console.log("<<<<<");
+    console.log(edgeSet);
+
     createFirst();
 
 }
@@ -604,6 +654,7 @@ function createFirst() {
     network.on('click', function (params) {
         params.event = "[original event]";
         numLayer = this.getNodeAt(params.pointer.DOM).toString();
+        console.log(numLayer);
         if (numLayer < 0) {
             this.destroy();
             createSecond(numLayer);
@@ -622,6 +673,7 @@ function createSecond(num) {
     let lastValue = 0;
 
     for (let i = 0; i < nodeSet.length; i++) {
+        //这个是为了让第二层显示的时候 有一个Exit元素连接Layer元素 为美观
         if (nodeSet[i].layersID.toString() === num) {
             if (firstFlag) {
                 tempNodes.add({id: "previous", label: "Exit"});
@@ -667,9 +719,10 @@ function createSecond(num) {
         params.event = "[original event]";
         numLayer = this.getNodeAt(params.pointer.DOM).toString();
         if (numLayer > 0) {
-            sendRequest(numLayer, 0 );
+            sendRequest(numLayer, 0);
         } else {
-            updateDisplay();
+            // updateDisplay();
+            displayNet();
         }
     });
 
@@ -690,7 +743,7 @@ function sendRequest(num, index) {
     fd.append('width', upload_image.length);
     fd.append('height', upload_image[0].length);
     fd.append('imgData', JSON.stringify(upload_image));
-
+    fd.append('netName', neural_network_value);
     fd.append('colorMap', colour_map_value);
 
     let xhr = new XMLHttpRequest();

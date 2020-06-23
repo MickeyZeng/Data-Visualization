@@ -99,9 +99,9 @@ def displayNet():
     return summary(stuResnet, (3, 244, 244))
 
 
-def outputNet():
+def outputNet(netName):
     """
-    :TODO: 会以Dictionary中 保存resnet50结构, save the data in JSON
+    :TODO: 会以Dictionary中 保存默认resnet50结构, save the data in JSON 会根据prama显示相关网络的结构
     :return: a dictionary for the structure of resnet
     """
 
@@ -120,11 +120,12 @@ def outputNet():
     tempLayers3 = []
 
     # 这个函数只做打印
-    resnet50 = models.resnet50(pretrained=True)
+    # resnet = models.resnet50(pretrained=True)
+    resnet = gnn.get_neural_network(netName)
     # This sentence can let you have right label in final
-    resnet50.eval()
+    resnet.eval()
 
-    resultString = resnet50.__str__()
+    resultString = resnet.__str__()
     resultString = resultString.split('\n')
     # This is to print the structure of ResNet directly
 
@@ -304,9 +305,10 @@ def viz(module, input):
 #
 #     return res
 
-def tempOutput(num, img, index, colorMap):
+def tempOutput(num, img, index, colorMap, netName):
     """
     :TODO: 这个函数是为了获取任意一层的输出
+    :param netName:
     :param colorMap:
     :param index:
     :param img:
@@ -327,11 +329,13 @@ def tempOutput(num, img, index, colorMap):
     i = 0
 
     # Create an neural network
-    resNet = models.resnet50(pretrained=True)
-    resNet.eval()
+    # resNet = models.resnet50(pretrained=True)
+    print(netName)
+    resnet = gnn.get_neural_network(netName)
+    resnet.eval()
 
     # Input output the result of certain layers
-    for name, m in resNet.named_modules():
+    for name, m in resnet.named_modules():
         if isinstance(m, torch.nn.Conv2d) or isinstance(m, torch.nn.MaxPool2d) \
                 or isinstance(m, torch.nn.AdaptiveAvgPool2d) or isinstance(m, torch.nn.Linear) \
                 or isinstance(m, torch.nn.ReLU):
@@ -346,7 +350,7 @@ def tempOutput(num, img, index, colorMap):
     # print(input_image.shape)
     # print(">>>>>>>>>>>!!!!!")
     with torch.no_grad():
-        resNet(input_image)
+        resnet(input_image)
 
     global numOfResult
     global picData
