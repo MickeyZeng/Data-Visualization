@@ -1,179 +1,290 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Machine Learning</title>
 
     <!-- p5 js lib -->
     <script src="{% static 'js/p5.js' %}"></script>
 
     <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href=" {% static 'css/materialize.min.css' %}" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/custom.css' %}" media="screen,projection"/>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href=" {% static 'css/materialize.min.css' %}"
+      media="screen,projection"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{% static 'css/custom.css' %}"
+      media="screen,projection"
+    />
 
     <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-</head>
-<body>
-<div class="main-alter">
-    <div>Too Small, Please View on a larger devices or enlarge your browser window.</div>
-</div>
-<section class="main-area">
-    <div class="first-row">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="main-alter">
+      <div>
+        Too Small, Please View on a larger devices or enlarge your browser
+        window.
+      </div>
+    </div>
+    <section class="main-area">
+      <div class="first-row">
         <div class="tool-box-area">
-            <div class="upload-input-area">
-                <div>
-                    <div class="file-field input-field" >
-                        <div class="btn">
-                          <span>Single Image</span>
-                          <input type="file" id="single-upload"/>
-                        </div>
-                        <div class="file-path-wrapper">
-                          <input class="file-path validate" type="text">
-                        </div>
-                      </div>
+          <div class="upload-input-area">
+            <div>
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Single Image</span>
+                  <input type="file" id="single-upload" />
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" />
+                </div>
+              </div>
 
-                      <div class="file-field input-field" >
-                        <div class="btn">
-                          <span>Folder</span>
-                          <input type="file" id="multi-upload" webkitdirectory directory multiple />
-                        </div>
-                        <div class="file-path-wrapper">
-                          <input class="file-path validate" type="text" />
-                        </div>
-                      </div>
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Folder</span>
+                  <input
+                    type="file"
+                    id="multi-upload"
+                    webkitdirectory
+                    directory
+                    multiple
+                  />
                 </div>
-                <div></div>
-            </div>
-            <div class="upload-image-button">
-                <div class="middle-button">
-                    <button class="btn-floating btn-large waves-effect waves-light red" id="disButton">
-                        <i class="material-icons">analytics</i></button>
-                    <button class="btn waves-effect waves-light" type="submit" name="action" id="submitPic">Submit
-                        <i class="material-icons right">send</i>
-                    </button>
-                    <button class="btn-floating btn-large waves-effect waves-light red" id="heatMapButton">
-                        <i class="material-icons">explore</i>
-                    </button>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" />
                 </div>
+              </div>
             </div>
-            <div class="drawing-pens">
-                <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
-                <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
-                <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"><i class="material-icons">edit</i></a>
-                <a class="btn-floating btn-large waves-effect waves-light red" id="back-image"><i class="material-icons">arrow_back</i></a>
-                <a class="btn-floating btn-large waves-effect waves-light red" id="next-image"><i class="material-icons">arrow_forward</i></a>
+            <div></div>
+          </div>
+          <div class="upload-image-button">
+            <div class="middle-button">
+              <button
+                class="btn-floating btn-large waves-effect waves-light red"
+                id="disButton"
+              >
+                <i class="material-icons">analytics</i>
+              </button>
+              <button
+                class="btn waves-effect waves-light"
+                type="submit"
+                name="action"
+                id="submitPic"
+              >
+                Submit
+                <i class="material-icons right">send</i>
+              </button>
+              <button
+                class="btn-floating btn-large waves-effect waves-light red"
+                id="heatMapButton"
+              >
+                <i class="material-icons">explore</i>
+              </button>
             </div>
+          </div>
+          <div class="drawing-pens">
+            <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"
+              ><i class="material-icons">edit</i></a
+            >
+            <a class="btn-floating btn-large cyan pulse" id="trigger-canvas"
+              ><i class="material-icons">edit</i></a
+            >
+            <a
+              class="btn-floating btn-large cyan pulse"
+              id="custom-network-model"
+              ><i class="material-icons">directions_bike</i></a
+            >
+            <a
+              class="btn-floating btn-large waves-effect waves-light red"
+              id="back-image"
+              ><i class="material-icons">arrow_back</i></a
+            >
+            <a
+              class="btn-floating btn-large waves-effect waves-light red"
+              id="next-image"
+              ><i class="material-icons">arrow_forward</i></a
+            >
+          </div>
         </div>
         <div id="upload-image-area">
-            <div id="sketch-holder">
-                <!-- Our sketch will go here! -->
-                <!-- <img src="css/images/sport-car1.jpeg"> -->
-            </div>
-            
+          <div id="sketch-holder">
+            <!-- Our sketch will go here! -->
+            <!-- <img src="css/images/sport-car1.jpeg"> -->
+          </div>
         </div>
         <div class="display-image-detail">
-
-            <div style="max-height:20em ;overflow-y:auto ">
-                <table id="disTbody">
-                    <tr id="head">
-                        <th width="85%">Name</th>
-                        <th width="15%">Probability</th>
-                    </tr>
-                    <tr id="nonRecord">
-                        <td colspan="10">
-                            <center>No Data, Please Upload the Pic!</center>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+          <div style="max-height: 20em; overflow-y: auto;">
+            <table id="disTbody">
+              <tr id="head">
+                <th width="85%">Name</th>
+                <th width="15%">Probability</th>
+              </tr>
+              <tr id="nonRecord">
+                <td colspan="10">
+                  <center>No Data, Please Upload the Pic!</center>
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
-    </div>
-    <div class="second-row">
+      </div>
+      <div class="second-row">
         <div class="two-d-network" id="displayContainer"></div>
         <div class="right-col">
-            <div class="display-network-image">
-                <div id="heatMap">
-                    <center>Score-CAM</center>
-                </div>
-                <div id="tempResult">
-                    <center>Colored Guided Backpropagation</center>
-                </div>
+          <div class="display-network-image">
+            <div id="heatMap">
+              <center>Score-CAM</center>
             </div>
-            <div class="three-d-network">
-                <div class="feature-map-controls">
-                    <div class="image-choose">
-                        <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Choose 
-                            feature map </a>
-                        <!-- Dropdown Structure -->
-                        <ul id='dropdown1' class='dropdown-content'>
-                            <li id="previous"><a href="#!">Please choose an Element</a></li>
-                        </ul>
-                    </div>
-                    <div class="color-map">
-                        <a class='dropdown-trigger btn' id="colour-map" href='#' data-target='dropdown2'>
-                            Colour Map</a>
-                        <!-- Dropdown Structure -->
-                        <ul id='dropdown2' class='dropdown-content'>
-                            <li id="previous" data-value="viridis"><a href="#!">viridis</a></li>
-                            <li id="previous"><a href="#!">magma</a></li>
-                            <li id="previous"><a href="#!">inferno</a></li>
-                            <li id="previous"><a href="#!">plasma</a></li>
-                            <li id="previous"><a href="#!">cividis</a></li>
-                            <li id="previous"><a href="#!">twilight</a></li>
-                            <li id="previous"><a href="#!">twilight_shifted</a></li>
-                            <li id="previous"><a href="#!">turbo</a></li>
-                        </ul> 
-                    </div>
-                </div>
-                <div id="diagramContainer">x</div>
+            <div id="tempResult">
+              <center>Colored Guided Backpropagation</center>
             </div>
+          </div>
+          <div class="three-d-network">
+            <div class="feature-map-controls">
+              <div class="image-choose">
+                <a class="dropdown-trigger btn" href="#" data-target="dropdown1"
+                  >Choose feature map
+                </a>
+                <!-- Dropdown Structure -->
+                <ul id="dropdown1" class="dropdown-content">
+                  <li id="previous">
+                    <a href="#!">Please choose an Element</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="color-map">
+                <a
+                  class="dropdown-trigger btn"
+                  id="colour-map"
+                  href="#"
+                  data-target="dropdown2"
+                >
+                  Colour Map</a
+                >
+                <!-- Dropdown Structure -->
+                <ul id="dropdown2" class="dropdown-content">
+                  <li id="previous" data-value="viridis">
+                    <a href="#!">viridis</a>
+                  </li>
+                  <li id="previous"><a href="#!">magma</a></li>
+                  <li id="previous"><a href="#!">inferno</a></li>
+                  <li id="previous"><a href="#!">plasma</a></li>
+                  <li id="previous"><a href="#!">cividis</a></li>
+                  <li id="previous"><a href="#!">twilight</a></li>
+                  <li id="previous"><a href="#!">twilight_shifted</a></li>
+                  <li id="previous"><a href="#!">turbo</a></li>
+                </ul>
+              </div>
+            </div>
+            <div id="diagramContainer">x</div>
+          </div>
         </div>
+      </div>
+    </section>
+    <div class="custom-model-section">
+      <div class="network-dropdown-selection">
+        <div class="color-map">
+          <a
+            class="dropdown-trigger btn"
+            id="colour-map"
+            href="#"
+            data-target="dropdown2"
+          >
+            NetWork
+          </a>
+          <!-- Dropdown Structure -->
+          <ul id="dropdown2" class="dropdown-content">
+            <li id="previous" data-value="viridis">
+              <a href="#!">viridis</a>
+            </li>
+            <li id="previous"><a href="#!">magma</a></li>
+            <li id="previous"><a href="#!">inferno</a></li>
+            <li id="previous"><a href="#!">plasma</a></li>
+            <li id="previous"><a href="#!">cividis</a></li>
+            <li id="previous"><a href="#!">twilight</a></li>
+            <li id="previous"><a href="#!">twilight_shifted</a></li>
+            <li id="previous"><a href="#!">turbo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="upload-custom-weight">
+        <div class="close-all">
+          <a class="btn-floating btn-large waves-effect waves-light red"
+            ><i class="material-icons">close</i></a
+          >
+        </div>
+        <div class="wrapper-upload">
+          <input type="file" />
+        </div>
+      </div>
     </div>
-</section>
-<div id="snackbar">Some text some message..</div>
-<footer>
-    <div>Copy Right whatever</div>
-</footer>
-<div>
-    <canvas id="my-canvas"></canvas>
-</div>
+    <div id="snackbar">Some text some message..</div>
+    <footer>
+      <div>Copy Right whatever</div>
+    </footer>
+    <div>
+      <canvas id="my-canvas"></canvas>
+    </div>
 
-<!--JavaScript at end of body for optimized loading-->
-<script type="text/javascript" src=" {% static 'js/materialize.min.js' %}"></script>
+    <!--JavaScript at end of body for optimized loading-->
+    <script
+      type="text/javascript"
+      src=" {% static 'js/materialize.min.js' %}"
+    ></script>
 
-<!-- jquery -->
-<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- jquery -->
+    <script
+      type="text/javascript"
+      src="{% static 'js/jquery.min.js' %}"
+    ></script>
 
-<!-- Import two js for displaying 2D -->
-<script type="text/javascript" src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"></script>
+    <!-- Import two js for displaying 2D -->
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"
+    ></script>
 
-<script type="text/javascript" src="https://docs.opencv.org/3.4.0/opencv.js"></script>
+    <script
+      type="text/javascript"
+      src="https://docs.opencv.org/3.4.0/opencv.js"
+    ></script>
 
-<!-- Import TesorSpace for displaying 3D -->
-<script src="{% static 'js/three.min.js' %}"></script>
-<script src="{% static 'js/tf.min.js' %}"></script>
-<script src="{% static 'js/tween.min.js' %}"></script>
-<script src="{% static 'js/TrackballControls.js' %}"></script>
-<script src="{% static 'js/tensorspace.min.js' %}"></script>
+    <!-- Import TesorSpace for displaying 3D -->
+    <script src="{% static 'js/three.min.js' %}"></script>
+    <script src="{% static 'js/tf.min.js' %}"></script>
+    <script src="{% static 'js/tween.min.js' %}"></script>
+    <script src="{% static 'js/TrackballControls.js' %}"></script>
+    <script src="{% static 'js/tensorspace.min.js' %}"></script>
 
-<!-- Import DIY JS method -->
-<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+    <!-- Import DIY JS method -->
+    <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var elems = document.querySelectorAll('.dropdown-trigger');
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".dropdown-trigger");
         var options = {
-            'click': true
+          click: true,
         };
         var instances = M.Dropdown.init(elems, options);
-    });
-</script>
-</body>
+      });
+    </script>
+  </body>
 </html>

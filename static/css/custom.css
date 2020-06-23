@@ -249,6 +249,53 @@ body {
     to {bottom: 0; opacity: 0;}
   }
 
+  .custom-model-section {
+      position: absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom: 0;
+      z-index: 1;
+      opacity: 0.9;
+      /* width: 80%; */
+      margin: 0 auto;
+      background-color: rgb(242, 210, 162);
+      display: flex;
+      /* flex-flow: 1 1 wrap; */
+      display:none;
+  }
+
+  .network-dropdown-selection {
+      width: 50%;
+      background-color: darkgreen;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .upload-custom-weight {
+      width: 50%;
+      background-color: darkkhaki;
+      /* display: flex;
+      align-items: center;
+      justify-content: center; */
+  }
+
+  .upload-custom-weight .close-all {
+      position: absolute;
+      top: 5px;
+      right: 5px; 
+      /* border: 2px gold solid; */
+  }
+
+  .upload-custom-weight .wrapper-upload {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px rosybrown solid;
+      height: 100vh;
+  }
+
 footer {
     background-color: black;
     min-height: 15vh;
