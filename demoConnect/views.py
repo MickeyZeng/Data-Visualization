@@ -29,7 +29,7 @@ def homepage(request):
     :param request:
     :return: Template page
     """
-    return render(request, 'display.html')
+    return render(request, 'index.html')
 
 
 def display(request):

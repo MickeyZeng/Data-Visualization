@@ -1,0 +1,420 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MJ Board</title>
+    <!-- Compiled and minified CSS -->
+    <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
+    {#    <link rel="stylesheet" href="./custom.css"/>#}
+</head>
+<body>
+<!-- Header Area -->
+<header>
+    <ul class="tabs">
+        <li data-tab-target="#home" class="active tab">Home</li>
+        <li data-tab-target="#function-tab-1" class="tab">Function 1</li>
+        <li data-tab-target="#function-tab-2" class="tab">Function - 2</li>
+    </ul>
+</header>
+
+<!-- Main Area -->
+<main>
+    <div class="tab-content">
+        <!-- Home Tab -->
+        <div id="home" data-tab-content class="active">
+            <div class="home-wraper">
+                <div class="left-section">
+                    <div class="main-left-section-wrapper">
+                        <!-- Upload Image Section -->
+                        <div class="upload-single-image-section">
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Single Image</span>
+                                    <input type="file" id="single-upload"/>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="upload-multi-image-section">
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Folder</span>
+                                    <input
+                                            type="file"
+                                            id="multi-upload"
+                                            webkitdirectory
+                                            directory
+                                            multiple
+                                    />
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Upload Image Section End Here -->
+
+                        <!-- Drawing Pens -->
+                        <div class="drawing-pens">
+                            <a
+                                    class="btn-floating btn-large cyan pulse"
+                                    id="trigger-canvas"
+                            ><i class="material-icons">edit</i></a
+                            >
+                            <a
+                                    class="btn-floating btn-large red"
+                                    id="clean-panel-1"
+                            ><i class="material-icons">clear</i></a>
+                            <div class="drawing-pens-control">
+                                <label for="spacing">Line Width:</label>
+                                <input
+                                        id="spacing"
+                                        type="range"
+                                        name="spacing"
+                                        min="1"
+                                        max="50"
+                                        value="5"
+                                        data-sizing="px"
+                                />
+                                <label for="base">Fill Colour</label>
+                                <input id="base" type="color" name="base" value="#BADA55"/>
+                            </div>
+                            <a
+                                    class="btn-floating btn-large cyan"
+                                    id=""
+                            ><i class="material-icons">edit</i></a
+                            >
+                        </div>
+                        <!-- Drawing Pens End Here -->
+
+                        <!-- Prev/ Next Image -->
+                        <div
+                                class="previous-next-selection"
+                                style="border: 1px red solid;"
+                        >
+                            <a
+                                    class="btn-floating btn-large waves-effect waves-light red"
+                                    id="back-image"
+                            ><i class="material-icons">arrow_back</i></a
+                            >
+                            <a
+                                    class="btn-floating btn-large waves-effect waves-light red"
+                                    id="next-image"
+                            ><i class="material-icons">arrow_forward</i></a
+                            >
+                        </div>
+
+                        <!-- Prev/ Next Image End Here-->
+
+                        <!-- Submit Button -->
+                        <div
+                                class="submit-image-button"
+                                style="border: 1px black solid;"
+                        >
+                            <button
+                                    class="btn waves-effect waves-light"
+                                    type="submit"
+                                    name="action"
+                                    id="submitPic"
+                            >
+                                Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                            <button
+                                    class="btn waves-effect waves-light"
+                                    type="submit"
+                                    name="action"
+                                    id="submitPic"
+                            >
+                                CAM
+                                <i class="material-icons right">send</i>
+                            </button>
+                            <button
+                                    class="btn-floating btn-large waves-effect waves-light red"
+                                    id="heatMapButton"
+                            >
+                                <i class="material-icons">explore</i>
+                            </button>
+                        </div>
+                        <!-- Submit Button End Here -->
+
+                        <!-- Feature Map Display Options -->
+                        <div
+                                class="feature-map-options"
+                                style="border: 1px black solid;"
+                        >
+                            <div class="image-choose">
+                                <a
+                                        class="dropdown-trigger btn"
+                                        href="#"
+                                        data-target="dropdown1"
+                                >Choose feature map
+                                </a>
+                                <!-- Dropdown Structure -->
+                                <ul id="dropdown1" class="dropdown-content">
+                                    <li id="previous">
+                                        <a href="#!">Please choose an Element</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="color-map">
+                                <a
+                                        class="dropdown-trigger btn"
+                                        id="colour-map"
+                                        href="#"
+                                        data-target="dropdown2"
+                                >
+                                    Colour Map</a
+                                >
+                                <!-- Dropdown Structure -->
+                                <ul id="dropdown2" class="dropdown-content">
+                                    <li id="previous" data-value="viridis">
+                                        <a href="#!">viridis</a>
+                                    </li>
+                                    <li id="previous"><a href="#!">magma</a></li>
+                                    <li id="previous"><a href="#!">inferno</a></li>
+                                    <li id="previous"><a href="#!">plasma</a></li>
+                                    <li id="previous"><a href="#!">cividis</a></li>
+                                    <li id="previous"><a href="#!">twilight</a></li>
+                                    <li id="previous"><a href="#!">twilight_shifted</a></li>
+                                    <li id="previous"><a href="#!">turbo</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Feature Map Display Options End Here -->
+
+                        <!-- Custom Network -->
+                        <div
+                                class="custom-network-section"
+                                style="border: 1px black solid;"
+                        >
+                            <div class="network-dropdown-selection">
+                                <div class="color-map">
+                                    <a
+                                            class="dropdown-trigger btn"
+                                            id="colour-map"
+                                            href="#"
+                                            data-target="dropdown2"
+                                    >
+                                        NetWork
+                                    </a>
+                                    <!-- Dropdown Structure -->
+                                    <ul id="dropdown2" class="dropdown-content">
+                                        <li id="previous" data-value="viridis">
+                                            <a href="#!">viridis</a>
+                                        </li>
+                                        <li id="previous"><a href="#!">magma</a></li>
+                                        <li id="previous"><a href="#!">inferno</a></li>
+                                        <li id="previous"><a href="#!">plasma</a></li>
+                                        <li id="previous"><a href="#!">cividis</a></li>
+                                        <li id="previous"><a href="#!">twilight</a></li>
+                                        <li id="previous"><a href="#!">twilight_shifted</a></li>
+                                        <li id="previous"><a href="#!">turbo</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="upload-custom-weight">
+                                <div class="wrapper-upload">
+                                    <input type="file"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Custom Network End Here -->
+                    </div>
+                </div>
+                <div class="right-section">
+                    <div class="work-place-wrapper">
+                        <!-- Work Place 1 -->
+                        <div class="work-place-1">
+                            <canvas
+                                    id="drawing-area"
+                                    style="height: 100%; width: 100%;"
+                            ></canvas>
+                        </div>
+                        <!-- Work Place 1 -->
+
+                        <!-- Work Place 2 -->
+                        <div class="work-place-2">
+                            <canvas id="display-area"></canvas>
+                            <canvas id="layer2"></canvas>
+                        </div>
+                        <!-- Work Place 2 -->
+
+                        <!-- Work Place 3 -->
+                        <div class="work-place-3">
+                            <div class="leader-board">
+                                <div class="leader-board-title">
+                                    <h5>Leader Board: Current</h2>
+                                </div>
+                                <table id="leader-board-current">
+                                    <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Possibility</th>
+                                        <th>Rank</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="priority-200">
+                                        <td>Corigi</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            <i class="fas fa-caret-up"></i>
+                                            1
+                                        </td>
+                                    </tr>
+
+                                    <tr class="priority-200">
+                                        <td>Corigi</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            <i class="fas fa-caret-up"></i>
+                                            2
+                                        </td>
+                                    </tr>
+
+                                    <tr class="priority-200">
+                                        <td>Corigi</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            <i class="fas fa-caret-up"></i>
+                                            3
+                                        </td>
+                                    </tr>
+
+                                    <tr class="priority-200">
+                                        <td>Corigi</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            <i class="fas fa-caret-up"></i>
+                                            4
+                                        </td>
+                                    </tr>
+
+                                    <tr class="priority-200">
+                                        <td>Corigi</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            <i class="fas fa-caret-down"></i>
+                                            5
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Work Place 3 -->
+
+                        <!-- Work Place 4 -->
+                        <div class="work-place-4">
+                            <div class="leader-board leader-board-previous">
+                                <div class="leader-board-title">
+                                    <h5>Leader Board: Previous</h2>
+                                </div>
+                                <table id="leader-board-previous">
+                                    <thead>
+                                    <tr>
+                                        <th>Class</th>
+                                        <th>Possibility</th>
+                                        <th>Rank</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="priority-200">
+                                        <td>Welsh Corigi x</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            5
+                                        </td>
+                                    </tr>
+
+                                    <tr class="priority-200">
+                                        <td>Welsh Corigi</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            5
+                                        </td>
+                                    </tr>
+
+                                    <tr class="priority-200">
+                                        <td>Welsh Corigi x</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            5
+                                        </td>
+                                    </tr>
+
+                                    <tr class="priority-200">
+                                        <td>Welsh Corigi x</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            5
+                                        </td>
+                                    </tr>
+
+                                    <tr class="priority-200">
+                                        <td>Welsh Corigi x</td>
+                                        <td>80.88%</td>
+                                        <td>
+                                            5
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Work Place 4 -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- First Tab -->
+        <div id="function-tab-1" data-tab-content>
+            <div class="home-wraper">
+                <div class="left-section"></div>
+                <div class="right-section"></div>
+            </div>
+        </div>
+
+        <!-- Second Tab -->
+        <div id="function-tab-2" data-tab-content>
+            <div class="home-wraper">
+                <div class="left-section"></div>
+                <div class="right-section"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer Area -->
+<footer></footer>
+
+<!-- Helper Library -->
+{#<script src="./js/helper.js"></script>#}
+<script src="{% static 'js/helper.js' %}"></script>
+<!-- Compiled and minified JavaScript -->
+<script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>
