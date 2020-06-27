@@ -5,6 +5,8 @@ CURRENTFILEINDEX = 0; // current file load on the canvas
 LINE_WIDTH = 5;
 FILL_COLOUR = "#BADA55";
 PEN_TRIGGER = false;
+let upload_image; // the 3d array for pic Data
+let neural_network_value = 'resnet50';
 
 // Select The Tab Elements
 (() => {
@@ -47,6 +49,11 @@ drawingPanel.style.height = drawingPanelWidth + "px";
 const displayPanel = document.querySelector(".work-place-2");
 displayPanel.style.width = drawingPanelWidth + "px";
 displayPanel.style.height = drawingPanelWidth + "px";
+
+// Layer 2
+const layerPanel = document.querySelector("#layer2");
+layerPanel.style.width = drawingPanelWidth + "px";
+layerPanel.style.height = drawingPanelWidth + "px";
 
 // *** The Order In This AREA CANNOT CHANGE ***
 
@@ -162,4 +169,34 @@ let control_index = 0;
 first_row.forEach((item) => {
   item.innerHTML = dog_breed[control_index];
   control_index++;
+});
+
+document.getElementById("submitPic").addEventListener("click", () => {
+  // console.log("READY >>>>>> " + Date.now());
+
+  let fd = new FormData();        // 相当于是一个 Form 表单
+
+  // console.log(upload_image.length);
+  // console.log(upload_image[0].length);
+
+  updateImage();  //Got the data from the canvas
+
+  fd.append('width', upload_image.length);
+  fd.append('height', upload_image[0].length);
+  fd.append('imgData', JSON.stringify(upload_image));
+  fd.append('netName', neural_network_value);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/upload_file/', true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+      console.table(obj);
+      let resLabel = obj[0].label[0];
+      console.log(resLabel);
+      disCAM(resLabel);
+      // disResult(obj); // Display the current result
+    }
+  };
+  xhr.send(fd);
 });

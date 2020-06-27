@@ -17,7 +17,7 @@ import ResNet50.get_neural_network as gnn
 
 import matplotlib
 
-matplotlib.use('agg')
+# matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
@@ -40,6 +40,8 @@ def mc_Resnet(img, netName):
     resnet = gnn.get_neural_network(netName)
     resnet.eval()
 
+    print(">>>>> HERE?? >>>>>>")
+
     input_image = preProcessImg(img)
     input_image = input_image.unsqueeze(0)
 
@@ -50,7 +52,7 @@ def mc_Resnet(img, netName):
 
     outputs = outputs.squeeze()
 
-    top_k = 10
+    top_k = 5
     top_k = top_k * (-1)
     outputs_numpy = outputs.detach().numpy()
 
@@ -375,8 +377,8 @@ def preProcessImg(img):
     pic = Image.fromarray(img.astype('uint8'), 'RGB')
     pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)
     pic = pic.transpose(Image.FLIP_LEFT_RIGHT)
-    # plt.imshow(pic)
-    # plt.show()
+    plt.imshow(pic)
+    plt.show()
 
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])

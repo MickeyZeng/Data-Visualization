@@ -1,17 +1,16 @@
-import os
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-import ResNet50.test_back_end as resnet
-import numpy as np
-import ResNet50.json_to_dict as jtd
-from PIL import Image
 import json
+
+import numpy as np
+from PIL import Image
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
+import ResNet50.json_to_dict as jtd
+import ResNet50.test_back_end as resnet
+from heatmap import guided_backprop as backprop
 from heatmap import misc_functions as mics
 from heatmap import scorecam as score
-from heatmap import guided_backprop as backprop
-from matplotlib import pyplot as plt
-import time
 
 
 def testThreeDimension(request):
@@ -125,7 +124,7 @@ def disHeatMap(request):
         mics.get_example_params(picData, index)
 
     # For score-weighted
-    imgArray = scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model)
+    imgArray = scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width)
     # For Colored Guided Backpropagation
     picArray = coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model)
 
@@ -156,7 +155,7 @@ def coloredGB(original_image, prep_img, target_class, file_name_to_export, pretr
 
 
 # TODO: This is to display the Score-weighted Class Activation Heatmap on Image
-def scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model):
+def scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width):
     # Score cam
     # print("3")
     # print(time.clock())
@@ -170,6 +169,7 @@ def scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretra
     # print("5")
     # print(time.clock())
     heatmap, heatmap_on_image = mics.apply_colormap_on_image(original_image, cam, 'magma')
+    heatmap_on_image = heatmap_on_image.resize((int(width), int(width)), Image.ANTIALIAS)
     # print("6")
     # print(time.clock())
     imgArray = np.array(heatmap_on_image)

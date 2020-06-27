@@ -74,12 +74,145 @@ function handleUpdate(e) {
     LINE_WIDTH = e.target.value;
     Drawing_panel_CTX.lineWidth = LINE_WIDTH;
   } else {
-    FILL_COLOUR = e.target.value;
-    Drawing_panel_CTX.strokeStyle = FILL_COLOUR;
+      FILL_COLOUR = e.target.value;
+      Drawing_panel_CTX.strokeStyle = FILL_COLOUR;
   }
 }
 
 // Clean Drawing Panel-1 And Redraw
 function cleanAllandReDraw() {
-  loadFileToCanvas(MULTIFILES[CURRENTFILEINDEX], true);
+    loadFileToCanvas(MULTIFILES[CURRENTFILEINDEX], true);
+}
+
+//TODO: Update the upload_image data in 3D array
+function updateImage() {
+    let canvasPic = Drawing_Panel;
+    let c = canvasPic.getContext('2d');
+    let canvasWidth = Math.trunc(canvasPic.width);
+    let canvasHeight = Math.trunc(canvasPic.height);
+    upload_image = [];
+    // console.log(upload_image[551][498] + "TEST!!!!!");
+
+    let imagesData = c.getImageData(0, 0, canvasWidth, canvasHeight).data;
+    for (let x = canvasWidth - 1; x >= 0; x--) {
+        upload_image[x] = new Array(); // insert new vertical array
+        for (let y = canvasHeight - 1; y >= 0; y--) {
+            upload_image[x][y] = [0, 0, 0, 0];
+        }
+    }
+
+    // console.log("WIDTH" + upload_image.length + "(((((" + upload_image[0].length);
+
+    for (let i = 0; i < imagesData.length - 3; i += 4) {
+        let x = parseInt(parseInt(i / 4) % (canvasWidth));
+        let y = parseInt(parseInt(i / 4) / (canvasWidth));
+
+        upload_image[x][y][0] = imagesData[i];
+        upload_image[x][y][1] = imagesData[i + 1];
+        upload_image[x][y][2] = imagesData[i + 2];
+        upload_image[x][y][3] = imagesData[i + 3];
+    }
+
+    // console.log("WIDTH" + canvasWidth + "***** HEIGHT" + canvasHeight);
+}
+
+//TODO: Get the heatmap
+function disCAM(resLabel) {
+
+    let fd = new FormData(); //Like a form data
+    let xhr = new XMLHttpRequest();
+    fd.append('label', resLabel);
+    xhr.open('POST', '/heatMap/', true);
+
+    updateImage();  //Got the data from the canvas
+
+    fd.append('width', upload_image.length);
+    fd.append('height', upload_image[0].length);
+    fd.append('imgData', JSON.stringify(upload_image));
+
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            let obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+            drawImage("layer2", obj[0]);
+            // drawImage("heatMap", obj[1]);
+        }
+    };
+    xhr.send(fd);
+}
+
+//TODO: The function to draw a pic by array || param: id (DOM element)
+function drawImage(elementID, tempObj) {
+
+    let c = document.getElementById(elementID);
+    // tempObj = JSON.parse(tempObj);
+    // let tempResult = document.getElementById(elementID);
+    // tempResult.innerHTML = "";
+
+    // cv.imshow(tempObj, "imgElement");
+    // let c = document.createElement("canvas");
+    // c.setAttribute("style", "margin: auto ");
+
+    // //The size of CANVAS
+    // let widthTemp = tempObj.length;
+    // let heightTemp = tempObj[0].length;
+    //
+    // //The size of DIV
+    // let tempRect = tempResult.getBoundingClientRect();
+    // let widthDiv = tempRect.width;
+    // let heightDiv = tempRect.height;
+    //
+    // var widthTemp_ratio = widthTemp / widthDiv;
+    // var heightTemp_ratio = heightTemp / heightDiv;
+    //
+    // c.width = widthTemp;
+    // c.height = heightTemp;
+
+    // if (widthTemp_ratio >= heightTemp_ratio && widthTemp > widthDiv) {
+    //     widthTemp = widthDiv;
+    //     // console.log("变过？？width" + widthTemp + widthDiv);
+    // } else if (heightTemp_ratio > widthTemp_ratio && heightTemp > heightDiv) {
+    //     heightTemp = heightDiv;
+    //     // console.log("变过？？");
+    // }
+
+    // c.setAttribute("width", widthTemp.toString());
+    // c.setAttribute("height", heightTemp.toString());
+    //
+    // tempResult.appendChild(c);
+
+    // console.log(widthTemp + " >>>>>>>>> " + heightTemp + " <<<<<<<<<< ");
+
+    let ctx = c.getContext("2d");
+    c.width = tempObj.length;
+    c.height = tempObj[0].length;
+
+    let r, g, b;
+
+    console.log(tempObj.length + ">>>>>>" + tempObj[0].length);
+
+    // console.log(tempObj.length + ">>>>>>" + tempObj[0].length + ">>>>>" + tempObj[0][0]);
+
+    for (let i = 0; i < tempObj.length; i++) {
+        for (let j = 0; j < tempObj[0].length; j++) {
+            r = tempObj[i][j][0];
+            g = tempObj[i][j][1];
+            b = tempObj[i][j][2];
+            ctx.fillStyle = "rgba(" + r + "," + g + "," + b + ", 1)";
+            ctx.fillRect(j, i, 1, 1);
+            // console.log(`R>>${r}>>G>>${g}>>>B>>${b}>>`);
+        }
+    }
+
+    // if (widthTemp < (widthDiv - 10) && heightTemp < (heightDiv - 10)) {
+    //     tempResult.innerHTML = "";
+    //     let imageData = ctx.getImageData(0, 0, widthTemp, heightTemp);
+    //     c.setAttribute("height", heightDiv.toString());
+    //     c.setAttribute("width", widthDiv.toString());
+    //
+    //     ctx.putImageData(imageData, (widthDiv - widthTemp) / 2, (heightDiv - heightTemp) / 2);
+    //
+    //     tempResult.appendChild(c);
+    // }
+
 }

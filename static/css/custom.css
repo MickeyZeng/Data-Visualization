@@ -126,9 +126,9 @@ body {
   left: 0;
   top: 0;
   z-index: 1;
-  background-color: red;
+  /*background-color: red;*/
   /* When We Received Data, We Change The Opacity To Achieve The Overlay Effect */
-  opacity: 0;
+  opacity: 0.75;
 }
 
 /* Work-Space-3 And Work-Space-4 Are For Display Possibility Result */
