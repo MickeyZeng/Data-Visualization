@@ -6,7 +6,8 @@ LINE_WIDTH = 5;
 FILL_COLOUR = "#BADA55";
 PEN_TRIGGER = false;
 let upload_image; // the 3d array for pic Data
-let neural_network_value = 'resnet50';
+let neural_network_value = "resnet50";
+let LeaderBoardResult = []; // For Leader Board
 
 // Select The Tab Elements
 (() => {
@@ -83,7 +84,11 @@ window.addEventListener("load", (e) => {
       }
       return;
     }
-    loadFileToCanvas(MULTIFILES[CURRENTFILEINDEX]);
+    loadFileToCanvas(
+      MULTIFILES[CURRENTFILEINDEX],
+      (clear = false),
+      (empty = true)
+    );
   });
 
   const backButton = document.querySelector("#back-image");
@@ -101,7 +106,11 @@ window.addEventListener("load", (e) => {
       }
       return;
     }
-    loadFileToCanvas(MULTIFILES[CURRENTFILEINDEX]);
+    loadFileToCanvas(
+      MULTIFILES[CURRENTFILEINDEX],
+      (clear = false),
+      (empty = true)
+    );
   });
 });
 
@@ -134,7 +143,7 @@ Drawing_Panel.addEventListener("mouseout", () => (IS_DRAWING = false));
 // Drwing pen config
 const penControls = document.querySelectorAll(".drawing-pens-control input");
 penControls.forEach((control) =>
-    control.addEventListener("change", handleUpdate)
+  control.addEventListener("change", handleUpdate)
 );
 // Drawing Pen Config Finished
 
@@ -154,49 +163,53 @@ drawingPenTrigger.addEventListener("click", () => {
 const eraseAll = document.querySelector("#clean-panel-1");
 eraseAll.addEventListener("click", cleanAllandReDraw);
 
-// Testing Select Table
-const leaderBoardCurrent = document.querySelectorAll(
-    "#leader-board-current td"
-);
-console.log(leaderBoardCurrent);
-let first_row = [];
-for (let index = 0; index < 15; index += 3) {
-  first_row.push(leaderBoardCurrent[index]);
-}
-console.log(first_row);
-let dog_breed = ["corgi", "husky", "golden", "bull", "berman"];
-let control_index = 0;
-first_row.forEach((item) => {
-  item.innerHTML = dog_breed[control_index];
-  control_index++;
-});
+// Change OverLay Opacity
+const overlayControls = document.querySelector(".overlay-control input");
+console.log(overlayControls);
+overlayControls.addEventListener("change", handleOpacityChange);
+overlayControls.addEventListener("mousemove", handleOpacityChange);
+// overlay-control
 
 document.getElementById("submitPic").addEventListener("click", () => {
   // console.log("READY >>>>>> " + Date.now());
 
-  let fd = new FormData();        // 相当于是一个 Form 表单
+  let fd = new FormData(); // 相当于是一个 Form 表单
 
   // console.log(upload_image.length);
   // console.log(upload_image[0].length);
 
-  updateImage();  //Got the data from the canvas
+  updateImage(); //Got the data from the canvas
 
-  fd.append('width', upload_image.length);
-  fd.append('height', upload_image[0].length);
-  fd.append('imgData', JSON.stringify(upload_image));
-  fd.append('netName', neural_network_value);
+  fd.append("width", upload_image.length);
+  fd.append("height", upload_image[0].length);
+  fd.append("imgData", JSON.stringify(upload_image));
+  fd.append("netName", neural_network_value);
+  console.log("hello -----> current index is: " + CURRENTFILEINDEX);
+  let tracking_index = CURRENTFILEINDEX;
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/upload_file/', true);
+  xhr.open("POST", "/upload_file/", true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
       var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
       console.table(obj);
       let resLabel = obj[0].label[0];
       console.log(resLabel);
-      disCAM(resLabel);
+      // Update Leader Board
+      updateLeaderBoard(obj);
+
+      console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
+      disCAM(resLabel, tracking_index);
       // disResult(obj); // Display the current result
     }
   };
   xhr.send(fd);
 });
+
+class LeaderBoardObj {
+  constructor(label, rate, rank) {
+    this.label = label;
+    this.rate = rate;
+    this.rank = rank;
+  }
+}

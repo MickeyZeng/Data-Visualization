@@ -88,7 +88,7 @@ body {
   grid-template-areas:
     "left1 left1 right1 right1"
     "left1 left1 right1 right1"
-    "right2 right2 right3 right3";
+    "right3 right3 right2 right2";
   padding: 3rem;
 }
 
@@ -135,7 +135,7 @@ body {
 .work-place-wrapper .work-place-3 {
   width: 99%;
   grid-area: right2;
-  background-color: rgb(14, 63, 59);
+  background-color: #273349;
   min-height: 35vh;
 }
 
