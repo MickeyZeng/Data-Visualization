@@ -17,7 +17,7 @@ import ResNet50.get_neural_network as gnn
 
 import matplotlib
 
-matplotlib.use('agg')
+# matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0

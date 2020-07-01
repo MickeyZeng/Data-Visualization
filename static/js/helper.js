@@ -142,6 +142,7 @@ function disCAM(resLabel, tracking_index) {
   fd.append("width", upload_image.length);
   fd.append("height", upload_image[0].length);
   fd.append("imgData", JSON.stringify(upload_image));
+  fd.append("type", "15");
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {

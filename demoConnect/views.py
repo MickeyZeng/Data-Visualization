@@ -1,16 +1,14 @@
 import json
 
 import numpy as np
-from PIL import Image
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 import ResNet50.json_to_dict as jtd
 import ResNet50.test_back_end as resnet
-from heatmap import guided_backprop as backprop
+from heatmap import heatmap_util as util
 from heatmap import misc_functions as mics
-from heatmap import scorecam as score
 
 
 def testThreeDimension(request):
@@ -113,72 +111,102 @@ def disHeatMap(request):
     label = request.POST.get('label')
     index = jtd.dis_index(label)
 
-    # print("1")
-    # print(time.clock())
+    heatType = request.POST.get('type')
+
     picData = arrToTensor(imgData, width, height)
 
-    # Get params
-    # print("2")
-    # print(time.clock())
     (original_image, prep_img, target_class, file_name_to_export, pretrained_model) = \
         mics.get_example_params(picData, index)
 
-    # For score-weighted
-    imgArray = scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width)
-    # For Colored Guided Backpropagation
-    picArray = coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model)
+    if heatType == "1":
+        # For Vanilla Backpropagation Saliency
+        color = True
+        heatArray = util.vanillaBS(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+                                   color)
 
-    resultList = [imgArray.tolist(), picArray.tolist()]
+    elif heatType == "2":
+        # For Vanilla Backpropagation Saliency
+        color = False
+        heatArray = util.vanillaBS(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+                                   color)
+
+    elif heatType == "3":
+        # For Colored Guided Backpropagation
+        color = True
+        negative = False
+        heatArray = util.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+                                   color, negative)
+
+    elif heatType == "4":
+        # For Guided Backpropagation Saliency (No Colored)
+        color = False
+        negative = False
+        heatArray = util.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+                                   color, negative)
+
+    elif heatType == "5":
+        # For Guided Backpropagation Negative Saliency
+        color = True
+        negative = "2"
+        heatArray = util.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+                                   color, negative)
+
+    elif heatType == "6":
+        # For Guided Backpropagation Positive Saliency
+        color = True
+        negative = "1"
+        heatArray = util.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+                                   color, negative)
+
+    elif heatType == "7":
+        # For Gradient-weighted Class Activation Map (Activation Map)
+        type = "gray"
+        heatArray = util.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+                                  width)
+
+    elif heatType == "8":
+        type = "colored"
+        heatArray = util.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+                                  width)
+
+    elif heatType == "9":
+        type = "onImage"
+        heatArray = util.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+                                  width)
+
+    elif heatType == "10":
+        type = "gray"
+        heatArray = util.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+                                  width)
+
+    elif heatType == "11":
+        type = "colored"
+        heatArray = util.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+                                  width)
+
+    elif heatType == "12":
+        # For score-weighted
+        type = "onImage"
+        heatArray = util.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+                                  width)
+
+    elif heatType == "13":
+        type = "colored"
+        heatArray = util.guidedCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+                                   width)
+
+    elif heatType == "14":
+        type = "gray"
+        heatArray = util.guidedCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+                                   width)
+
+    elif heatType == "15":
+        heatArray = util.integradePic(original_image, prep_img, target_class, file_name_to_export, pretrained_model,
+                                      width)
+
+    resultList = [heatArray.tolist()]
 
     return HttpResponse(json.dumps(resultList))
-
-
-# TODO: This is to display the Colored Guided Backpropagation
-def coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model):
-    # Guided backprop
-    GBP = backprop.GuidedBackprop(pretrained_model)
-
-    # Get gradients
-    guided_grads = GBP.generate_gradients(prep_img, target_class)
-
-    # Save colored gradients
-    # Normalize
-    gradient = guided_grads - guided_grads.min()
-    gradient /= gradient.max()
-
-    if isinstance(gradient, (np.ndarray, np.generic)):
-        im = mics.format_np_output(gradient)
-        im = Image.fromarray(im)
-
-    picArray = np.array(im)
-    return picArray
-
-
-# TODO: This is to display the Score-weighted Class Activation Heatmap on Image
-def scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width):
-    # Score cam
-    # print("3")
-    # print(time.clock())
-    score_cam = score.ScoreCam(pretrained_model, target_layer=11)
-    # Generate cam mask
-    # print("4")
-    # print(time.clock())
-    cam = score_cam.generate_cam(prep_img, target_class)
-    # Save mask
-    # save_class_activation_images(original_image, cam, file_name_to_export)
-    # print("5")
-    # print(time.clock())
-    heatmap, heatmap_on_image = mics.apply_colormap_on_image(original_image, cam, 'magma')
-    heatmap_on_image = heatmap_on_image.resize((int(width), int(width)), Image.ANTIALIAS)
-    # print("6")
-    # print(time.clock())
-    imgArray = np.array(heatmap_on_image)
-    # print("7")
-    # print(time.clock())
-
-    print('Score cam completed')
-
-    return imgArray
 
 
 # TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
