@@ -5,7 +5,10 @@ CURRENTFILEINDEX = 0; // current file load on the canvas
 LINE_WIDTH = 5;
 FILL_COLOUR = "#BADA55";
 PEN_TRIGGER = false;
+
 let upload_image; // the 3d array for pic Data
+let CANVAS1DATA;
+
 let neural_network_value = "resnet50";
 let LeaderBoardResult = []; // For Leader Board
 
@@ -213,3 +216,23 @@ class LeaderBoardObj {
     this.rank = rank;
   }
 }
+
+// Switch Image Upload - CSV
+let CSV_IMG_SWITCH = false;
+const upload_image_section = document.querySelector(".upload-image-section");
+const upload_csv_section = document.querySelector(".upload-csv-section");
+const csv_image_switch = document.querySelector(".switch input");
+csv_image_switch.addEventListener("change", (e) => {
+  CSV_IMG_SWITCH = !CSV_IMG_SWITCH;
+  if (CSV_IMG_SWITCH) {
+    // display CSV
+
+    upload_image_section.style.display = "none";
+    upload_csv_section.style.display = "block";
+  } else {
+    // display img upload
+    upload_image_section.style.display = "block";
+    upload_csv_section.style.display = "none";
+  }
+});
+// Switch Image Upload - CSV

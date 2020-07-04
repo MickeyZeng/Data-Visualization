@@ -108,6 +108,7 @@ function updateImage() {
   // console.log(upload_image[551][498] + "TEST!!!!!");
 
   let imagesData = c.getImageData(0, 0, canvasWidth, canvasHeight).data;
+  CANVAS1DATA = c.getImageData(0, 0, canvasWidth, canvasHeight);
   for (let x = canvasWidth - 1; x >= 0; x--) {
     upload_image[x] = new Array(); // insert new vertical array
     for (let y = canvasHeight - 1; y >= 0; y--) {
@@ -119,7 +120,8 @@ function updateImage() {
 
   for (let i = 0; i < imagesData.length - 3; i += 4) {
     let x = parseInt(parseInt(i / 4) % canvasWidth);
-    let y = parseInt(parseInt(i / 4) / canvasWidth);
+    // let y = parseInt(parseInt(i / 4) / canvasWidth);
+    let y = parseInt(parseInt(i / 4) / canvasHeight);
 
     upload_image[x][y][0] = imagesData[i];
     upload_image[x][y][1] = imagesData[i + 1];
@@ -142,12 +144,17 @@ function disCAM(resLabel, tracking_index) {
   fd.append("width", upload_image.length);
   fd.append("height", upload_image[0].length);
   fd.append("imgData", JSON.stringify(upload_image));
-  fd.append("type", "15");
+  fd.append("type", "1");
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
       let obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
       if (tracking_index == CURRENTFILEINDEX) {
+        // Update Canvas 2 First
+        // Uncomment this method if needed
+        // updateDisplayArea();
+
+        // Update Layer 2
         drawImage("layer2", obj[0]);
       } else {
         console.log("No Drawing, Because Tracking Index is different now");
@@ -161,7 +168,7 @@ function disCAM(resLabel, tracking_index) {
 //TODO: The function to draw a pic by array || param: id (DOM element)
 function drawImage(elementID, tempObj) {
   console.log("hello hello hello -----> current index is: " + CURRENTFILEINDEX);
-  let c = document.getElementById(elementID);
+
   // tempObj = JSON.parse(tempObj);
   // let tempResult = document.getElementById(elementID);
   // tempResult.innerHTML = "";
@@ -200,6 +207,7 @@ function drawImage(elementID, tempObj) {
 
   // console.log(widthTemp + " >>>>>>>>> " + heightTemp + " <<<<<<<<<< ");
 
+  let c = document.getElementById(elementID);
   let ctx = c.getContext("2d");
   c.width = tempObj.length;
   c.height = tempObj[0].length;
@@ -305,4 +313,12 @@ function clearBothLeaderBoard() {
     .querySelector("#leader-board-previous")
     .getElementsByTagName("tbody")[0];
   leaderBoardPrevious.innerHTML = "";
+}
+
+function updateDisplayArea() {
+  let c = document.getElementById("display-area"); // DisplayPanel
+  let ctx = c.getContext("2d");
+  c.width = CANVAS1DATA.width;
+  c.height = CANVAS1DATA.height;
+  ctx.putImageData(CANVAS1DATA, 0, 0);
 }

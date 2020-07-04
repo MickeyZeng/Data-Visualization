@@ -2,6 +2,7 @@
 :root {
   --line-weight: 5;
   --line-colour: "#BADA55";
+  box-sizing: content-box;
 }
 
 [data-tab-content] {
