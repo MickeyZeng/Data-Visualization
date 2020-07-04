@@ -17,7 +17,7 @@ import ResNet50.get_neural_network as gnn
 
 import matplotlib
 
-# matplotlib.use('agg')
+matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
@@ -113,7 +113,7 @@ def outputNet(netName):
     # 暂存一个最大的list
     res = []
     # 层数的index
-    index = 0;
+    index = 0
     # 这个是给第一层写的
     tempLayers1 = []
     # 这个是给第二层写的
@@ -281,7 +281,8 @@ def viz(module, input):
         cm = plt.get_cmap(cmp)
         # cm = plt.get_cmap('viridis')
         colored_image = cm(picData)
-        picData = Image.fromarray((colored_image[:, :, :3] * 255).astype(np.uint8))
+        picData = Image.fromarray(
+            (colored_image[:, :, :3] * 255).astype(np.uint8))
         picData = picData.resize((400, 400), Image.ANTIALIAS)
         picData = np.array(picData)
         # picData = fig.make_image(r)
@@ -343,7 +344,8 @@ def tempOutput(num, img, index, colorMap, netName):
                 or isinstance(m, torch.nn.ReLU):
 
             if int(num) == int(i):
-                print(str(i) + "|||||" + str(name) + " |||| " + str(m) + "|||||")
+                print(str(i) + "|||||" + str(name) +
+                      " |||| " + str(m) + "|||||")
                 m.register_forward_pre_hook(viz)
 
             i = i + 1
