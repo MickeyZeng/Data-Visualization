@@ -1,6 +1,5 @@
 import json
 
-import numpy as np
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -9,6 +8,7 @@ import ResNet50.json_to_dict as jtd
 import ResNet50.test_back_end as resnet
 from heatmap import heatmap_util as util
 from heatmap import misc_functions as mics
+from demoConnect import util
 
 
 def testThreeDimension(request):
@@ -54,7 +54,7 @@ def uploadFile(request):
     height = request.POST.get('height')
     netName = request.POST.get('netName')
 
-    picData = arrToTensor(imgData, width, height)
+    picData = util.arrToTensor(imgData, width, height)
 
     # " 放入训练好的神经网络 进行训练 并返回结果 "
     resultDict = resnet.mc_Resnet(picData, netName)
@@ -91,7 +91,7 @@ def tempOutput(request):
     colorMap = request.POST.get('colorMap')
     netName = request.POST.get('netName')
 
-    picData = arrToTensor(imgData, width, height)
+    picData = util.arrToTensor(imgData, width, height)
 
     result = resnet.tempOutput(num, picData, index, colorMap, netName)
     finales = json.dumps(result)
@@ -113,7 +113,7 @@ def disHeatMap(request):
 
     heatType = request.POST.get('type')
 
-    picData = arrToTensor(imgData, width, height)
+    picData = util.arrToTensor(imgData, width, height)
 
     (original_image, prep_img, target_class, file_name_to_export, pretrained_model) = \
         mics.get_example_params(picData, index)
@@ -209,20 +209,4 @@ def disHeatMap(request):
     return HttpResponse(json.dumps(resultList))
 
 
-# TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
-def arrToTensor(imgData, width, height):
-    imgData = json.loads(imgData)
-    # print(type(imgData))
-    # print(str(len(imgData[551][498])) + "1!!22###")
 
-    # print(str(width) + str(height) + "WIDTH &&&& HEIGHT")
-    picData = np.zeros((int(width), int(height), 3))
-
-    for i in range(int(width)):
-        for j in range(int(height)):
-            for k in range(3):
-                picData[i][j][k] = int(imgData[i][j][k])
-
-    # print(picData)
-
-    return picData
