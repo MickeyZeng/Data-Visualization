@@ -236,3 +236,17 @@ csv_image_switch.addEventListener("change", (e) => {
   }
 });
 // Switch Image Upload - CSV
+
+
+// This code is for test submic CSV file
+document.getElementById("subCSV").addEventListener("click", () => {
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/subCSV/", true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      let obj = JSON.parse(xhr.responseText);
+      console.log(obj);
+    }
+  };
+  xhr.send();
+});

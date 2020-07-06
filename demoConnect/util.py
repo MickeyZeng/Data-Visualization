@@ -1,12 +1,12 @@
 import json
 
 import numpy as np
+import pandas
+
 
 # TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
 def arrToTensor(imgData, width, height):
     imgData = json.loads(imgData)
-    # print(type(imgData))
-    # print(str(len(imgData[551][498])) + "1!!22###")
 
     # print(str(width) + str(height) + "WIDTH &&&& HEIGHT")
     picData = np.zeros((int(width), int(height), 3))
@@ -19,3 +19,16 @@ def arrToTensor(imgData, width, height):
     # print(picData)
 
     return picData
+
+
+# TODO: This is to Read the CSV file (这里是处理上传上来的CSV文件)
+def readFile(file):
+    # This is to read a certain file
+    df = pandas.read_csv(file)
+    # df = pandas.read_csv('test.csv')
+    name = df['Ground Truth'].tolist()
+    path = df['Path'].tolist()
+
+    result = [name, path]
+
+    return result
