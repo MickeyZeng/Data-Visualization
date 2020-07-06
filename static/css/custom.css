@@ -70,8 +70,13 @@ body {
 
 /* Home Page Left Section */
 .main-left-section-wrapper {
+  padding: 0.7rem;
   display: flex;
   flex-direction: column;
+}
+
+.main-left-section-wrapper > div {
+  margin: 6px;
 }
 
 /* Drawing Pens */
@@ -264,6 +269,15 @@ table tbody tr td .fa-circle {
 
 .leader-board-previous table {
   color: #f4c19b;
+}
+
+.control-label {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+.control-label:hover {
+  font-size: 1.6rem;
+  transition: all 1s ease-in-out;
 }
 
 /* Media Query */

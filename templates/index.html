@@ -41,7 +41,7 @@
               <div class="main-left-section-wrapper">
                 <!-- Switch -->
                 <div class="switch">
-                  <label>
+                  <label class="control-label">
                     Upload Image
                     <input type="checkbox" />
                     <span class="lever"></span>
@@ -111,7 +111,7 @@
                     ><i class="material-icons">clear</i></a
                   >
                   <div class="drawing-pens-control">
-                    <label for="spacing">Line Width:</label>
+                    <label class="control-label">Line Width:</label>
                     <input
                       id="spacing"
                       type="range"
@@ -121,7 +121,7 @@
                       value="5"
                       data-sizing="px"
                     />
-                    <label for="base">Fill Colour</label>
+                    <label class="control-label">Fill Colour</label>
                     <input id="base" type="color" name="base" value="#BADA55" />
                   </div>
                   <a class="btn-floating btn-large cyan" id=""
@@ -155,7 +155,7 @@
                   style="border: 1px black solid;"
                 >
                   <div class="overlay-control">
-                    <label for="spacing">Opacity:</label>
+                    <label class="control-label">Opacity:</label>
                     <input
                       id="spacing"
                       type="range"
@@ -175,7 +175,7 @@
                     Submit
                     <i class="material-icons right">send</i>
                   </button>
-                  <button
+                  <!-- <button
                     class="btn waves-effect waves-light"
                     type="submit"
                     name="action"
@@ -183,98 +183,15 @@
                   >
                     CAM
                     <i class="material-icons right">send</i>
-                  </button>
-                  <button
+                  </button> -->
+                  <!-- <button
                     class="btn-floating btn-large waves-effect waves-light red"
                     id="heatMapButton"
                   >
                     <i class="material-icons">explore</i>
-                  </button>
+                  </button> -->
                 </div>
                 <!-- Submit Button End Here -->
-
-                <!-- Feature Map Display Options -->
-                <div
-                  class="feature-map-options"
-                  style="border: 1px black solid;"
-                >
-                  <div class="image-choose">
-                    <a
-                      class="dropdown-trigger btn"
-                      href="#"
-                      data-target="dropdown1"
-                      >Choose feature map
-                    </a>
-                    <!-- Dropdown Structure -->
-                    <ul id="dropdown1" class="dropdown-content">
-                      <li id="previous">
-                        <a href="#!">Please choose an Element</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="color-map">
-                    <a
-                      class="dropdown-trigger btn"
-                      id="colour-map"
-                      href="#"
-                      data-target="dropdown2"
-                    >
-                      Colour Map</a
-                    >
-                    <!-- Dropdown Structure -->
-                    <ul id="dropdown2" class="dropdown-content">
-                      <li id="previous" data-value="viridis">
-                        <a href="#!">viridis</a>
-                      </li>
-                      <li id="previous"><a href="#!">magma</a></li>
-                      <li id="previous"><a href="#!">inferno</a></li>
-                      <li id="previous"><a href="#!">plasma</a></li>
-                      <li id="previous"><a href="#!">cividis</a></li>
-                      <li id="previous"><a href="#!">twilight</a></li>
-                      <li id="previous"><a href="#!">twilight_shifted</a></li>
-                      <li id="previous"><a href="#!">turbo</a></li>
-                    </ul>
-                  </div>
-                </div>
-                <!-- Feature Map Display Options End Here -->
-
-                <!-- Custom Network -->
-                <div
-                  class="custom-network-section"
-                  style="border: 1px black solid;"
-                >
-                  <div class="network-dropdown-selection">
-                    <div class="color-map">
-                      <a
-                        class="dropdown-trigger btn"
-                        id="colour-map"
-                        href="#"
-                        data-target="dropdown2"
-                      >
-                        NetWork
-                      </a>
-                      <!-- Dropdown Structure -->
-                      <ul id="dropdown2" class="dropdown-content">
-                        <li id="previous" data-value="viridis">
-                          <a href="#!">viridis</a>
-                        </li>
-                        <li id="previous"><a href="#!">magma</a></li>
-                        <li id="previous"><a href="#!">inferno</a></li>
-                        <li id="previous"><a href="#!">plasma</a></li>
-                        <li id="previous"><a href="#!">cividis</a></li>
-                        <li id="previous"><a href="#!">twilight</a></li>
-                        <li id="previous"><a href="#!">twilight_shifted</a></li>
-                        <li id="previous"><a href="#!">turbo</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="upload-custom-weight">
-                    <div class="wrapper-upload">
-                      <input type="file" />
-                    </div>
-                  </div>
-                </div>
-                <!-- Custom Network End Here -->
               </div>
             </div>
             <div class="right-section">
@@ -348,18 +265,101 @@
           </div>
         </div>
 
-        <!-- First Tab -->
+        <!-- Second Tab -->
         <div id="function-tab-1" data-tab-content>
           <div class="home-wraper">
-            <div class="left-section"></div>
+            <div class="left-section">
+                <!-- Feature Map Display Options -->
+                <div
+                  class="feature-map-options"
+                  style="border: 1px black solid;"
+                >
+                  <div class="image-choose">
+                    <a
+                      class="dropdown-trigger btn"
+                      href="#"
+                      data-target="dropdown1"
+                      >Choose feature map
+                    </a>
+                    <!-- Dropdown Structure -->
+                    <ul id="dropdown1" class="dropdown-content">
+                      <li id="previous">
+                        <a href="#!">Please choose an Element</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="color-map">
+                    <a
+                      class="dropdown-trigger btn"
+                      id="colour-map"
+                      href="#"
+                      data-target="dropdown2"
+                    >
+                      Colour Map</a
+                    >
+                    <!-- Dropdown Structure -->
+                    <ul id="dropdown2" class="dropdown-content">
+                      <li id="previous" data-value="viridis">
+                        <a href="#!">viridis</a>
+                      </li>
+                      <li id="previous"><a href="#!">magma</a></li>
+                      <li id="previous"><a href="#!">inferno</a></li>
+                      <li id="previous"><a href="#!">plasma</a></li>
+                      <li id="previous"><a href="#!">cividis</a></li>
+                      <li id="previous"><a href="#!">twilight</a></li>
+                      <li id="previous"><a href="#!">twilight_shifted</a></li>
+                      <li id="previous"><a href="#!">turbo</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Feature Map Display Options End Here -->
+            </div>
             <div class="right-section"></div>
           </div>
         </div>
 
-        <!-- Second Tab -->
+        <!-- Third Tab -->
         <div id="function-tab-2" data-tab-content>
           <div class="home-wraper">
-            <div class="left-section"></div>
+            <div class="left-section">
+                 <!-- Custom Network -->
+                 <div
+                 class="custom-network-section"
+                 style="border: 1px black solid;"
+               >
+                 <div class="network-dropdown-selection">
+                   <div class="color-map">
+                     <a
+                       class="dropdown-trigger btn"
+                       id="colour-map"
+                       href="#"
+                       data-target="dropdown2"
+                     >
+                       NetWork
+                     </a>
+                     <!-- Dropdown Structure -->
+                     <ul id="dropdown2" class="dropdown-content">
+                       <li id="previous" data-value="viridis">
+                         <a href="#!">viridis</a>
+                       </li>
+                       <li id="previous"><a href="#!">magma</a></li>
+                       <li id="previous"><a href="#!">inferno</a></li>
+                       <li id="previous"><a href="#!">plasma</a></li>
+                       <li id="previous"><a href="#!">cividis</a></li>
+                       <li id="previous"><a href="#!">twilight</a></li>
+                       <li id="previous"><a href="#!">twilight_shifted</a></li>
+                       <li id="previous"><a href="#!">turbo</a></li>
+                     </ul>
+                   </div>
+                 </div>
+                 <div class="upload-custom-weight">
+                   <div class="wrapper-upload">
+                     <input type="file" />
+                   </div>
+                 </div>
+               </div>
+               <!-- Custom Network End Here -->
+            </div>
             <div class="right-section"></div>
           </div>
         </div>
