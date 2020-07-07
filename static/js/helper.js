@@ -316,32 +316,70 @@ function clearBothLeaderBoard() {
 }
 
 function updateDisplayArea() {
-  let c = document.getElementById("display-area"); // DisplayPanel
-  let ctx = c.getContext("2d");
-  c.width = CANVAS1DATA.width;
-  c.height = CANVAS1DATA.height;
-  ctx.putImageData(CANVAS1DATA, 0, 0);
+    let c = document.getElementById("display-area"); // DisplayPanel
+    let ctx = c.getContext("2d");
+    c.width = CANVAS1DATA.width;
+    c.height = CANVAS1DATA.height;
+    ctx.putImageData(CANVAS1DATA, 0, 0);
 }
 
 //This is to read the data and display the visualization
+//TODO: Update Version for 2D
+let NETWORK;    //为NETWORK定义一个全局变量
 
-let container = document.getElementById("displayContainer");
+//这个nodes 和 edges是为最上层的layers
+let NODES = new vis.DataSet([]);
+let EDGES = new vis.DataSet([]);
 
-let numLayer = 0; //这个是用来存放用户点击了哪一层的element
+let NODESET = [];   //这个是用来存点集的
+let EDGESET = [];   //这个用来存线集的
+let SPECIAL = [];   //存放特殊的elements
+
+let OPTIONS = {
+    height: '90%',
+    layout: {
+        hierarchical: {
+            enabled: true,
+            levelSeparation: 400,
+            nodeSpacing: 300,
+        },
+    },
+    physics: {
+        hierarchicalRepulsion: {
+            nodeDistance: 400
+        }
+    },
+    nodes: {
+        font: {
+            size: 40
+        },
+        margin: 10,
+        widthConstraint: {
+            minimum: 200
+        },
+        heightConstraint: {
+            minimum: 70
+        }
+    }
+};
+
+let CONTAINER = document.getElementById("displayContainer");
+
+let NUMLAYER = 0; //这个是用来存放用户点击了哪一层的element
 
 function updateDisplay(obj) {
     console.log(obj);
 
-    nodes = new vis.DataSet([]);
-    edges = new vis.DataSet([]);
+    NODES = new vis.DataSet([]);
+    EDGES = new vis.DataSet([]);
 
-    nodeSet = [];
-    edgeSet = [];
-    special = [];
+    NODESET = [];
+    EDGESET = [];
+    SPECIAL = [];
 
-    container.innerHTML = "";
+    CONTAINER.innerHTML = "";
     try {
-        network.destroy();
+        NETWORK.destroy();
     } catch {
         console.log("No netWork now !!!");
     }
@@ -356,25 +394,25 @@ function updateDisplay(obj) {
     let bottleFlag = false;
     let doubleLink = true;
 
-    if (nodes.length === 0) {
+    if (NODES.length === 0) {
         for (let i = 0; i < lengthJSON; i++) {
             if (obj[i].length > 10) {
                 if (obj[i].search("Conv2d") === 1) {
-                    nodes.add({id: numOfId, label: "Conv2d - " + numOfId,});
+                    NODES.add({id: numOfId, label: "Conv2d - " + numOfId,});
                 } else if (obj[i].search("MaxPool") === 1) {
-                    nodes.add({id: numOfId, label: "MaxPool - " + numOfId});
+                    NODES.add({id: numOfId, label: "MaxPool - " + numOfId});
                 } else if (obj[i].search("Adaptive") === 1) {
-                    nodes.add({id: numOfId, label: "AdaptiveAvgPool2d - " + numOfId,});
+                    NODES.add({id: numOfId, label: "AdaptiveAvgPool2d - " + numOfId,});
                 } else if (obj[i].search("Linear") === 1) {
-                    nodes.add({id: numOfId, label: "Linear - " + numOfId,});
+                    NODES.add({id: numOfId, label: "Linear - " + numOfId,});
                 } else if (obj[i].search("ReLu") === 1) {
-                    nodes.add({id: numOfId, label: "ReLu - " + numOfId,});
+                    NODES.add({id: numOfId, label: "ReLu - " + numOfId,});
                 }
                 if (i > 0) {
                     if (layersID > 0) {
-                        edges.add({from: (numOfId - 1).toString(), to: numOfId, arrows: 'to'});
+                        EDGES.add({from: (numOfId - 1).toString(), to: numOfId, arrows: 'to'});
                     } else {
-                        edges.add({from: (layersID).toString(), to: numOfId, arrows: 'to'});
+                        EDGES.add({from: (layersID).toString(), to: numOfId, arrows: 'to'});
                         layersID = layersID * (-1);
                     }
                 }
@@ -385,19 +423,19 @@ function updateDisplay(obj) {
                 }
 
                 layersID = layersID - 1;
-                nodes.add({id: layersID, label: "Layers - " + (layersID * -1),});
+                NODES.add({id: layersID, label: "Layers - " + (layersID * -1),});
 
                 if (layersID === -1) {
-                    edges.add({from: (numOfId - 1).toString(), to: layersID, arrows: 'to'});
+                    EDGES.add({from: (numOfId - 1).toString(), to: layersID, arrows: 'to'});
                 } else {
-                    edges.add({from: (layersID + 1).toString(), to: layersID, arrows: 'to',});
+                    EDGES.add({from: (layersID + 1).toString(), to: layersID, arrows: 'to',});
                 }
 
                 let tempNode = {};
                 tempNode['layersID'] = layersID;
                 tempNode['id'] = layersID;
                 tempNode['label'] = "Layers - " + (layersID * -1).toString();
-                nodeSet.push(tempNode);
+                NODESET.push(tempNode);
 
                 //告诉后面的连接这个是必须和上一层的layer连接的
                 connectFlag = true;
@@ -414,8 +452,8 @@ function updateDisplay(obj) {
                                 tempNodes['layersID'] = layersID;
                                 tempNodes['id'] = numOfId;
                                 tempNodes['label'] = "Conv2d -  neck " + numOfId;
-                                nodeSet.push(tempNodes);
-                                special.push(numOfId);
+                                NODESET.push(tempNodes);
+                                SPECIAL.push(numOfId);
 
                             } else if (obj[i][j][k][0].search("MaxPool") === 1) {
 
@@ -423,7 +461,7 @@ function updateDisplay(obj) {
                                 tempNodes['layersID'] = layersID;
                                 tempNodes['id'] = numOfId;
                                 tempNodes['label'] = "MaxPool -  neck " + numOfId;
-                                nodeSet.push(tempNodes);
+                                NODESET.push(tempNodes);
 
                             }
                             if (i > 0) {
@@ -433,7 +471,7 @@ function updateDisplay(obj) {
                                 tempEdges['from'] = layersID.toString();
                                 tempEdges['to'] = numOfId;
                                 tempEdges['type'] = "";
-                                edgeSet.push(tempEdges);
+                                EDGESET.push(tempEdges);
 
                                 if (bottleFlag) {
                                     numOfId = numOfId + 1;
@@ -442,7 +480,7 @@ function updateDisplay(obj) {
                                     tempNodes['layersID'] = layersID;
                                     tempNodes['id'] = numOfId;
                                     tempNodes['label'] = "ReLu - " + numOfId;
-                                    nodeSet.push(tempNodes);
+                                    NODESET.push(tempNodes);
 
                                     //这里的两条线是为了完成一个Bottleneck with downsample
 
@@ -452,14 +490,14 @@ function updateDisplay(obj) {
                                     tempEdges1['to'] = numOfId;
                                     tempEdges1['type'] = "";
 
-                                    edgeSet.push(tempEdges1);
+                                    EDGESET.push(tempEdges1);
 
                                     let tempEdges = {};
                                     tempEdges['layersID'] = layersID;
                                     tempEdges['from'] = (numOfId - 2).toString();
                                     tempEdges['to'] = numOfId;
                                     tempEdges['type'] = "";
-                                    edgeSet.push(tempEdges);
+                                    EDGESET.push(tempEdges);
 
                                     bottleFlag = false;
                                 }
@@ -475,7 +513,7 @@ function updateDisplay(obj) {
                                 tempNodes['layersID'] = layersID;
                                 tempNodes['id'] = numOfId;
                                 tempNodes['label'] = "Conv2d - " + numOfId;
-                                nodeSet.push(tempNodes);
+                                NODESET.push(tempNodes);
 
                             } else if (obj[i][j][k].search("MaxPool") === 1) {
 
@@ -483,7 +521,7 @@ function updateDisplay(obj) {
                                 tempNodes['layersID'] = layersID;
                                 tempNodes['id'] = numOfId;
                                 tempNodes['label'] = "MaxPool - " + numOfId;
-                                nodeSet.push(tempNodes);
+                                NODESET.push(tempNodes);
 
                             } else if (obj[i][j][k] === "Bottleneck") {
                                 bottleFlag = true;
@@ -499,7 +537,7 @@ function updateDisplay(obj) {
                                     tempEdges['from'] = layersID.toString();
                                     tempEdges['to'] = numOfId;
                                     tempEdges['type'] = "";
-                                    edgeSet.push(tempEdges);
+                                    EDGESET.push(tempEdges);
 
                                 } else {
 
@@ -508,7 +546,7 @@ function updateDisplay(obj) {
                                     tempEdges['from'] = (numOfId - 1).toString();
                                     tempEdges['to'] = numOfId;
                                     tempEdges['type'] = "";
-                                    edgeSet.push(tempEdges);
+                                    EDGESET.push(tempEdges);
                                 }
                                 connectFlag = false;
                                 if (k === (obj[i][j].length - 1) && bottleFlag) {
@@ -519,7 +557,7 @@ function updateDisplay(obj) {
                                     tempNodes['layersID'] = layersID;
                                     tempNodes['id'] = numOfId;
                                     tempNodes['label'] = "ReLu - " + numOfId;
-                                    nodeSet.push(tempNodes);
+                                    NODESET.push(tempNodes);
 
                                     //所有的ReLu必须邀有两条线
 
@@ -528,14 +566,14 @@ function updateDisplay(obj) {
                                     tempEdges['from'] = (numOfId - k - 1).toString();
                                     tempEdges['to'] = numOfId;
                                     tempEdges['type'] = "curvedCW";
-                                    edgeSet.push(tempEdges);
+                                    EDGESET.push(tempEdges);
 
                                     let tempEdges1 = {};
                                     tempEdges1['layersID'] = layersID;
                                     tempEdges1['from'] = (numOfId - 1).toString();
                                     tempEdges1['to'] = numOfId;
                                     tempEdges1['type'] = "";
-                                    edgeSet.push(tempEdges1);
+                                    EDGESET.push(tempEdges1);
 
                                     bottleFlag = false;
                                 }
@@ -549,9 +587,9 @@ function updateDisplay(obj) {
         }
     }
 
-    console.log(nodeSet);
+    console.log(NODESET);
     console.log("<<<<<");
-    console.log(edgeSet);
+    console.log(EDGESET);
 
     createFirst();
 
@@ -560,22 +598,22 @@ function updateDisplay(obj) {
 function createFirst() {
 
     let data = {
-        nodes: nodes,
-        edges: edges
+        nodes: NODES,
+        edges: EDGES
     };
 
-    network = new vis.Network(container, data, options);
+    NETWORK = new vis.Network(CONTAINER, data, OPTIONS);
 
-    network.on('click', function (params) {
+    NETWORK.on('click', function (params) {
         params.event = "[original event]";
-        numLayer = this.getNodeAt(params.pointer.DOM).toString();
-        console.log(numLayer);
-        if (numLayer < 0) {
+        NUMLAYER = this.getNodeAt(params.pointer.DOM).toString();
+        console.log(NUMLAYER);
+        if (NUMLAYER < 0) {
             this.destroy();
-            createSecond(numLayer);
+            createSecond(NUMLAYER);
         } else {
             // 当这个是Elements的时候 默认弹出第一张
-            sendRequest(numLayer, 0);
+            sendRequest(NUMLAYER, 0);
         }
     });
 
@@ -587,58 +625,133 @@ function createSecond(num) {
     let firstFlag = true;
     let lastValue = 0;
 
-    for (let i = 0; i < nodeSet.length; i++) {
+    for (let i = 0; i < NODESET.length; i++) {
         //这个是为了让第二层显示的时候 有一个Exit元素连接Layer元素 为美观
-        if (nodeSet[i].layersID.toString() === num) {
+        if (NODESET[i].layersID.toString() === num) {
             if (firstFlag) {
                 tempNodes.add({id: "previous", label: "Exit"});
-                tempEdges.add({from: "previous", to: nodeSet[i].id, arrows: 'to'});
+                tempEdges.add({from: "previous", to: NODESET[i].id, arrows: 'to'});
                 firstFlag = false;
             }
 
-            tempNodes.add({id: nodeSet[i].id, label: nodeSet[i].label});
+            tempNodes.add({id: NODESET[i].id, label: NODESET[i].label});
             lastValue = i;
         }
     }
 
-    for (let i = 0; i < edgeSet.length; i++) {
-        if (edgeSet[i].layersID.toString() === num) {
+    for (let i = 0; i < EDGESET.length; i++) {
+        if (EDGESET[i].layersID.toString() === num) {
             tempEdges.add({
-                from: edgeSet[i].from,
-                to: edgeSet[i].to,
+                from: EDGESET[i].from,
+                to: EDGESET[i].to,
                 arrows: 'to',
                 smooth: {
                     enabled: true,
-                    type: edgeSet[i].type,
-                    roundness: edgeSet[i].type.length > 0 ? 0.3 : 0,
+                    type: EDGESET[i].type,
+                    roundness: EDGESET[i].type.length > 0 ? 0.3 : 0,
                 }
             });
         }
     }
 
     tempNodes.add({id: "next", label: "Go back"});
-    tempEdges.add({from: nodeSet[lastValue].id, to: "next", arrows: 'to'});
+    tempEdges.add({from: NODESET[lastValue].id, to: "next", arrows: 'to'});
 
     let data = {
         nodes: tempNodes,
         edges: tempEdges,
     };
 
-    network = new vis.Network(container, data, options);
+    NETWORK = new vis.Network(CONTAINER, data, OPTIONS);
 
     //Change the position for special elements
     let i = num * (-1) - 1;
-    network.moveNode(special[i], network.getPosition(special[i] - 2)['x'] - 600, network.getPosition(special[i] - 2)['y']);
+    NETWORK.moveNode(SPECIAL[i], NETWORK.getPosition(SPECIAL[i] - 2)['x'] - 600, NETWORK.getPosition(SPECIAL[i] - 2)['y']);
 
-    network.on('click', function (params) {
+    NETWORK.on('click', function (params) {
         params.event = "[original event]";
-        numLayer = this.getNodeAt(params.pointer.DOM).toString();
-        if (numLayer > 0) {
-            sendRequest(numLayer, 0);
+        NUMLAYER = this.getNodeAt(params.pointer.DOM).toString();
+        if (NUMLAYER > 0) {
+            sendRequest(NUMLAYER, 0);
         } else {
             // updateDisplay();
             displayNet();
         }
     });
 
+}
+
+//TODO: Send the num of element to the back-end and get the feature map displaying front-end
+function sendRequest(num, index) {
+
+    updateImage();  //Update the canvas data
+
+    //TODO:通过打印出来的数字 去返回相关层的输出 与后台服务器交流
+    let fd = new FormData(); //Like a form data
+
+    //需要传送两个参数 一个是点击的层数 还有一个是这张图片的三位数组
+    fd.append('number', num);   //上传点击的层数的数字
+    fd.append('index', index);   //确认应该显示哪一张照片
+
+    fd.append('width', upload_image.length);
+    fd.append('height', upload_image[0].length);
+    fd.append('imgData', JSON.stringify(upload_image));
+    fd.append('netName', neural_network_value);
+    fd.append('colorMap', colour_map_value);
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/outputTest/', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            let obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+            // console.log("后面返回了 >>>>> " + obj.sum);   //检查返回是否成功
+            disNumResult(obj.sum);
+            disTemResult(obj.picData);
+        }
+    };
+    xhr.send(fd);
+}
+
+// TODO: Display the temp Result
+function disTemResult(obj) {
+    // let tempObj = obj;
+    let tempObj = JSON.parse(obj);
+
+    drawImage("diagramContainer", tempObj);
+}
+
+//TODO: Create a choices list
+function disNumResult(num) {
+    // console.log(num);
+    //1. Delete the previous elements first
+    let list = document.getElementById("dropdown1");
+    list.innerHTML = "";
+
+    //2. Put the num choices for the user
+    // Example:<li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+    //<li class="divider" tabindex="-1"></li>
+    for (let i = 0; i < num; i++) {
+        let li = document.createElement("li");
+        let href_a = document.createElement("a");
+        let icon = document.createElement("i");
+
+        icon.setAttribute("class", "material-icons");
+        icon.innerHTML = "view_module";
+        href_a.setAttribute("onclick", "sendRequest(" + NUMLAYER + "," + i + ")");
+        href_a.innerText = i;
+
+        href_a.appendChild(icon);
+        li.appendChild(href_a);
+        list.appendChild(li);
+
+    }
+}
+
+//TODO: Get the length of data in JSON
+function getJsonLength(jsonData) {
+    var length = 0;
+    for (var ever in jsonData) {
+        length++;
+    }
+    return length;
 }

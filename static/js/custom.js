@@ -6,12 +6,12 @@ LINE_WIDTH = 5;
 FILL_COLOUR = "#BADA55";
 PEN_TRIGGER = false;
 
-let upload_image; // the 3d array for pic Data
+let UPLOAD_IMAGE; // the 3d array for pic Data
 let CANVAS1DATA;
 
-let neural_network_value = "resnet50";
-let modelMode = true;   // True is 2D & False is 3D
-let LeaderBoardResult = []; // For Leader Board
+let NEURAL_NETWORK_VALUE = "resnet50";
+let MODELMODE = true;   // True is 2D & False is 3D
+let LEADERBOARDRESULT = []; // For Leader Board
 
 // Select The Tab Elements
 (() => {
@@ -200,10 +200,10 @@ document.getElementById("submitPic").addEventListener("click", () => {
 
     updateImage(); //Got the data from the canvas
 
-    fd.append("width", upload_image.length);
-    fd.append("height", upload_image[0].length);
-    fd.append("imgData", JSON.stringify(upload_image));
-    fd.append("netName", neural_network_value);
+    fd.append("width", UPLOAD_IMAGE.length);
+    fd.append("height", UPLOAD_IMAGE[0].length);
+    fd.append("imgData", JSON.stringify(UPLOAD_IMAGE));
+    fd.append("netName", NEURAL_NETWORK_VALUE);
     console.log("hello -----> current index is: " + CURRENTFILEINDEX);
     let tracking_index = CURRENTFILEINDEX;
 
@@ -275,7 +275,7 @@ csv_image_switch.addEventListener("change", (e) => {
 // TODO: This is to display the network visualization
 document.getElementById("disNetwork").addEventListener("click", ()=>{
   let fd = new FormData(); //Like a form data
-  fd.append('name', neural_network_value);
+  fd.append('name', NEURAL_NETWORK_VALUE);
 
   let xhr = new XMLHttpRequest();
 
@@ -288,11 +288,11 @@ document.getElementById("disNetwork").addEventListener("click", ()=>{
             if (false) {
                 //暂时先用update的版本
                 // displayJson(obj); // 做成2D的区域
-            } else if (modelMode) {
+            } else if (MODELMODE) {
                 // modelMode = false;
                 updateDisplay(obj);
             } else {
-                modelMode = true;
+                MODELMODE = true;
                 displayThreeD(obj);
             }
         }
