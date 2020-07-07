@@ -3,10 +3,10 @@ let upload_image_flg = false;
 let upload_image;
 let new_a;
 
-let multiFiles = [] // for multi files
-let currentFileIndex = 0 // current file load on the canvas
-let colour_map_value = 'twilight'
-let neural_network_value = 'resnet50'
+let multiFiles = []; // for multi files
+let currentFileIndex = 0; // current file load on the canvas
+let colour_map_value = 'twilight';
+let neural_network_value = 'resnet50';
 
 let resLabel;   // To save the label of temp result
 let modelMode = true;   // True is 2D & False is 3D

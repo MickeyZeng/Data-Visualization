@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 import ResNet50.json_to_dict as jtd
 import ResNet50.test_back_end as resnet
-from heatmap import heatmap_util as util
+from heatmap import heatmap_util as heatUtil
 from heatmap import misc_functions as mics
 from demoConnect import util
 
@@ -121,87 +121,87 @@ def disHeatMap(request):
     if heatType == "1":
         # For Vanilla Backpropagation Saliency
         color = True
-        heatArray = util.vanillaBS(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+        heatArray = heatUtil.vanillaBS(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
                                    color)
 
     elif heatType == "2":
         # For Vanilla Backpropagation Saliency
         color = False
-        heatArray = util.vanillaBS(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+        heatArray = heatUtil.vanillaBS(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
                                    color)
 
     elif heatType == "3":
         # For Colored Guided Backpropagation
         color = True
         negative = False
-        heatArray = util.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+        heatArray = heatUtil.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
                                    color, negative)
 
     elif heatType == "4":
         # For Guided Backpropagation Saliency (No Colored)
         color = False
         negative = False
-        heatArray = util.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+        heatArray = heatUtil.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
                                    color, negative)
 
     elif heatType == "5":
         # For Guided Backpropagation Negative Saliency
         color = True
         negative = "2"
-        heatArray = util.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+        heatArray = heatUtil.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
                                    color, negative)
 
     elif heatType == "6":
         # For Guided Backpropagation Positive Saliency
         color = True
         negative = "1"
-        heatArray = util.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
+        heatArray = heatUtil.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
                                    color, negative)
 
     elif heatType == "7":
         # For Gradient-weighted Class Activation Map (Activation Map)
         type = "gray"
-        heatArray = util.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+        heatArray = heatUtil.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
                                   width)
 
     elif heatType == "8":
         type = "colored"
-        heatArray = util.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+        heatArray = heatUtil.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
                                   width)
 
     elif heatType == "9":
         type = "onImage"
-        heatArray = util.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+        heatArray = heatUtil.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
                                   width)
 
     elif heatType == "10":
         type = "gray"
-        heatArray = util.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+        heatArray = heatUtil.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
                                   width)
 
     elif heatType == "11":
         type = "colored"
-        heatArray = util.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+        heatArray = heatUtil.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
                                   width)
 
     elif heatType == "12":
         # For score-weighted
         type = "onImage"
-        heatArray = util.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+        heatArray = heatUtil.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
                                   width)
 
     elif heatType == "13":
         type = "colored"
-        heatArray = util.guidedCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+        heatArray = heatUtil.guidedCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
                                    width)
 
     elif heatType == "14":
         type = "gray"
-        heatArray = util.guidedCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
+        heatArray = heatUtil.guidedCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
                                    width)
 
     elif heatType == "15":
-        heatArray = util.integradePic(original_image, prep_img, target_class, file_name_to_export, pretrained_model,
+        heatArray = heatUtil.integradePic(original_image, prep_img, target_class, file_name_to_export, pretrained_model,
                                       width)
 
     resultList = [heatArray.tolist()]

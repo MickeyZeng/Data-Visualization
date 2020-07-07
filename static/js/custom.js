@@ -10,6 +10,7 @@ let upload_image; // the 3d array for pic Data
 let CANVAS1DATA;
 
 let neural_network_value = "resnet50";
+let modelMode = true;   // True is 2D & False is 3D
 let LeaderBoardResult = []; // For Leader Board
 
 // Select The Tab Elements
@@ -270,3 +271,33 @@ csv_image_switch.addEventListener("change", (e) => {
   }
 });
 // Switch Image Upload - CSV
+
+
+// TODO: This is to display the network visualization
+document.getElementById("disNetwork").addEventListener("click", ()=>{
+  let fd = new FormData(); //Like a form data
+  fd.append('name', neural_network_value);
+
+  let xhr = new XMLHttpRequest();
+
+  xhr.open('POST', '/display/', true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+            // console.log(obj);
+            // displayThreeD(obj); //暂时不需要渲染3D的区域
+            if (false) {
+                //暂时先用update的版本
+                // displayJson(obj); // 做成2D的区域
+            } else if (modelMode) {
+                // modelMode = false;
+                updateDisplay(obj);
+            } else {
+                modelMode = true;
+                displayThreeD(obj);
+            }
+        }
+    };
+    xhr.send(fd);      // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
+
+});
