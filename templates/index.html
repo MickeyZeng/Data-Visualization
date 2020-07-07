@@ -19,7 +19,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
     />
     <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
+<<<<<<< HEAD
     {# <link rel="stylesheet" href="./custom.css" /> #}
+=======
+>>>>>>> 52459cc3a7a58f45b4881c9f980592134b0d0ddc
   </head>
   <body>
     <!-- Header Area -->
@@ -82,26 +85,26 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Multi Image Upload -->
+                    <!-- Multi Image Upload -->
                 </div>
-                <!-- Upload Image Section End Here -->
+                  <!-- Upload Image Section End Here -->
 
-                <!-- CSV File Upload Section -->
-                <div class="upload-csv-section" style="display: none;">
-                  <div class="file-field input-field">
-                    <div class="btn">
-                      <span>CSV File</span>
-                      <input type="file" />
-                    </div>
-                    <div class="file-path-wrapper">
-                      <input class="file-path validate" type="text" />
-                    </div>
+                  <!-- CSV File Upload Section -->
+                  <div class="upload-csv-section" style="display: none;">
+                      <div class="file-field input-field">
+                          <div class="btn">
+                              <span>CSV File</span>
+                              <input type="file" id="CSV"/>
+                          </div>
+                          <div class="file-path-wrapper">
+                              <input class="file-path validate" type="text"/>
+                          </div>
+                      </div>
                   </div>
-                </div>
-                <!-- CSV File Upload Section -->
+                  <!-- CSV File Upload Section -->
 
-                <!-- Drawing Pens -->
-                <div class="drawing-pens">
+                  <!-- Drawing Pens -->
+                  <div class="drawing-pens">
                   <a
                     class="btn-floating btn-large cyan pulse"
                     id="trigger-canvas"
@@ -368,7 +371,6 @@
     <footer></footer>
 
     <!-- Helper Library -->
-    {# <script src="./js/helper.js"></script> #}
     <script src="{% static 'js/helper.js' %}"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="{% static 'js/custom.js' %}"></script>

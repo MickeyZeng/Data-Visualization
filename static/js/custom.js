@@ -173,40 +173,73 @@ overlayControls.addEventListener("change", handleOpacityChange);
 overlayControls.addEventListener("mousemove", handleOpacityChange);
 // overlay-control
 
+let csvFile;
+const csvUploadInput = document.querySelector('#CSV');
+csvUploadInput.addEventListener('change', (e) => {
+  csvFile = csvUploadInput.files[0];
+
+  // var reader = new FileReader();//新建一个FileReader
+  // reader.readAsText(csvFile, "UTF-8");//读取文件
+  // reader.onload = function (evt) { //读取完文件之后会回来这里
+  //   console.log(evt);
+  //   var fileString = evt.target.result; // 读取文件内容
+  //   csvFile = fileString;
+  // }
+});
+
 document.getElementById("submitPic").addEventListener("click", () => {
   // console.log("READY >>>>>> " + Date.now());
+  if (CSV_IMG_SWITCH == false) {
 
-  let fd = new FormData(); // 相当于是一个 Form 表单
 
-  // console.log(upload_image.length);
-  // console.log(upload_image[0].length);
+    let fd = new FormData(); // 相当于是一个 Form 表单
 
-  updateImage(); //Got the data from the canvas
+    // console.log(upload_image.length);
+    // console.log(upload_image[0].length);
 
-  fd.append("width", upload_image.length);
-  fd.append("height", upload_image[0].length);
-  fd.append("imgData", JSON.stringify(upload_image));
-  fd.append("netName", neural_network_value);
-  console.log("hello -----> current index is: " + CURRENTFILEINDEX);
-  let tracking_index = CURRENTFILEINDEX;
+    updateImage(); //Got the data from the canvas
 
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/upload_file/", true);
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4) {
-      var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
-      console.table(obj);
-      let resLabel = obj[0].label[0];
-      console.log(resLabel);
-      // Update Leader Board
-      updateLeaderBoard(obj);
+    fd.append("width", upload_image.length);
+    fd.append("height", upload_image[0].length);
+    fd.append("imgData", JSON.stringify(upload_image));
+    fd.append("netName", neural_network_value);
+    console.log("hello -----> current index is: " + CURRENTFILEINDEX);
+    let tracking_index = CURRENTFILEINDEX;
 
-      console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
-      disCAM(resLabel, tracking_index);
-      // disResult(obj); // Display the current result
-    }
-  };
-  xhr.send(fd);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/upload_file/", true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+        console.table(obj);
+        let resLabel = obj[0].label[0];
+        console.log(resLabel);
+        // Update Leader Board
+        updateLeaderBoard(obj);
+
+        console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
+        disCAM(resLabel, tracking_index);
+        // disResult(obj); // Display the current result
+      }
+    };
+    xhr.send(fd);
+  } else {
+    // Submit For CSV File
+    let fd = new FormData();
+    console.log(csvFile.type);
+    console.log(csvFile);
+    fd.append("csvFile", csvFile);
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/subCSV/", true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        let obj = JSON.parse(xhr.responseText);
+        console.log(obj);
+      }
+    };
+    xhr.send(fd);
+
+  }
 });
 
 class LeaderBoardObj {
@@ -236,17 +269,3 @@ csv_image_switch.addEventListener("change", (e) => {
   }
 });
 // Switch Image Upload - CSV
-
-
-// This code is for test submic CSV file
-document.getElementById("subCSV").addEventListener("click", () => {
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "/subCSV/", true);
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4) {
-      let obj = JSON.parse(xhr.responseText);
-      console.log(obj);
-    }
-  };
-  xhr.send();
-});
