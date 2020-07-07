@@ -272,12 +272,14 @@ table tbody tr td .fa-circle {
 }
 
 .control-label {
-  font-size: 1.4rem;
+  font-size: 1rem;
+  display: block;
   font-weight: 500;
 }
 .control-label:hover {
-  font-size: 1.6rem;
+  font-size: 1.1rem;
   transition: all 1s ease-in-out;
+  color: rgb(105, 76, 135);
 }
 
 /* Media Query */
