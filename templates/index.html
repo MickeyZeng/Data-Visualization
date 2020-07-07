@@ -81,26 +81,26 @@
                       </div>
                     </div>
                   </div>
-                    <!-- Multi Image Upload -->
+                  <!-- Multi Image Upload -->
                 </div>
-                  <!-- Upload Image Section End Here -->
+                <!-- Upload Image Section End Here -->
 
-                  <!-- CSV File Upload Section -->
-                  <div class="upload-csv-section" style="display: none;">
-                      <div class="file-field input-field">
-                          <div class="btn">
-                              <span>CSV File</span>
-                              <input type="file" id="CSV"/>
-                          </div>
-                          <div class="file-path-wrapper">
-                              <input class="file-path validate" type="text"/>
-                          </div>
-                      </div>
+                <!-- CSV File Upload Section -->
+                <div class="upload-csv-section" style="display: none;">
+                  <div class="file-field input-field">
+                    <div class="btn">
+                      <span>CSV File</span>
+                      <input type="file" id="CSV" />
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text" />
+                    </div>
                   </div>
-                  <!-- CSV File Upload Section -->
+                </div>
+                <!-- CSV File Upload Section -->
 
-                  <!-- Drawing Pens -->
-                  <div class="drawing-pens">
+                <!-- Drawing Pens -->
+                <div class="drawing-pens">
                   <a
                     class="btn-floating btn-large cyan pulse"
                     id="trigger-canvas"
@@ -176,16 +176,19 @@
                   </button>
                   <!-- CAM -->
                   <div>
-                  <!-- Dropdown Trigger -->
-                    <a class='dropdown-trigger btn' href='#' data-target='dropdown3'>Gradient Visualization</a>
+                    <!-- Dropdown Trigger -->
+                    <a
+                      class="dropdown-trigger btn"
+                      id="cam-option"
+                      href="#"
+                      data-target="dropdown3"
+                      >Gradient Visualization</a
+                    >
 
                     <!-- Dropdown Structure -->
-                    <ul id='dropdown3' class='dropdown-content'>
-                        <li><a href="#!">1</a></li>
-                        <li><a href="#!">2</a></li>
-                      </ul>
+                    <ul id="dropdown3" class="dropdown-content"></ul>
                   </div>
-                    
+
                   <!-- CAM -->
                   <!-- <button
                     class="btn waves-effect waves-light"
@@ -218,27 +221,27 @@
                 <!-- Work Place 1 -->
 
                 <!-- Work Place 2 -->
-                  <div class="work-place-2">
-                      <canvas id="display-area"></canvas>
-                      <canvas id="layer2"></canvas>
-                  </div>
-                  <!-- Work Place 2 -->
+                <div class="work-place-2">
+                  <canvas id="display-area"></canvas>
+                  <canvas id="layer2"></canvas>
+                </div>
+                <!-- Work Place 2 -->
 
-                  <!-- Work Place 3 -->
-                  <div class="work-place-3">
-                      <div class="leader-board">
-                          <div class="leader-board-title">
-                              <h5>Leader Board: Current</h5>
-                          </div>
-                          <table id="leader-board-current">
-                              <thead>
-                              <tr>
-                                  <th>Class</th>
-                                  <th>Possibility</th>
-                                  <th>Rank</th>
-                              </tr>
-                              </thead>
-                              <tbody>
+                <!-- Work Place 3 -->
+                <div class="work-place-3">
+                  <div class="leader-board">
+                    <div class="leader-board-title">
+                      <h5>Leader Board: Current</h5>
+                    </div>
+                    <table id="leader-board-current">
+                      <thead>
+                        <tr>
+                          <th>Class</th>
+                          <th>Possibility</th>
+                          <th>Rank</th>
+                        </tr>
+                      </thead>
+                      <tbody>
                         <!-- <tr class="priority-200">
                                         <td></td>
                                         <td></td>
@@ -284,7 +287,7 @@
               <!-- Feature Map Display Options -->
               <div class="feature-map-options" style="border: 1px black solid;">
                 <div class="Display">
-                    <a class="btn" id="disNetwork">Display</a>
+                  <a class="btn" id="disNetwork">Display</a>
                 </div>
                 <div class="image-choose">
                   <a
@@ -314,24 +317,24 @@
                     <li id="previous" data-value="viridis">
                       <a href="#!">viridis</a>
                     </li>
-                      <li id="previous"><a href="#!">magma</a></li>
-                      <li id="previous"><a href="#!">inferno</a></li>
-                      <li id="previous"><a href="#!">plasma</a></li>
-                      <li id="previous"><a href="#!">cividis</a></li>
-                      <li id="previous"><a href="#!">twilight</a></li>
-                      <li id="previous"><a href="#!">twilight_shifted</a></li>
-                      <li id="previous"><a href="#!">turbo</a></li>
+                    <li id="previous"><a href="#!">magma</a></li>
+                    <li id="previous"><a href="#!">inferno</a></li>
+                    <li id="previous"><a href="#!">plasma</a></li>
+                    <li id="previous"><a href="#!">cividis</a></li>
+                    <li id="previous"><a href="#!">twilight</a></li>
+                    <li id="previous"><a href="#!">twilight_shifted</a></li>
+                    <li id="previous"><a href="#!">turbo</a></li>
                   </ul>
                 </div>
               </div>
-                <!-- Feature Map Display Options End Here -->
+              <!-- Feature Map Display Options End Here -->
             </div>
-              <div class="right-section"></div>
+            <div class="right-section"></div>
           </div>
         </div>
 
-          <!-- Third Tab -->
-          <div id="function-tab-2" data-tab-content>
+        <!-- Third Tab -->
+        <div id="function-tab-2" data-tab-content>
           <div class="home-wraper">
             <div class="left-section">
               <!-- Custom Network -->
@@ -387,13 +390,13 @@
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-        var elems = document.querySelectorAll('.dropdown-trigger');
+      document.addEventListener("DOMContentLoaded", () => {
+        var elems = document.querySelectorAll(".dropdown-trigger");
         var options = {
-            'click': true
+          click: true,
         };
         var instances = M.Dropdown.init(elems, options);
-    });
+      });
     </script>
   </body>
 </html>
