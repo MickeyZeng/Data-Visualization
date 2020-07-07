@@ -33,6 +33,8 @@ let CAM_OPTION = {
 let CURRENT_CAM = 1;
 let RESULT_LABEL;
 
+let COLOUR_MAP_VALUE = 'twilight';
+
 // Select The Tab Elements
 (() => {
   const MyTabs = {

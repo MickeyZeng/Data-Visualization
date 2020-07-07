@@ -169,44 +169,6 @@ function disCAM(resLabel, tracking_index) {
 function drawImage(elementID, tempObj) {
   console.log("hello hello hello -----> current index is: " + CURRENTFILEINDEX);
 
-  // tempObj = JSON.parse(tempObj);
-  // let tempResult = document.getElementById(elementID);
-  // tempResult.innerHTML = "";
-
-  // cv.imshow(tempObj, "imgElement");
-  // let c = document.createElement("canvas");
-  // c.setAttribute("style", "margin: auto ");
-
-  // //The size of CANVAS
-  // let widthTemp = tempObj.length;
-  // let heightTemp = tempObj[0].length;
-  //
-  // //The size of DIV
-  // let tempRect = tempResult.getBoundingClientRect();
-  // let widthDiv = tempRect.width;
-  // let heightDiv = tempRect.height;
-  //
-  // var widthTemp_ratio = widthTemp / widthDiv;
-  // var heightTemp_ratio = heightTemp / heightDiv;
-  //
-  // c.width = widthTemp;
-  // c.height = heightTemp;
-
-  // if (widthTemp_ratio >= heightTemp_ratio && widthTemp > widthDiv) {
-  //     widthTemp = widthDiv;
-  //     // console.log("变过？？width" + widthTemp + widthDiv);
-  // } else if (heightTemp_ratio > widthTemp_ratio && heightTemp > heightDiv) {
-  //     heightTemp = heightDiv;
-  //     // console.log("变过？？");
-  // }
-
-  // c.setAttribute("width", widthTemp.toString());
-  // c.setAttribute("height", heightTemp.toString());
-  //
-  // tempResult.appendChild(c);
-
-  // console.log(widthTemp + " >>>>>>>>> " + heightTemp + " <<<<<<<<<< ");
-
   let c = document.getElementById(elementID);
   let ctx = c.getContext("2d");
   c.width = tempObj.length;
@@ -215,8 +177,6 @@ function drawImage(elementID, tempObj) {
   let r, g, b;
 
   console.log(tempObj.length + ">>>>>>" + tempObj[0].length);
-
-  // console.log(tempObj.length + ">>>>>>" + tempObj[0].length + ">>>>>" + tempObj[0][0]);
 
   for (let i = 0; i < tempObj.length; i++) {
     for (let j = 0; j < tempObj[0].length; j++) {
@@ -228,17 +188,6 @@ function drawImage(elementID, tempObj) {
       // console.log(`R>>${r}>>G>>${g}>>>B>>${b}>>`);
     }
   }
-
-  // if (widthTemp < (widthDiv - 10) && heightTemp < (heightDiv - 10)) {
-  //     tempResult.innerHTML = "";
-  //     let imageData = ctx.getImageData(0, 0, widthTemp, heightTemp);
-  //     c.setAttribute("height", heightDiv.toString());
-  //     c.setAttribute("width", widthDiv.toString());
-  //
-  //     ctx.putImageData(imageData, (widthDiv - widthTemp) / 2, (heightDiv - heightTemp) / 2);
-  //
-  //     tempResult.appendChild(c);
-  // }
 }
 
 function updateLeaderBoard(result) {
@@ -367,6 +316,7 @@ let options = {
 let container = document.getElementById("displayContainer");
 
 let numLayer = 0; //这个是用来存放用户点击了哪一层的element
+
 
 function updateDisplay(obj) {
     console.log(obj);
@@ -698,7 +648,7 @@ function sendRequest(num, index) {
     fd.append('height', upload_image[0].length);
     fd.append('imgData', JSON.stringify(upload_image));
     fd.append('netName', neural_network_value);
-    fd.append('colorMap', colour_map_value);
+    fd.append('colorMap', COLOUR_MAP_VALUE);
 
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/outputTest/', true);
@@ -718,7 +668,7 @@ function disTemResult(obj) {
     // let tempObj = obj;
     let tempObj = JSON.parse(obj);
 
-    drawImage("diagramContainer", tempObj);
+    drawImage("feature-map-canvas", tempObj);
 }
 
 //TODO: Create a choices list
