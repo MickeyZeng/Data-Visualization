@@ -308,16 +308,25 @@ table tbody tr td .fa-circle {
   justify-content: center;
 }
 
+/* 2d network arch */
 #displayContainer {
   height: 100%;
   width: 65%;
+  border: 1px silver solid;
 }
 
 #diagramContainer {
   flex-grow: 1;
+  width: 40%;
+}
+
+#feature-map-original {
+  width: 100%;
+  height: 100%;
 }
 
 #feature-map-canvas {
   width: 100%;
   height: 100%;
+  border-top: 1px silver solid;
 }

@@ -33,7 +33,7 @@ let CAM_OPTION = {
 let CURRENT_CAM = 1;
 let RESULT_LABEL;
 
-let COLOUR_MAP_VALUE = 'twilight';
+let COLOUR_MAP_VALUE = "twilight";
 
 // Select The Tab Elements
 (() => {
@@ -140,12 +140,15 @@ window.addEventListener("load", (e) => {
   });
 });
 
+// Original Image Above Feature Map
+const aboveFeatureMap = document.querySelector("#feature-map-original");
+aboveFeatureMap.height = aboveFeatureMap.width;
+
 // Feature Map Size
 let FEATUREMAP_HEIGHT;
 const featureMapArea = document.querySelector("#feature-map-canvas");
 FEATUREMAP_HEIGHT = featureMapArea.width;
 featureMapArea.height = featureMapArea.width;
-console.log(featureMapArea.width);
 
 // Drawing Function - For Drawing On The Image
 let IS_DRAWING = false;
