@@ -6,12 +6,32 @@ LINE_WIDTH = 5;
 FILL_COLOUR = "#BADA55";
 PEN_TRIGGER = false;
 
-let UPLOAD_IMAGE; // the 3d array for pic Data
+let upload_image; // the 3d array for pic Data
 let CANVAS1DATA;
 
-let NEURAL_NETWORK_VALUE = "resnet50";
+let neural_network_value = "resnet50";
 let MODELMODE = true;   // True is 2D & False is 3D
-let LEADERBOARDRESULT = []; // For Leader Board
+let LeaderBoardResult = []; // For Leader Board
+let CAM_OPTION = {
+  0: "Please Choose An Option",
+  1: "Colored Vanilla Backpropagation",
+  2: "Vanilla Backpropagation Saliency",
+  3: "Colored Guided Backpropagation",
+  4: "Guided Backpropagation Saliency",
+  5: "Guided Backpropagation Negative Saliency",
+  6: "Guided Backpropagation Positive Saliency",
+  7: "Gradient-weighted Class Activation Map",
+  8: "Gradient-weighted Class Activation Heatmap",
+  9: "Gradient-weighted Class Activation Heatmap on Image",
+  10: "Score-weighted Class Activation Map",
+  11: "Score-weighted Class Activation Heatmap",
+  12: "Score-weighted Class Activation Heatmap on Image",
+  13: "Colored Guided Gradient-weighted Class Activation Map",
+  14: "Guided Gradient-weighted Class Activation Map Saliency",
+  15: "Integrated Gradients (without image multiplication)",
+};
+let CURRENT_CAM = 1;
+let RESULT_LABEL;
 
 // Select The Tab Elements
 (() => {
@@ -175,35 +195,21 @@ overlayControls.addEventListener("mousemove", handleOpacityChange);
 // overlay-control
 
 let csvFile;
-const csvUploadInput = document.querySelector('#CSV');
-csvUploadInput.addEventListener('change', (e) => {
+const csvUploadInput = document.querySelector("#CSV");
+csvUploadInput.addEventListener("change", (e) => {
   csvFile = csvUploadInput.files[0];
-
-  // var reader = new FileReader();//新建一个FileReader
-  // reader.readAsText(csvFile, "UTF-8");//读取文件
-  // reader.onload = function (evt) { //读取完文件之后会回来这里
-  //   console.log(evt);
-  //   var fileString = evt.target.result; // 读取文件内容
-  //   csvFile = fileString;
-  // }
 });
 
 document.getElementById("submitPic").addEventListener("click", () => {
   // console.log("READY >>>>>> " + Date.now());
   if (CSV_IMG_SWITCH == false) {
-
-
     let fd = new FormData(); // 相当于是一个 Form 表单
-
-    // console.log(upload_image.length);
-    // console.log(upload_image[0].length);
-
     updateImage(); //Got the data from the canvas
 
-    fd.append("width", UPLOAD_IMAGE.length);
-    fd.append("height", UPLOAD_IMAGE[0].length);
-    fd.append("imgData", JSON.stringify(UPLOAD_IMAGE));
-    fd.append("netName", NEURAL_NETWORK_VALUE);
+    fd.append("width", upload_image.length);
+    fd.append("height", upload_image[0].length);
+    fd.append("imgData", JSON.stringify(upload_image));
+    fd.append("netName", neural_network_value);
     console.log("hello -----> current index is: " + CURRENTFILEINDEX);
     let tracking_index = CURRENTFILEINDEX;
 
@@ -213,13 +219,12 @@ document.getElementById("submitPic").addEventListener("click", () => {
       if (xhr.readyState == 4) {
         var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
         console.table(obj);
-        let resLabel = obj[0].label[0];
-        console.log(resLabel);
+        RESULT_LABEL = obj[0].label[0];
         // Update Leader Board
         updateLeaderBoard(obj);
 
         console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
-        disCAM(resLabel, tracking_index);
+        disCAM(RESULT_LABEL, tracking_index);
         // disResult(obj); // Display the current result
       }
     };
@@ -239,7 +244,6 @@ document.getElementById("submitPic").addEventListener("click", () => {
       }
     };
     xhr.send(fd);
-
   }
 });
 
@@ -250,6 +254,30 @@ class LeaderBoardObj {
     this.rank = rank;
   }
 }
+
+// CAM
+const camDropDown = document.querySelector("#cam-option");
+const camDropDownList = document.querySelector("#dropdown3");
+for (let i = 0; i < Object.keys(CAM_OPTION).length; i++) {
+  if (i == 0) continue; // The 0th Is Not An Option
+  console.log(CAM_OPTION[i]);
+  let li = document.createElement("li");
+  let href_a = document.createElement("a");
+  href_a.innerHTML = CAM_OPTION[i];
+  // TODO: Finish Callback Function Instead Of Alert
+  href_a.setAttribute("onclick", `sendCAMtoBackEnd(${i})`);
+  li.appendChild(href_a);
+  camDropDownList.appendChild(li);
+}
+
+function sendCAMtoBackEnd(i) {
+  CURRENT_CAM = i;
+  let result_label = RESULT_LABEL;
+  let tracking_index = CURRENTFILEINDEX;
+  disCAM(result_label, tracking_index);
+  console.log(i);
+}
+// CAM
 
 // Switch Image Upload - CSV
 let CSV_IMG_SWITCH = false;
@@ -271,11 +299,11 @@ csv_image_switch.addEventListener("change", (e) => {
 });
 // Switch Image Upload - CSV
 
-
 // TODO: This is to display the network visualization
-document.getElementById("disNetwork").addEventListener("click", ()=>{
+document.getElementById("disNetwork").addEventListener("click", () => {
   let fd = new FormData(); //Like a form data
-  fd.append('name', NEURAL_NETWORK_VALUE);
+
+  fd.append('name', neural_network_value);
 
   let xhr = new XMLHttpRequest();
 
