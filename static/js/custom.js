@@ -31,14 +31,14 @@ let CAM_OPTION = {
   15: "Integrated Gradients (without image multiplication)",
 };
 let COLOUR_MAP_OPTION = [
-  'viridis',
-  'magma',
-  'inferno',
-  'plasma',
-  'cividis',
-  'twilight',
-  'twilight_shifted',
-  'turbo'
+  "viridis",
+  "magma",
+  "inferno",
+  "plasma",
+  "cividis",
+  "twilight",
+  "twilight_shifted",
+  "turbo",
 ];
 let CURRENT_CAM = 1;
 let RESULT_LABEL;
@@ -216,57 +216,74 @@ overlayControls.addEventListener("change", handleOpacityChange);
 overlayControls.addEventListener("mousemove", handleOpacityChange);
 // overlay-control
 
-let csvFile;
+// CSV Section
+let csvFile; // User Uploaded CSV File
+let ABSOLUTE_PATH; // The Absolute Path To The Folder, Provided By The User
 const csvUploadInput = document.querySelector("#CSV");
 csvUploadInput.addEventListener("change", (e) => {
   csvFile = csvUploadInput.files[0];
 });
+const fileUploadButton = document.querySelector("#file-upload-button");
+fileUploadButton.addEventListener("click", () => {
+  // Store The Absolute Path To Global Variable
+  ABSOLUTE_PATH = document.querySelector("#path-to-folder").value;
+  console.log(ABSOLUTE_PATH);
+  // Error Handling First
+  if (!csvFile) {
+    console.log("no file");
+    alert("Please Upload CSV File First");
+    return;
+  }
+  if (!ABSOLUTE_PATH.length) {
+    alert("Please Enter The Absolute Path To The Dataset Folder");
+    return;
+  }
+
+  // Submit For CSV File
+  let fd = new FormData();
+  console.log(csvFile.type);
+  console.log(csvFile);
+  fd.append("csvFile", csvFile);
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/subCSV/", true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      let obj = JSON.parse(xhr.responseText);
+      console.log(obj);
+    }
+  };
+  xhr.send(fd);
+});
 
 document.getElementById("submitPic").addEventListener("click", () => {
   // console.log("READY >>>>>> " + Date.now());
-  if (CSV_IMG_SWITCH == false) {
-    let fd = new FormData(); // 相当于是一个 Form 表单
-    updateImage(); //Got the data from the canvas
+  // if (CSV_IMG_SWITCH == false) {
+  let fd = new FormData(); // 相当于是一个 Form 表单
+  updateImage(); //Got the data from the canvas
 
-    fd.append("width", upload_image.length);
-    fd.append("height", upload_image[0].length);
-    fd.append("imgData", JSON.stringify(upload_image));
-    fd.append("netName", neural_network_value);
-    console.log("hello -----> current index is: " + CURRENTFILEINDEX);
-    let tracking_index = CURRENTFILEINDEX;
+  fd.append("width", upload_image.length);
+  fd.append("height", upload_image[0].length);
+  fd.append("imgData", JSON.stringify(upload_image));
+  fd.append("netName", neural_network_value);
+  console.log("hello -----> current index is: " + CURRENTFILEINDEX);
+  let tracking_index = CURRENTFILEINDEX;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/upload_file/", true);
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
-        console.table(obj);
-        RESULT_LABEL = obj[0].label[0];
-        // Update Leader Board
-        updateLeaderBoard(obj);
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/upload_file/", true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+      console.table(obj);
+      RESULT_LABEL = obj[0].label[0];
+      // Update Leader Board
+      updateLeaderBoard(obj);
 
-        console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
-        disCAM(RESULT_LABEL, tracking_index);
-        // disResult(obj); // Display the current result
-      }
-    };
-    xhr.send(fd);
-  } else {
-    // Submit For CSV File
-    let fd = new FormData();
-    console.log(csvFile.type);
-    console.log(csvFile);
-    fd.append("csvFile", csvFile);
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/subCSV/", true);
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4) {
-        let obj = JSON.parse(xhr.responseText);
-        console.log(obj);
-      }
-    };
-    xhr.send(fd);
-  }
+      console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
+      disCAM(RESULT_LABEL, tracking_index);
+      // disResult(obj); // Display the current result
+    }
+  };
+  xhr.send(fd);
 });
 
 class LeaderBoardObj {
@@ -292,13 +309,16 @@ for (let i = 0; i < Object.keys(CAM_OPTION).length; i++) {
   camDropDownList.appendChild(li);
 }
 // Colour Map Option
-const colourMapDropDown = document.querySelector('#color-dropdown')
+const colourMapDropDown = document.querySelector("#color-dropdown");
 for (let i = 0; i < COLOUR_MAP_OPTION.length; i++) {
   let li = document.createElement("li");
   let href_a = document.createElement("a");
   href_a.innerHTML = COLOUR_MAP_OPTION[i];
   // TODO: Finish Callback Function Instead Of Alert
-  href_a.setAttribute("onclick", "userSelectedColourMapOption(\""+`${COLOUR_MAP_OPTION[i]}` + "\")");
+  href_a.setAttribute(
+    "onclick",
+    'userSelectedColourMapOption("' + `${COLOUR_MAP_OPTION[i]}` + '")'
+  );
   li.appendChild(href_a);
   colourMapDropDown.appendChild(li);
 }
@@ -314,7 +334,7 @@ function sendCAMtoBackEnd(i) {
 function userSelectedColourMapOption(option) {
   console.log(option);
   console.log(">>>>>>");
-  COLOUR_MAP_VALUE = option
+  COLOUR_MAP_VALUE = option;
 }
 // CAM
 

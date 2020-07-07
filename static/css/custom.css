@@ -100,6 +100,10 @@ body {
   margin: 10px;
 }
 
+#path-to-folder::placeholder {
+  color: rgb(136, 136, 133);
+}
+
 .work-place-wrapper {
   display: grid;
   /* width: 90%; */
@@ -111,7 +115,7 @@ body {
     "left1 left1 right1 right1"
     "left1 left1 right1 right1"
     "right3 right3 right2 right2";
-  padding: 3rem;
+  padding: 1rem 3rem;
 }
 
 /* Drawing Panel, Feature Maps, CAM */
@@ -293,7 +297,7 @@ table tbody tr td .fa-circle {
   font-weight: 500;
 }
 .control-label:hover {
-  font-size: 1.1rem;
+  font-size: 1.01rem;
   transition: all 1s ease-in-out;
   color: rgb(105, 76, 135);
 }
@@ -346,5 +350,4 @@ table tbody tr td .fa-circle {
   width: 100%;
   height: 100%;
   border-top: 1px silver solid;
-
 }
