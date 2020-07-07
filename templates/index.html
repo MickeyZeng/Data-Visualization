@@ -61,66 +61,66 @@
                       </div>
                     </div>
                   </div>
-                    <!-- Single Image Upload -->
+                  <!-- Single Image Upload -->
 
-                    <!-- Multi Image Upload -->
-                    <div class="upload-multi-image-section">
-                        <div class="file-field input-field">
-                            <div class="btn">
-                                <span>Folder</span>
-                                <input
-                                        type="file"
-                                        id="multi-upload"
-                                        webkitdirectory
-                                        directory
-                                        multiple
-                                />
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text"/>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Multi Image Upload -->
-                </div>
-                  <!-- Upload Image Section End Here -->
-
-                  <!-- CSV File Upload Section -->
-                  <div class="upload-csv-section" style="display: none;">
-                      <div class="file-field input-field">
-                          <div class="btn">
-                              <span>CSV File</span>
-                              <input type="file" id="CSV"/>
-                          </div>
-                          <div class="file-path-wrapper">
-                              <input class="file-path validate" type="text"/>
-                          </div>
+                  <!-- Multi Image Upload -->
+                  <div class="upload-multi-image-section">
+                    <div class="file-field input-field">
+                      <div class="btn">
+                        <span>Folder</span>
+                        <input
+                          type="file"
+                          id="multi-upload"
+                          webkitdirectory
+                          directory
+                          multiple
+                        />
                       </div>
+                      <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" />
+                      </div>
+                    </div>
                   </div>
-                  <!-- CSV File Upload Section -->
+                  <!-- Multi Image Upload -->
+                </div>
+                <!-- Upload Image Section End Here -->
 
-                  <!-- Drawing Pens -->
-                  <div class="drawing-pens">
-                      <a
-                              class="btn-floating btn-large cyan pulse"
-                              id="trigger-canvas"
-                      ><i class="material-icons">edit</i></a
-                      >
-                      <a class="btn-floating btn-large red" id="clean-panel-1"
-                      ><i class="material-icons">clear</i></a
-                      >
-                      <div class="drawing-pens-control">
-                          <label class="control-label">Line Width:</label>
-                          <input
-                                  id="spacing"
-                                  type="range"
-                                  name="spacing"
-                                  min="1"
-                                  max="50"
-                                  value="5"
-                                  data-sizing="px"
-                          />
-                          <label class="control-label">Fill Colour</label>
+                <!-- CSV File Upload Section -->
+                <div class="upload-csv-section" style="display: none;">
+                  <div class="file-field input-field">
+                    <div class="btn">
+                      <span>CSV File</span>
+                      <input type="file" id="CSV" />
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text" />
+                    </div>
+                  </div>
+                </div>
+                <!-- CSV File Upload Section -->
+
+                <!-- Drawing Pens -->
+                <div class="drawing-pens">
+                  <a
+                    class="btn-floating btn-large cyan pulse"
+                    id="trigger-canvas"
+                    ><i class="material-icons">edit</i></a
+                  >
+                  <a class="btn-floating btn-large red" id="clean-panel-1"
+                    ><i class="material-icons">clear</i></a
+                  >
+                  <div class="drawing-pens-control">
+                    <label class="control-label">Line Width:</label>
+                    <input
+                      id="spacing"
+                      type="range"
+                      name="spacing"
+                      min="1"
+                      max="50"
+                      value="5"
+                      data-sizing="px"
+                    />
+                    <label class="control-label">Fill Colour</label>
                     <input id="base" type="color" name="base" value="#BADA55" />
                   </div>
                   <a class="btn-floating btn-large cyan" id=""
@@ -155,42 +155,42 @@
                 >
                   <div class="overlay-control">
                     <label class="control-label">Opacity:</label>
-                      <input
-                              id="spacing"
-                              type="range"
-                              name="spacing"
-                              min="0"
-                              max="100"
-                              value="75"
-                              id="overlay-control"
-                      />
+                    <input
+                      id="spacing"
+                      type="range"
+                      name="spacing"
+                      min="0"
+                      max="100"
+                      value="75"
+                      id="overlay-control"
+                    />
                   </div>
-                    <button
-                            class="btn waves-effect waves-light"
-                            type="submit"
-                            name="action"
-                            id="submitPic"
+                  <button
+                    class="btn waves-effect waves-light"
+                    type="submit"
+                    name="action"
+                    id="submitPic"
+                  >
+                    Submit
+                    <i class="material-icons right">send</i>
+                  </button>
+                  <!-- CAM -->
+                  <div>
+                    <!-- Dropdown Trigger -->
+                    <a
+                      class="dropdown-trigger btn"
+                      id="cam-option"
+                      href="#"
+                      data-target="dropdown3"
+                      >Gradient Visualization</a
                     >
-                        Submit
-                        <i class="material-icons right">send</i>
-                    </button>
-                    <!-- CAM -->
-                    <div>
-                        <!-- Dropdown Trigger -->
-                        <a
-                                class="dropdown-trigger btn"
-                                id="cam-option"
-                                href="#"
-                                data-target="dropdown3"
-                        >Gradient Visualization</a
-                        >
 
-                        <!-- Dropdown Structure -->
-                        <ul id="dropdown3" class="dropdown-content"></ul>
-                    </div>
+                    <!-- Dropdown Structure -->
+                    <ul id="dropdown3" class="dropdown-content"></ul>
+                  </div>
 
-                    <!-- CAM -->
-                    <!-- <button
+                  <!-- CAM -->
+                  <!-- <button
                       class="btn waves-effect waves-light"
                       type="submit"
                       name="action"
@@ -199,50 +199,50 @@
                       CAM
                       <i class="material-icons right">send</i>
                     </button> -->
-                    <!-- <button
+                  <!-- <button
                       class="btn-floating btn-large waves-effect waves-light red"
                       id="heatMapButton"
                     >
                       <i class="material-icons">explore</i>
                     </button> -->
                 </div>
-                  <!-- Submit Button End Here -->
+                <!-- Submit Button End Here -->
               </div>
             </div>
-              <div class="right-section">
-                  <div class="work-place-wrapper">
-                      <!-- Work Place 1 -->
-                      <div class="work-place-1">
-                          <canvas
-                                  id="drawing-area"
-                                  style="height: 100%; width: 100%;"
-                          ></canvas>
-                      </div>
-                      <!-- Work Place 1 -->
+            <div class="right-section">
+              <div class="work-place-wrapper">
+                <!-- Work Place 1 -->
+                <div class="work-place-1">
+                  <canvas
+                    id="drawing-area"
+                    style="height: 100%; width: 100%;"
+                  ></canvas>
+                </div>
+                <!-- Work Place 1 -->
 
-                      <!-- Work Place 2 -->
-                      <div class="work-place-2">
-                          <canvas id="display-area"></canvas>
-                          <canvas id="layer2"></canvas>
-                      </div>
-                      <!-- Work Place 2 -->
+                <!-- Work Place 2 -->
+                <div class="work-place-2">
+                  <canvas id="display-area"></canvas>
+                  <canvas id="layer2"></canvas>
+                </div>
+                <!-- Work Place 2 -->
 
-                      <!-- Work Place 3 -->
-                      <div class="work-place-3">
-                          <div class="leader-board">
-                              <div class="leader-board-title">
-                              <h5>Leader Board: Current</h5>
-                              </div>
-                              <table id="leader-board-current">
-                                  <thead>
-                                  <tr>
-                                      <th>Class</th>
-                                      <th>Possibility</th>
-                                      <th>Rank</th>
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  <!-- <tr class="priority-200">
+                <!-- Work Place 3 -->
+                <div class="work-place-3">
+                  <div class="leader-board">
+                    <div class="leader-board-title">
+                      <h5>Leader Board: Current</h5>
+                    </div>
+                    <table id="leader-board-current">
+                      <thead>
+                        <tr>
+                          <th>Class</th>
+                          <th>Possibility</th>
+                          <th>Rank</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- <tr class="priority-200">
                                                   <td></td>
                                                   <td></td>
                                                   <td>
@@ -250,18 +250,18 @@
 
                                                   </td>
                                               </tr> -->
-                                  </tbody>
-                              </table>
-                          </div>
-                      </div>
-                      <!-- Work Place 3 -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Work Place 3 -->
 
-                      <!-- Work Place 4 -->
-                      <div class="work-place-4">
-                          <div class="leader-board leader-board-previous">
-                              <div class="leader-board-title">
-                                  <h5>Leader Board: Previous</h5>
-                              </div>
+                <!-- Work Place 4 -->
+                <div class="work-place-4">
+                  <div class="leader-board leader-board-previous">
+                    <div class="leader-board-title">
+                      <h5>Leader Board: Previous</h5>
+                    </div>
                     <table id="leader-board-previous">
                       <thead>
                         <tr>
@@ -270,123 +270,127 @@
                           <th>Rank</th>
                         </tr>
                       </thead>
-                        <tbody></tbody>
+                      <tbody></tbody>
                     </table>
-                          </div>
-                      </div>
-                      <!-- Work Place 4 -->
                   </div>
+                </div>
+                <!-- Work Place 4 -->
               </div>
+            </div>
           </div>
         </div>
 
-          <!-- Second Tab -->
-          <div id="function-tab-1" data-tab-content>
-              <div class="home-wraper">
-                  <div class="left-section">
-                      <!-- Feature Map Display Options -->
-                      <div class="feature-map-options" style="border: 1px black solid;">
-                          <div class="Display">
-                              <a class="btn" id="disNetwork">Display</a>
-                          </div>
-                          <div class="image-choose">
-                              <a
-                                      class="dropdown-trigger btn"
-                                      href="#"
-                                      data-target="dropdown1"
-                              >Choose feature map
-                              </a>
-                              <!-- Dropdown Structure -->
-                              <ul id="dropdown1" class="dropdown-content">
-                                  <li id="previous">
-                                      <a href="#!">Please choose an Element</a>
-                                  </li>
-                              </ul>
-                          </div>
-                          <div class="color-map">
-                              <a
-                                      class="dropdown-trigger btn"
-                                      id="colour-map"
-                                      href="#"
-                                      data-target="dropdown2"
-                              >
-                                  Colour Map</a
-                              >
-                              <!-- Dropdown Structure -->
-                              <ul id="dropdown2" class="dropdown-content">
-                                  <li id="previous" data-value="viridis">
-                                      <a href="#!">viridis</a>
-                                  </li>
-                                  <li id="previous"><a href="#!">magma</a></li>
-                                  <li id="previous"><a href="#!">inferno</a></li>
-                                  <li id="previous"><a href="#!">plasma</a></li>
-                                  <li id="previous"><a href="#!">cividis</a></li>
-                                  <li id="previous"><a href="#!">twilight</a></li>
-                                  <li id="previous"><a href="#!">twilight_shifted</a></li>
-                                  <li id="previous"><a href="#!">turbo</a></li>
-                              </ul>
-                          </div>
-                      </div>
-                      <!-- Feature Map Display Options End Here -->
-                  </div>
-                  <div class="right-section">
-                      <!-- Display visualization area -->
-                      <div id="displayContainer" style="width: 100%; height:50%"></div>
-                      <!-- Neural network visualization area End Here -->
-
-                      <!-- Display the feature map area -->
-                      <div id="diagramContainer" style="width: 100%; height: 50%"></div>
-                      <!-- Feature map area End Here -->
-                  </div>
+        <!-- Second Tab -->
+        <div id="function-tab-1" data-tab-content>
+          <div class="home-wraper">
+            <div class="left-section">
+              <!-- Feature Map Display Options -->
+              <div class="feature-map-options" style="border: 1px black solid;">
+                <div class="Display">
+                  <a class="btn" id="disNetwork">Display</a>
+                </div>
+                <div class="image-choose">
+                  <a
+                    class="dropdown-trigger btn"
+                    href="#"
+                    data-target="dropdown1"
+                    >Choose feature map
+                  </a>
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown1" class="dropdown-content">
+                    <li id="previous">
+                      <a href="#!">Please choose an Element</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="color-map">
+                  <a
+                    class="dropdown-trigger btn"
+                    id="colour-map"
+                    href="#"
+                    data-target="dropdown2"
+                  >
+                    Colour Map</a
+                  >
+                  <!-- Dropdown Structure -->
+                  <ul id="dropdown2" class="dropdown-content">
+                    <li id="previous" data-value="viridis">
+                      <a href="#!">viridis</a>
+                    </li>
+                    <li id="previous"><a href="#!">magma</a></li>
+                    <li id="previous"><a href="#!">inferno</a></li>
+                    <li id="previous"><a href="#!">plasma</a></li>
+                    <li id="previous"><a href="#!">cividis</a></li>
+                    <li id="previous"><a href="#!">twilight</a></li>
+                    <li id="previous"><a href="#!">twilight_shifted</a></li>
+                    <li id="previous"><a href="#!">turbo</a></li>
+                  </ul>
+                </div>
               </div>
-          </div>
+              <!-- Feature Map Display Options End Here -->
+            </div>
+            <div class="right-section">
+              <div class="right-section-wrapper">
+                <!-- Display visualization area -->
+                <div id="displayContainer"></div>
+                <!-- Neural network visualization area End Here -->
 
-          <!-- Third Tab -->
-          <!-- Third Tab -->
-          <div id="function-tab-2" data-tab-content>
-              <div class="home-wraper">
-                  <div class="left-section">
-                      <!-- Custom Network -->
-                      <div
-                              class="custom-network-section"
-                              style="border: 1px black solid;"
-                      >
-                          <div class="network-dropdown-selection">
-                              <div class="color-map">
-                                  <a
-                                          class="dropdown-trigger btn"
-                                          id="colour-map"
-                                          href=" "
-                                          data-target="dropdown2"
-                                  >
-                                      NetWork
-                                  </a>
-                                  <!-- Dropdown Structure -->
-                                  <ul id="dropdown2" class="dropdown-content">
-                                      <li id="previous" data-value="viridis">
-                                          <a href="#!">viridis</a>
-                                      </li>
-                                      <li id="previous"><a href="#!">magma</a></li>
-                                      <li id="previous"><a href="#!">inferno</a></li>
-                                      <li id="previous"><a href="#!">plasma</a></li>
-                                      <li id="previous"><a href="#!">cividis</a></li>
-                                      <li id="previous"><a href="#!">twilight</a></li>
-                                      <li id="previous"><a href="#!">twilight_shifted</a></li>
-                                      <li id="previous"><a href="#!">turbo</a></li>
-                                  </ul>
-                              </div>
-                          </div>
-                          <div class="upload-custom-weight">
-                              <div class="wrapper-upload">
-                                  <input type="file"/>
-                              </div>
-                          </div>
-                      </div>
-                      <!-- Custom Network End Here -->
-                  </div>
-                  <div class="right-section"></div>
+                <!-- Display the feature map area -->
+                <div id="diagramContainer">
+                  <canvas id="feature-map-canvas"></canvas>
+                </div>
+                <!-- Feature map area End Here -->
               </div>
+            </div>
           </div>
+        </div>
+
+        <!-- Third Tab -->
+        <!-- Third Tab -->
+        <div id="function-tab-2" data-tab-content>
+          <div class="home-wraper">
+            <div class="left-section">
+              <!-- Custom Network -->
+              <div
+                class="custom-network-section"
+                style="border: 1px black solid;"
+              >
+                <div class="network-dropdown-selection">
+                  <div class="color-map">
+                    <a
+                      class="dropdown-trigger btn"
+                      id="colour-map"
+                      href=" "
+                      data-target="dropdown2"
+                    >
+                      NetWork
+                    </a>
+                    <!-- Dropdown Structure -->
+                    <ul id="dropdown2" class="dropdown-content">
+                      <li id="previous" data-value="viridis">
+                        <a href="#!">viridis</a>
+                      </li>
+                      <li id="previous"><a href="#!">magma</a></li>
+                      <li id="previous"><a href="#!">inferno</a></li>
+                      <li id="previous"><a href="#!">plasma</a></li>
+                      <li id="previous"><a href="#!">cividis</a></li>
+                      <li id="previous"><a href="#!">twilight</a></li>
+                      <li id="previous"><a href="#!">twilight_shifted</a></li>
+                      <li id="previous"><a href="#!">turbo</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="upload-custom-weight">
+                  <div class="wrapper-upload">
+                    <input type="file" />
+                  </div>
+                </div>
+              </div>
+              <!-- Custom Network End Here -->
+            </div>
+            <div class="right-section"></div>
+          </div>
+        </div>
       </div>
     </main>
 
@@ -394,21 +398,39 @@
     <footer></footer>
 
     <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src=" {% static 'js/materialize.min.js' %}"></script>
+    <script
+      type="text/javascript"
+      src=" {% static 'js/materialize.min.js' %}"
+    ></script>
 
     <!-- jquery -->
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script
+      type="text/javascript"
+      src="{% static 'js/jquery.min.js' %}"
+    ></script>
 
     <!-- Import two js for displaying 2D -->
-    <script type="text/javascript" src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"
+    ></script>
 
     <!-- Import TesorSpace for displaying 3D -->
-{#    <script src="{% static 'js/three.min.js' %}"></script>#}
-{#    <script src="{% static 'js/tf.min.js' %}"></script>#}
-{#    <script src="{% static 'js/tween.min.js' %}"></script>#}
-{#    <script src="{% static 'js/TrackballControls.js' %}"></script>#}
-{#    <script src="{% static 'js/tensorspace.min.js' %}"></script>#}
+    <!-- {#
+    <script src="{% static 'js/three.min.js' %}"></script>
+    #} {#
+    <script src="{% static 'js/tf.min.js' %}"></script>
+    #} {#
+    <script src="{% static 'js/tween.min.js' %}"></script>
+    #} {#
+    <script src="{% static 'js/TrackballControls.js' %}"></script>
+    #} {#
+    <script src="{% static 'js/tensorspace.min.js' %}"></script>
+    #} -->
 
     <!-- Helper Library -->
     <script src="{% static 'js/helper.js' %}"></script>
@@ -416,13 +438,13 @@
     <script src="{% static 'js/custom.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            var elems = document.querySelectorAll(".dropdown-trigger");
-            var options = {
-                click: true,
-            };
-            var instances = M.Dropdown.init(elems, options);
-        });
+      document.addEventListener("DOMContentLoaded", () => {
+        var elems = document.querySelectorAll(".dropdown-trigger");
+        var options = {
+          click: true,
+        };
+        var instances = M.Dropdown.init(elems, options);
+      });
     </script>
   </body>
 </html>
