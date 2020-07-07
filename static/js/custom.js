@@ -30,10 +30,20 @@ let CAM_OPTION = {
   14: "Guided Gradient-weighted Class Activation Map Saliency",
   15: "Integrated Gradients (without image multiplication)",
 };
+let COLOUR_MAP_OPTION = [
+  'viridis',
+  'magma',
+  'inferno',
+  'plasma',
+  'cividis',
+  'twilight',
+  'twilight_shifted',
+  'turbo'
+];
 let CURRENT_CAM = 1;
 let RESULT_LABEL;
 
-let COLOUR_MAP_VALUE = "twilight";
+let COLOUR_MAP_VALUE = "viridis";
 
 // Select The Tab Elements
 (() => {
@@ -281,6 +291,17 @@ for (let i = 0; i < Object.keys(CAM_OPTION).length; i++) {
   li.appendChild(href_a);
   camDropDownList.appendChild(li);
 }
+// Colour Map Option
+const colourMapDropDown = document.querySelector('#color-dropdown')
+for (let i = 0; i < COLOUR_MAP_OPTION.length; i++) {
+  let li = document.createElement("li");
+  let href_a = document.createElement("a");
+  href_a.innerHTML = COLOUR_MAP_OPTION[i];
+  // TODO: Finish Callback Function Instead Of Alert
+  href_a.setAttribute("onclick", "userSelectedColourMapOption(\""+`${COLOUR_MAP_OPTION[i]}` + "\")");
+  li.appendChild(href_a);
+  colourMapDropDown.appendChild(li);
+}
 
 function sendCAMtoBackEnd(i) {
   CURRENT_CAM = i;
@@ -288,6 +309,12 @@ function sendCAMtoBackEnd(i) {
   let tracking_index = CURRENTFILEINDEX;
   disCAM(result_label, tracking_index);
   console.log(i);
+}
+
+function userSelectedColourMapOption(option) {
+  console.log(option);
+  console.log(">>>>>>");
+  COLOUR_MAP_VALUE = option
 }
 // CAM
 
