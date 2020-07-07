@@ -174,8 +174,8 @@ overlayControls.addEventListener("mousemove", handleOpacityChange);
 // overlay-control
 
 let csvFile;
-const csvUploadInput = document.querySelector('#CSV');
-csvUploadInput.addEventListener('change', (e) => {
+const csvUploadInput = document.querySelector("#CSV");
+csvUploadInput.addEventListener("change", (e) => {
   csvFile = csvUploadInput.files[0];
 
   // var reader = new FileReader();//新建一个FileReader
@@ -190,8 +190,6 @@ csvUploadInput.addEventListener('change', (e) => {
 document.getElementById("submitPic").addEventListener("click", () => {
   // console.log("READY >>>>>> " + Date.now());
   if (CSV_IMG_SWITCH == false) {
-
-
     let fd = new FormData(); // 相当于是一个 Form 表单
 
     // console.log(upload_image.length);
@@ -238,7 +236,6 @@ document.getElementById("submitPic").addEventListener("click", () => {
       }
     };
     xhr.send(fd);
-
   }
 });
 
@@ -249,6 +246,10 @@ class LeaderBoardObj {
     this.rank = rank;
   }
 }
+
+// CAM
+
+// CAM
 
 // Switch Image Upload - CSV
 let CSV_IMG_SWITCH = false;
