@@ -139,7 +139,7 @@ body {
 
 /* Work-Space-3 And Work-Space-4 Are For Display Possibility Result */
 .work-place-wrapper .work-place-3 {
-  width: 99%;
+  /* width: 99%; */
   grid-area: right2;
   background-color: #273349;
   min-height: 35vh;
@@ -253,7 +253,7 @@ table tbody tr td .fa-circle {
 
 .work-place-wrapper .work-place-4 {
   background-color: #1c223b;
-  width: 99%;
+  /* width: 99%; */
   min-height: 35vh;
   grid-area: right3;
   /* background-color: yellow; */
