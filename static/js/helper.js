@@ -151,6 +151,7 @@ function updateImage() {
 
 //TODO: Get the heatmap
 function disCAM(resLabel, tracking_index) {
+  console.log(resLabel, tracking_index);
   let fd = new FormData(); //Like a form data
   let xhr = new XMLHttpRequest();
   fd.append("label", resLabel);
@@ -234,15 +235,15 @@ function updateTheLeaderBoard(table_id) {
 
   for (let index = 0; index < 5; index++) {
     let newRow = leaderBoardCurrent.insertRow(index);
-    newRow.innerHTML = `<td>${LeaderBoardResult[index].label}</td> 
+    newRow.innerHTML = `<td><a onclick="disCAM('${LeaderBoardResult[index].label}', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}</a></td> 
     <td>${LeaderBoardResult[index].rate}</td>
     <td>${
-      table_id == "leader-board-previous" ? "#" : LeaderBoardResult[index].rank
-      //  == "+"
-      // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
-      // : LeaderBoardResult[index].rank[0] == "-"
-      // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
-      // : LeaderBoardResult[index].rank
+        table_id == "leader-board-previous" ? "#" : LeaderBoardResult[index].rank
+        //  == "+"
+        // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
+        // : LeaderBoardResult[index].rank[0] == "-"
+        // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
+        // : LeaderBoardResult[index].rank
     }</td> 
     `;
   }
