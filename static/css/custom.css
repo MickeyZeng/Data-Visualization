@@ -271,6 +271,11 @@ table tbody tr td .fa-circle {
   transform: scale(0.5);
 }
 
+/* Leader Board Pointing Cursor */
+#leader-board-current tbody tr {
+  cursor: pointer;
+}
+
 .work-place-wrapper .work-place-4 {
   background-color: #1c223b;
   /* width: 99%; */
