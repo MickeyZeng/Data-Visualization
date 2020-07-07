@@ -715,3 +715,31 @@ function getJsonLength(jsonData) {
   }
   return length;
 }
+
+function displayNet() {
+  // TODO: Display the Structure of resNet
+  var fd = new FormData(); //Like a form data
+  // fd.append('name', 'resnet50');
+  fd.append('name', neural_network_value);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/display/', true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+      // console.log(obj);
+      // displayThreeD(obj); //暂时不需要渲染3D的区域
+      if (false) {
+        //暂时先用update的版本
+        // displayJson(obj); // 做成2D的区域
+      } else if (modelMode) {
+        // modelMode = false;
+        updateDisplay(obj);
+      } else {
+        modelMode = true;
+        displayThreeD(obj);
+      }
+    }
+  };
+  xhr.send(fd);      // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
+}

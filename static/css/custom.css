@@ -317,7 +317,8 @@ table tbody tr td .fa-circle {
 
 #diagramContainer {
   flex-grow: 1;
-  width: 40%;
+  width: 30%;
+  padding: 20px;
 }
 
 #feature-map-original {
@@ -329,4 +330,5 @@ table tbody tr td .fa-circle {
   width: 100%;
   height: 100%;
   border-top: 1px silver solid;
+
 }

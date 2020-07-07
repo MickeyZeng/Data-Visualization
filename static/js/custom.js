@@ -10,7 +10,7 @@ let upload_image; // the 3d array for pic Data
 let CANVAS1DATA;
 
 let neural_network_value = "resnet50";
-let MODELMODE = true; // True is 2D & False is 3D
+let modelMode = true; // True is 2D & False is 3D
 let LeaderBoardResult = []; // For Leader Board
 let CAM_OPTION = {
   0: "Please Choose An Option",
@@ -328,11 +328,11 @@ document.getElementById("disNetwork").addEventListener("click", () => {
       if (false) {
         //暂时先用update的版本
         // displayJson(obj); // 做成2D的区域
-      } else if (MODELMODE) {
+      } else if (modelMode) {
         // modelMode = false;
         updateDisplay(obj);
       } else {
-        MODELMODE = true;
+        modelMode = true;
         displayThreeD(obj);
       }
     }
