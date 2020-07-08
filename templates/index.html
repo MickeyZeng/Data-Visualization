@@ -142,102 +142,107 @@
                     <input id="base" type="color" name="base" value="#BADA55" />
                   </div>
                   <a class="btn-floating btn-large cyan" id=""
-                    ><i class="material-icons">edit</i></a
+                  ><i class="material-icons">edit</i></a
                   >
                 </div>
-                <!-- Drawing Pens End Here -->
+                  <!-- Drawing Pens End Here -->
 
-                <!-- Prev/ Next Image -->
-                <div class="previous-next-selection">
-                  <a
-                    class="btn-floating btn-large waves-effect waves-light red"
-                    id="back-image"
-                    ><i class="material-icons">arrow_back</i></a
-                  >
-                  <a
-                    class="btn-floating btn-large waves-effect waves-light red"
-                    id="next-image"
-                    ><i class="material-icons">arrow_forward</i></a
-                  >
-                </div>
-
-                <!-- Prev/ Next Image End Here-->
-
-                <!-- Submit Button -->
-                <div class="submit-image-button">
-                  <div class="overlay-control">
-                    <label class="control-label">Opacity:</label>
-                    <input
-                      id="spacing"
-                      type="range"
-                      name="spacing"
-                      min="0"
-                      max="100"
-                      value="75"
-                      id="overlay-control"
-                    />
+                  <!-- Prev/ Next Image -->
+                  <div class="previous-next-selection">
+                      <a
+                              class="btn-floating btn-large waves-effect waves-light red"
+                              id="back-image"
+                      ><i class="material-icons">arrow_back</i></a
+                      >
+                      <a
+                              class="btn-floating btn-large waves-effect waves-light red"
+                              id="next-image"
+                      ><i class="material-icons">arrow_forward</i></a
+                      >
                   </div>
-                  <button
-                    class="btn waves-effect waves-light"
-                    type="submit"
-                    name="action"
-                    id="submitPic"
-                  >
-                    Submit
-                    <i class="material-icons right">send</i>
-                  </button>
-                  <!-- CAM -->
-                  <div class="cam-dropdown">
-                    <!-- Dropdown Trigger -->
-                    <a
-                      class="dropdown-trigger btn-large"
-                      id="cam-option"
-                      href="#"
-                      data-target="dropdown3"
-                      >Gradient Visualization</a
-                    >
+                  <!-- Prev/ Next Image End Here-->
 
-                    <!-- Dropdown Structure -->
-                    <ul id="dropdown3" class="dropdown-content"></ul>
+                  <!-- Submit Button & CAM Options & Different neural network options-->
+                  <!-- Submit button -->
+                  <div class="submit-image-button">
+                      <div class="overlay-control">
+                          <label class="control-label">Opacity:</label>
+                          <input
+                                  id="spacing"
+                                  type="range"
+                                  name="spacing"
+                                  min="0"
+                                  max="100"
+                                  value="75"
+                                  id="overlay-control"
+                          />
+                      </div>
+                      <button
+                              class="btn waves-effect waves-light"
+                              type="submit"
+                              name="action"
+                              id="submitPic"
+                      >
+                          Submit
+                          <i class="material-icons right">send</i>
+                      </button>
+                      <!-- Submit Button End here -->
+                      <!-- CAM -->
+                      <div class="cam-dropdown">
+                          <!-- Dropdown Trigger -->
+                          <a
+                                  class="dropdown-trigger btn-large"
+                                  id="cam-option"
+                                  href="#"
+                                  data-target="dropdown3"
+                          >Gradient Visualization</a
+                          >
+
+                          <!-- Dropdown Structure -->
+                          <ul id="dropdown3" class="dropdown-content"></ul>
+                      </div>
+                      <!-- Different neural network Options -->
+
+                      <!-- Different neural network Options -->
+
+                      <!-- CAM -->
+                      <!-- <button
+                          class="btn waves-effect waves-light"
+                          type="submit"
+                          name="action"
+                          id="disCAM"
+                        >
+                          CAM
+                          <i class="material-icons right">send</i>
+                        </button> -->
+                      <!-- <button
+                          class="btn-floating btn-large waves-effect waves-light red"
+                          id="heatMapButton"
+                        >
+                          <i class="material-icons">explore</i>
+                        </button> -->
                   </div>
 
-                  <!-- CAM -->
-                  <!-- <button
-                      class="btn waves-effect waves-light"
-                      type="submit"
-                      name="action"
-                      id="disCAM"
-                    >
-                      CAM
-                      <i class="material-icons right">send</i>
-                    </button> -->
-                  <!-- <button
-                      class="btn-floating btn-large waves-effect waves-light red"
-                      id="heatMapButton"
-                    >
-                      <i class="material-icons">explore</i>
-                    </button> -->
-                </div>
-                <!-- Submit Button End Here -->
+                  <!-- Submit Button & CAM Options & Different neural network options End Here -->
               </div>
             </div>
-            <div class="right-section">
-              <div class="work-place-wrapper">
-                <!-- Work Place 1 -->
-                <div class="work-place-1">
-                  <canvas
-                    id="drawing-area"
-                    style="height: 100%; width: 100%;"
-                  ></canvas>
-                </div>
-                <!-- Work Place 1 -->
+              <div class="right-section">
+                  <div class="work-place-wrapper">
+                      <!-- Work Place 1 -->
+                      <div class="work-place-1">
+                          <canvas
+                                  id="drawing-area"
+                                  style="height: 100%; width: 100%;"
+                          ></canvas>
+                      </div>
+                      <!-- Work Place 1 -->
 
-                <!-- Work Place 2 -->
-                <div class="work-place-2">
-                  <canvas id="display-area"></canvas>
-                  <canvas id="layer2"></canvas>
-                </div>
-                <!-- Work Place 2 -->
+                      <!-- Work Place 2 -->
+                      <div class="work-place-2">
+                          <canvas id="display-area"></canvas>
+                          <canvas id="layer2"></canvas>
+                      </div>
+                      <!-- Work Place 2 -->
 
                 <!-- Work Place 3 -->
                 <div class="work-place-3">
