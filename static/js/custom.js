@@ -9,9 +9,10 @@ PEN_TRIGGER = false;
 let upload_image; // the 3d array for pic Data
 let CANVAS1DATA;
 
-let neural_network_value = "resnet50";
 let modelMode = true; // True is 2D & False is 3D
 let LeaderBoardResult = []; // For Leader Board
+
+//Different CAM picture options
 let CAM_OPTION = {
   0: "Please Choose An Option",
   1: "Colored Vanilla Backpropagation",
@@ -30,6 +31,9 @@ let CAM_OPTION = {
   14: "Guided Gradient-weighted Class Activation Map Saliency",
   15: "Integrated Gradients (without image multiplication)",
 };
+
+//Different colour map options
+let COLOUR_MAP_VALUE = "viridis";
 let COLOUR_MAP_OPTION = [
   "viridis",
   "magma",
@@ -40,10 +44,19 @@ let COLOUR_MAP_OPTION = [
   "twilight_shifted",
   "turbo",
 ];
+
+// To choose different neural network
+let neural_network_value = "resnet50";
+let NEURAL_NETWORK_OPTION = [
+    "resnet50",
+    "resnet18",
+    "resnet34",
+    "resnet101",
+    "resnet152",
+];
+
 let CURRENT_CAM = 1;
 let RESULT_LABEL;
-
-let COLOUR_MAP_VALUE = "viridis";
 
 // Select The Tab Elements
 (() => {
