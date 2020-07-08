@@ -262,11 +262,11 @@ fileUploadButton.addEventListener("click", () => {
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
       let obj = JSON.parse(xhr.responseText);
-      console.log(obj);
-      let testingImg = "file://" + ABSOLUTE_PATH + "/" + obj[1][0];
-      console.log(testingImg);
+      // console.log(obj);
+      // let testingImg = "file://" + ABSOLUTE_PATH + "/" + obj[1][0];
+      // console.log(testingImg);
       // const testing_img_tag = document.querySelector('#testing-image')
-      document.querySelector("#testing-img").src = testingImg;
+      // document.querySelector("#testing-img").src = testingImg;
     }
   };
   xhr.send(fd);
