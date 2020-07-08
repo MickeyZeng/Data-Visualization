@@ -48,11 +48,11 @@ let COLOUR_MAP_OPTION = [
 // To choose different neural network
 let neural_network_value = "resnet50";
 let NEURAL_NETWORK_OPTION = [
-    "resnet50",
-    "resnet18",
-    "resnet34",
-    "resnet101",
-    "resnet152",
+  "resnet50",
+  "resnet18",
+  "resnet34",
+  "resnet101",
+  "resnet152",
 ];
 
 let CURRENT_CAM = 1;
@@ -263,6 +263,10 @@ fileUploadButton.addEventListener("click", () => {
     if (xhr.readyState == 4) {
       let obj = JSON.parse(xhr.responseText);
       console.log(obj);
+      let testingImg = "file://" + ABSOLUTE_PATH + "/" + obj[1][0];
+      console.log(testingImg);
+      // const testing_img_tag = document.querySelector('#testing-image')
+      document.querySelector("#testing-img").src = testingImg;
     }
   };
   xhr.send(fd);

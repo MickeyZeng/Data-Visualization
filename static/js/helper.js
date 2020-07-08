@@ -63,6 +63,7 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
       }
     };
     image.src = event.target.result;
+    console.log(image.src);
   };
   // display
   reader.readAsDataURL(currentFile);
