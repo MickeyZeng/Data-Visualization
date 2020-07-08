@@ -220,8 +220,8 @@ featureMapArea.height = featureMapArea.width;
 // Drawing Panel - On The Left
 const drawingPanel1 = new DrawingObject("drawing-area");
 drawingPanel1.init();
-// Scribble Panel - On The Right - #layer2
-const drawingPanel2 = new DrawingObject("layer2");
+// Scribble Panel - On The Right - #layer3
+const drawingPanel2 = new DrawingObject("layer3");
 drawingPanel2.init();
 
 // Drwing pen config

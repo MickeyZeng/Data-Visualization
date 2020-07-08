@@ -165,6 +165,18 @@ body {
   opacity: 0.75;
 }
 
+#layer3 {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  /*background-color: red;*/
+  /* When We Received Data, We Change The Opacity To Achieve The Overlay Effect */
+  opacity: 0.75;
+}
+
 /* Work-Space-3 And Work-Space-4 Are For Display Possibility Result */
 .work-place-wrapper .work-place-3 {
   /* width: 99%; */

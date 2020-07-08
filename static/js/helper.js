@@ -8,6 +8,14 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
   const canvasDisplay = document.querySelector("#display-area");
   const ctxDisplay = canvasDisplay.getContext("2d");
 
+  // Layer 2
+  const layer2 = document.querySelector("#layer2");
+  const layer2CTX = layer2.getContext("2d");
+  layer2CTX.clearRect(0, 0, layer2.width, layer2.height);
+  // Empty Global Var
+  LeaderBoardResult = [];
+  clearBothLeaderBoard();
+
   // Second Tab
   const featureMapOriginal = document.querySelector("#feature-map-original");
   const featureMapOriginalCTX = featureMapOriginal.getContext("2d");
@@ -71,7 +79,7 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
       }
     };
     image.src = event.target.result;
-    console.log(image.src);
+    // console.log(image.src);
   };
   // display
   reader.readAsDataURL(currentFile);
@@ -114,7 +122,8 @@ function handleUpdate(e) {
 
 function handleOpacityChange(e) {
   let opacityValue = e.target.value / 100;
-  drawingPanel2.drawing_panel.style.opacity = opacityValue;
+  const layer2 = document.querySelector("#layer2");
+  layer2.style.opacity = opacityValue;
 }
 
 // Clean Drawing Panel-1 And Redraw
