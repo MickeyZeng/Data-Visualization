@@ -1,10 +1,6 @@
 // Global Variables
 MULTIFILES = [];
 CURRENTFILEINDEX = 0; // current file load on the canvas
-// For PEN Width And Fill Colour
-LINE_WIDTH = 5;
-FILL_COLOUR = "#BADA55";
-PEN_TRIGGER = false;
 
 let upload_image; // the 3d array for pic Data
 let CANVAS1DATA;
@@ -55,8 +51,56 @@ let NEURAL_NETWORK_OPTION = [
   "resnet152",
 ];
 
-let CURRENT_CAM = 1;
+let CURRENT_CAM = 1; // CAM Starts From 1 To 15
 let RESULT_LABEL;
+
+// Drawing Function - For Drawing On The Image
+class DrawingObject {
+  constructor(panelID, pen_trigger = false) {
+    this.drawing_panel = document.querySelector(`#${panelID}`);
+    this.drawing_panel_ctx = this.drawing_panel.getContext("2d");
+    this.drawing_panel.width = drawingPanelWidth;
+    this.drawing_panel.height = drawingPanelWidth;
+    (this.is_drawing = false), (this.LastX = 0), (this.LastY = 0);
+    this.drawing_panel_ctx.strokeStyle = "#BADA55";
+    this.drawing_panel_ctx.lineJoin = "round";
+    this.drawing_panel_ctx.lineCap = "round";
+    this.drawing_panel_ctx.lineWidth = 5;
+    this.pen_trigger = pen_trigger;
+  }
+  init = () => {
+    this.drawing_panel.addEventListener("mousedown", (e) => {
+      this.is_drawing = true;
+      [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
+      // TODO: Remove This Console.log After Label Function
+      console.log(this.LastX, this.LastY);
+    });
+    this.drawing_panel.addEventListener("mousemove", this.drawing);
+    this.drawing_panel.addEventListener(
+      "mouseup",
+      () => (this.is_drawing = false)
+    );
+    this.drawing_panel.addEventListener(
+      "mouseout",
+      () => (this.is_drawing = false)
+    );
+  };
+  drawing = (e) => {
+    if (!this.is_drawing || !this.pen_trigger) return; // Stop Drawing, Stop Function
+
+    this.drawing_panel_ctx.beginPath();
+
+    // Start From
+    this.drawing_panel_ctx.moveTo(this.LastX, this.LastY);
+
+    // Go To
+    this.drawing_panel_ctx.lineTo(e.offsetX, e.offsetY);
+    this.drawing_panel_ctx.stroke();
+
+    // Update LastX, LastY Position
+    [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
+  };
+}
 
 // Select The Tab Elements
 (() => {
@@ -173,31 +217,12 @@ const featureMapArea = document.querySelector("#feature-map-canvas");
 FEATUREMAP_HEIGHT = featureMapArea.width;
 featureMapArea.height = featureMapArea.width;
 
-// Drawing Function - For Drawing On The Image
-let IS_DRAWING = false;
-let LastX = 0;
-let LastY = 0;
-
-const Drawing_Panel = document.querySelector("#drawing-area");
-const Drawing_panel_CTX = Drawing_Panel.getContext("2d");
-Drawing_Panel.width = drawingPanelWidth;
-Drawing_Panel.height = drawingPanelWidth;
-Drawing_panel_CTX.strokeStyle = FILL_COLOUR;
-Drawing_panel_CTX.lineJoin = "round";
-Drawing_panel_CTX.lineCap = "round";
-Drawing_panel_CTX.lineWidth = LINE_WIDTH;
-
-Drawing_Panel.addEventListener("mousedown", (e) => {
-  IS_DRAWING = true;
-  [LastX, LastY] = [e.offsetX, e.offsetY];
-  // TODO: Remove This Console.log After Label Function
-  console.log(LastX, LastY);
-});
-
-Drawing_Panel.addEventListener("mousemove", drawing);
-Drawing_Panel.addEventListener("mouseup", () => (IS_DRAWING = false));
-Drawing_Panel.addEventListener("mouseout", () => (IS_DRAWING = false));
-// Drawing Finished
+// Drawing Panel - On The Left
+const drawingPanel1 = new DrawingObject("drawing-area");
+drawingPanel1.init();
+// Scribble Panel - On The Right - #layer2
+const drawingPanel2 = new DrawingObject("layer2");
+drawingPanel2.init();
 
 // Drwing pen config
 const penControls = document.querySelectorAll(".drawing-pens-control input");
@@ -210,12 +235,22 @@ penControls.forEach((control) =>
 const drawingPenTrigger = document.querySelector("#trigger-canvas");
 drawingPenTrigger.addEventListener("click", () => {
   // TODO: Maybe Change Cursor To A Pen
-  if (PEN_TRIGGER) {
+  if (drawingPanel1.pen_trigger) {
     alert("Now you cannot draw");
   } else {
     alert("Now you cann draw");
   }
-  PEN_TRIGGER = !PEN_TRIGGER;
+  drawingPanel1.pen_trigger = !drawingPanel1.pen_trigger;
+});
+// Scribble Trigger
+const scribbleTrigger = document.querySelector("#sribble-trigger");
+scribbleTrigger.addEventListener("click", () => {
+  if (drawingPanel2.pen_trigger) {
+    alert("Now you cannot scribble");
+  } else {
+    alert("Now you can scribble");
+  }
+  drawingPanel2.pen_trigger = !drawingPanel2.pen_trigger;
 });
 
 // Clean Drawing

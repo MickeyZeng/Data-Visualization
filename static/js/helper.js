@@ -12,6 +12,14 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
   const featureMapOriginal = document.querySelector("#feature-map-original");
   const featureMapOriginalCTX = featureMapOriginal.getContext("2d");
 
+  // Clean Up Scribble When Comes A New Image
+  drawingPanel2.drawing_panel_ctx.clearRect(
+    0,
+    0,
+    drawingPanel2.drawing_panel.width,
+    drawingPanel2.drawing_panel.height
+  );
+
   if (empty) {
     // Empty Global Var
     LeaderBoardResult = [];
@@ -98,17 +106,15 @@ function drawing(e) {
 // Update The Pen
 function handleUpdate(e) {
   if (e.target.value.length < 3) {
-    LINE_WIDTH = e.target.value;
-    Drawing_panel_CTX.lineWidth = LINE_WIDTH;
+    drawingPanel1.drawing_panel_ctx.lineWidth = e.target.value;
   } else {
-    FILL_COLOUR = e.target.value;
-    Drawing_panel_CTX.strokeStyle = FILL_COLOUR;
+    drawingPanel1.drawing_panel_ctx.strokeStyle = e.target.value;
   }
 }
 
 function handleOpacityChange(e) {
   let opacityValue = e.target.value / 100;
-  layerPanel.style.opacity = opacityValue;
+  drawingPanel2.drawing_panel.style.opacity = opacityValue;
 }
 
 // Clean Drawing Panel-1 And Redraw
@@ -118,7 +124,7 @@ function cleanAllandReDraw() {
 
 //TODO: Update the upload_image data in 3D array
 function updateImage() {
-  let canvasPic = Drawing_Panel;
+  let canvasPic = drawingPanel1.drawing_panel;
   let c = canvasPic.getContext("2d");
   let canvasWidth = Math.trunc(canvasPic.width);
   let canvasHeight = Math.trunc(canvasPic.height);
