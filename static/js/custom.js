@@ -258,6 +258,7 @@ fileUploadButton.addEventListener("click", () => {
 document.getElementById("submitPic").addEventListener("click", () => {
   // console.log("READY >>>>>> " + Date.now());
   // if (CSV_IMG_SWITCH == false) {
+  snackBarDisplay("Fetching Results, Please Wait");
   let fd = new FormData(); // 相当于是一个 Form 表单
   updateImage(); //Got the data from the canvas
 
@@ -327,7 +328,11 @@ function sendCAMtoBackEnd(i) {
   CURRENT_CAM = i;
   let result_label = RESULT_LABEL;
   let tracking_index = CURRENTFILEINDEX;
-  disCAM(result_label, tracking_index);
+  const msg = "Fetching Option: " + CAM_OPTION[i];
+  snackBarDisplay(msg);
+  setTimeout(() => {
+    disCAM(result_label, tracking_index);
+  }, 1000);
   console.log(i);
 }
 
@@ -335,8 +340,21 @@ function userSelectedColourMapOption(option) {
   console.log(option);
   console.log(">>>>>>");
   COLOUR_MAP_VALUE = option;
+  const msg = "You have selected Colour map: " + COLOUR_MAP_VALUE;
+  snackBarDisplay(msg);
 }
 // CAM
+
+// Snack Bar Display Msg
+function snackBarDisplay(msg, duration = 3000) {
+  // Default display duration is 3s
+  const x = document.getElementById("snackbar");
+  x.className = "show";
+  x.innerHTML = msg;
+  setTimeout(function () {
+    x.className = x.className.replace("show", "");
+  }, duration);
+}
 
 // Switch Image Upload - CSV
 let CSV_IMG_SWITCH = false;

@@ -149,6 +149,14 @@ function updateImage() {
   // console.log("WIDTH" + canvasWidth + "***** HEIGHT" + canvasHeight);
 }
 
+// CAM display MiddleWare for each result
+function disCAM_MiddleWare(label, current_index) {
+  snackBarDisplay("Fetching result for " + label);
+  setTimeout(() => {
+    disCAM(label, current_index);
+  }, 1000);
+}
+
 //TODO: Get the heatmap
 function disCAM(resLabel, tracking_index) {
   console.log(resLabel, tracking_index);
@@ -174,6 +182,9 @@ function disCAM(resLabel, tracking_index) {
 
         // Update Layer 2
         drawImage("layer2", obj[0]);
+        setTimeout(() => {
+          snackBarDisplay("Fetched Result", 3000);
+        }, 1000);
       } else {
         console.log("No Drawing, Because Tracking Index is different now");
       }
@@ -235,15 +246,17 @@ function updateTheLeaderBoard(table_id) {
 
   for (let index = 0; index < 5; index++) {
     let newRow = leaderBoardCurrent.insertRow(index);
-    newRow.innerHTML = `<td><a onclick="disCAM('${LeaderBoardResult[index].label}', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}</a></td> 
+    newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${
+      LeaderBoardResult[index].label
+    }', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}</a></td> 
     <td>${LeaderBoardResult[index].rate}</td>
     <td>${
-        table_id == "leader-board-previous" ? "#" : LeaderBoardResult[index].rank
-        //  == "+"
-        // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
-        // : LeaderBoardResult[index].rank[0] == "-"
-        // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
-        // : LeaderBoardResult[index].rank
+      table_id == "leader-board-previous" ? "#" : LeaderBoardResult[index].rank
+      //  == "+"
+      // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
+      // : LeaderBoardResult[index].rank[0] == "-"
+      // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
+      // : LeaderBoardResult[index].rank
     }</td> 
     `;
   }
@@ -721,10 +734,10 @@ function displayNet() {
   // TODO: Display the Structure of resNet
   var fd = new FormData(); //Like a form data
   // fd.append('name', 'resnet50');
-  fd.append('name', neural_network_value);
+  fd.append("name", neural_network_value);
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/display/', true);
+  xhr.open("POST", "/display/", true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
       var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
@@ -742,5 +755,5 @@ function displayNet() {
       }
     }
   };
-  xhr.send(fd);      // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
+  xhr.send(fd); // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
 }

@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MJ Board</title>
+    <!-- Our Icon -->
+    <!-- Give Credit Later In Readme -->
+    <link rel="shortcut icon" href="../static/css/image/icon.png" />
     <!-- Compiled and minified CSS -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -24,9 +27,13 @@
     <!-- Header Area -->
     <header>
       <ul class="tabs">
+        <!-- Our Logo -->
+        <!-- <li style="position: absolute; top: 10px; left: 10px;">
+          <div class="our-logo"></div>
+        </li> -->
         <li data-tab-target="#home" class="active tab">Home</li>
-        <li data-tab-target="#function-tab-1" class="tab">Function 1</li>
-        <li data-tab-target="#function-tab-2" class="tab">Function - 2</li>
+        <li data-tab-target="#function-tab-1" class="tab">Network Arch</li>
+        <li data-tab-target="#function-tab-2" class="tab">Customize Network</li>
       </ul>
     </header>
 
@@ -290,7 +297,7 @@
           <div class="home-wraper">
             <div class="left-section">
               <!-- Feature Map Display Options -->
-              <div class="feature-map-options" style="border: 1px black solid;">
+              <div class="feature-map-options">
                 <div class="Display">
                   <a class="btn" id="disNetwork">Display</a>
                 </div>
@@ -341,7 +348,6 @@
         </div>
 
         <!-- Third Tab -->
-        <!-- Third Tab -->
         <div id="function-tab-2" data-tab-content>
           <div class="home-wraper">
             <div class="left-section">
@@ -381,14 +387,26 @@
                   </div>
                 </div>
               </div>
-              <!-- Custom Network End Here -->
             </div>
-            <div class="right-section"></div>
+            <div
+              class="right-section"
+              style="
+                font-size: 5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              Under Construction...
+            </div>
           </div>
+          <!-- Custom Network End Here -->
         </div>
+        <!-- Third Tab -->
       </div>
     </main>
 
+    <div id="snackbar">Some text some message..</div>
     <!-- Footer Area -->
     <footer></footer>
 

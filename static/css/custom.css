@@ -49,6 +49,14 @@ body {
   color: #f5f3f1;
 }
 
+/* .our-logo {
+  height: 4em;
+  width: 4em;
+  border: 1px black solid;
+  background-image: url("../css/image/logo.png");
+  background-size: cover; 
+}  */
+
 .tab-content {
   /* margin-left: 20px; */
   /* margin-right: 20px; */
@@ -334,6 +342,15 @@ table tbody tr td .fa-circle {
 }
 
 /* 2d network arch */
+
+.feature-map-options {
+  margin: 2rem 1rem 0 1rem;
+}
+
+.feature-map-options div {
+  margin-top: 2rem;
+}
+
 #displayContainer {
   height: 100%;
   width: 65%;
@@ -356,3 +373,74 @@ table tbody tr td .fa-circle {
   height: 100%;
   border-top: 1px silver solid;
 }
+
+/* Snack Bar */
+#snackbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  min-width: 250px;
+  /* margin-left: -125px; */
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 300px;
+  font-size: 20px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 300px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 300px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 300px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 300px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+/* Snack Bar */
