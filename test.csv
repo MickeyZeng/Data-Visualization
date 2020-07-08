@@ -1,3 +1,11 @@
 Ground Truth,Path
-basketball,dataSet/basketball.gif
-beer bottle,/Users/mickey/Downloads/dataSet
+"basketball",dataSet/basketball.1.gif
+"beer bottle",dataSet/bottle.1.jpg
+"beer bottle",dataSet/bottle.2.jpg
+"quilt, comforter, comfort, puff",dataSet/cat.6.jpg
+"sports car, sport car",dataSet/car.1.jpg
+"Egyptian cat",dataSet/cat.7.jpg
+"Siamese cat, Siamese",dataSet/cat.5.jpg
+"Egyptian cat",dataSet/cat.4.jpg
+"ladle",dataSet/spoon.1.jpg
+"Tibetan terrier, chrysanthemum dog",dataSet/dog.2.jpg
