@@ -473,9 +473,13 @@ document.getElementById("disNetwork").addEventListener("click", () => {
 // Save Scribble
 const saveScribbleBtn = document.querySelector("#save-scribble");
 saveScribbleBtn.addEventListener("click", () => {
+  let fileName = MULTIFILES[CURRENTFILEINDEX].name;
+  console.log(fileName);
   /*
     originalImageHeight, originalImageWidth --> 原图的Height/ Width
-    
+
     drawingPanel2.pointPositioin --> 这个Array里面有所有点的位置 都是以object的形式存在的
+
+    fileName --> 当前文件的名字，后台存的时候可以用file名字，这里提供的是带后缀的文件名
   */
 });
