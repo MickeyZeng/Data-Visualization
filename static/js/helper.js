@@ -15,6 +15,8 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
   // Empty Global Var
   LeaderBoardResult = [];
   clearBothLeaderBoard();
+  // Clean Up The Scribble For The New Image
+  drawingPanel2.cleanUpPosition();
 
   // Second Tab
   const featureMapOriginal = document.querySelector("#feature-map-original");
@@ -42,6 +44,10 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
   reader.onload = function (event) {
     var image = new Image();
     image.onload = () => {
+      console.log(image.width);
+      console.log(image.height);
+      originalImageWidth = image.width;
+      originalImageHeight = image.height;
       // if (image.height > drawingPanelWidth) {
       // }
 

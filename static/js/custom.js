@@ -7,6 +7,8 @@ let CANVAS1DATA;
 
 let modelMode = true; // True is 2D & False is 3D
 let LeaderBoardResult = []; // For Leader Board
+let originalImageHeight;
+let originalImageWidth;
 
 //Different CAM picture options
 let CAM_OPTION = {
@@ -68,6 +70,8 @@ class DrawingObject {
     this.drawing_panel_ctx.lineWidth = 5;
     this.pen_trigger = pen_trigger;
   }
+  pointPositioin = [];
+
   init = () => {
     this.drawing_panel.addEventListener("mousedown", (e) => {
       this.is_drawing = true;
@@ -99,7 +103,16 @@ class DrawingObject {
 
     // Update LastX, LastY Position
     [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
+
+    // Store The Scribble Position
+    this.pointPositioin.push({ x: this.LastX, y: this.LastY });
+    // this.pointPositioin.yArray.push(this.LastY);
   };
+  cleanUpPosition() {
+    console.log(this.pointPositioin);
+    this.pointPositioin = [];
+    // this.pointPositioin.yArray = [];
+  }
 }
 
 // Select The Tab Elements
@@ -455,4 +468,10 @@ document.getElementById("disNetwork").addEventListener("click", () => {
     }
   };
   xhr.send(fd); // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
+});
+
+// Save Scribble
+const saveScribbleBtn = document.querySelector("#save-scribble");
+saveScribbleBtn.addEventListener("click", () => {
+  console.log(saveScribbleBtn);
 });
