@@ -474,7 +474,6 @@ document.getElementById("disNetwork").addEventListener("click", () => {
 const saveScribbleBtn = document.querySelector("#save-scribble");
 saveScribbleBtn.addEventListener("click", () => {
   let fileName = MULTIFILES[CURRENTFILEINDEX].name;
-  console.log(fileName);
   /*
     originalImageHeight, originalImageWidth --> 原图的Height/ Width
 
@@ -482,4 +481,34 @@ saveScribbleBtn.addEventListener("click", () => {
 
     fileName --> 当前文件的名字，后台存的时候可以用file名字，这里提供的是带后缀的文件名
   */
+  // console.log("原图比例 = " + originalImageHeight + "\t" + originalImageWidth);
+  // console.log("所有点的位置 = " + drawingPanel2.pointPositioin[10]['x']);
+  // console.log("FileName is = " + fileName);
+
+  let fd = new FormData(); //Like a form data
+
+  /* Send original Image Height and Width */
+  fd.append("originalImageHeight", originalImageHeight);
+  fd.append("originalImageWidth", originalImageWidth);
+
+  /* Send the drawing Panel Width*/
+  fd.append("drawingPanelWidth", drawingPanelWidth.toString());
+
+  /* Send File Name */
+  fd.append("fileName", fileName);
+
+  /* Send the object include Point positions  */
+  fd.append("pointPositioin", JSON.stringify(drawingPanel2.pointPositioin));
+
+  let xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "/saveScribble/", true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      // var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+      //       // console.log(obj);
+    }
+  };
+  xhr.send(fd); // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
+
 });

@@ -32,3 +32,57 @@ def readFile(file):
     result = [name, path]
 
     return result
+
+
+# TODO: This is to save Scribble (这里是接受上传上来的图片数据 然后保存Scribble为JSON并保存本地)
+def processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth, request):
+    """
+    This function would applied all the parameter and create a JSON file saving all the point positions in user computer
+    :param request: This is to let the user select the download position (传送前端的请求 然后让用户选择JSON文件下载的地方)
+    :param originalImageHeight: Original Image Height (图片的原始高度)
+    :param originalImageWidth: Original Image Width (图片的原始宽度)
+    :param fileName: The name of file, which will be json File  (该图片的名字)
+    :param pointPositioin: A set include all position of sets   (这是一个Set 里面保存每一个点的X 和 Y 坐标)
+    :param drawingPanelWidth: The width of drawing panel    (这是原始的画框的宽度 因为这是一个正方形 所以只需要宽度就足够了)
+    :return: TRUE OR FALSE
+    """
+
+    """
+    Calculate the ratio of Width (Original/Panel) 
+    这个是计算比例(Original/Panel) Original的为分子 Panel为分母
+    Because the panel is square, the width equals height
+    因为画板是正方形 所以长宽是相同的
+    """
+    widthRatio = originalImageWidth / drawingPanelWidth
+    heightRatio = originalImageHeight / drawingPanelWidth
+    resultList = []
+
+    for i in range(len(pointPositioin)):
+        tempList = {}
+        tempList['x'] = pointPositioin[i]['x'] * widthRatio
+        tempList['y'] = pointPositioin[i]['y'] * heightRatio
+        resultList.append(tempList)
+
+    # print(resultList)
+
+    resultList = json.dumps(resultList, indent=2)
+
+    response = download_file(request, fileName, resultList)
+
+    return response
+
+
+# TODO: This is to download the file
+def download_file(request, fileName, resultList):
+    """
+    This is function is to write the data in file and download it
+    :param request:
+    :param fileName:
+    :param resultList:
+    :return:
+    """
+    fileObject = open('testData/' + fileName + '.json', 'w')
+    fileObject.write(resultList)
+    fileObject.close()
+
+    return True

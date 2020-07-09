@@ -28,6 +28,7 @@ urlpatterns = [
     path('outputTest/', views.tempOutput),
     path('heatMap/', views.disHeatMap),
     path('subCSV/', views.readCSV),
+    path('saveScribble/',views.saveScribble),
     path('', views.homepage),
 ]
 

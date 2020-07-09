@@ -6,9 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 import ResNet50.json_to_dict as jtd
 import ResNet50.test_back_end as resnet
+from demoConnect import util
 from heatmap import heatmap_util as heatUtil
 from heatmap import misc_functions as mics
-from demoConnect import util
 
 
 def testThreeDimension(request):
@@ -212,7 +212,6 @@ def disHeatMap(request):
 # TODO: This is to read the CSV file
 @csrf_exempt
 def readCSV(request):
-
     CSVFile = request.FILES['csvFile']
 
     result = util.readFile(CSVFile)
@@ -220,4 +219,23 @@ def readCSV(request):
     return HttpResponse(json.dumps(result))
 
 
+# TODO: This is to process the Scribble file and save the points in a file
+@csrf_exempt
+def saveScribble(request):
+    """
+    Get The data from front-End
+    """
 
+    originalImageHeight = int(request.POST.get('originalImageHeight'))
+    originalImageWidth = int(request.POST.get('originalImageWidth'))
+    fileName = request.POST.get('fileName')
+    pointPositioin = json.loads(request.POST.get('pointPositioin'))
+    drawingPanelWidth = int(request.POST.get('drawingPanelWidth'))
+
+    """
+    Process The data
+    """
+    result = util.processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth,
+                                  request)
+
+    return HttpResponse(json.dumps(result))
