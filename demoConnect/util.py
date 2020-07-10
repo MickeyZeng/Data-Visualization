@@ -2,6 +2,8 @@ import json
 
 import numpy as np
 import pandas
+import os
+import shutil
 
 
 # TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
@@ -35,7 +37,7 @@ def readFile(file):
 
 
 # TODO: This is to save Scribble (这里是接受上传上来的图片数据 然后保存Scribble为JSON并保存本地)
-def processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth, request):
+def processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth):
     """
     This function would applied all the parameter and create a JSON file saving all the point positions in user computer
     :param request: This is to let the user select the download position (传送前端的请求 然后让用户选择JSON文件下载的地方)
@@ -58,30 +60,31 @@ def processScribble(originalImageHeight, originalImageWidth, fileName, pointPosi
     resultList = []
 
     for i in range(len(pointPositioin)):
-        tempList = {}
-        tempList['x'] = pointPositioin[i]['x'] * widthRatio
-        tempList['y'] = pointPositioin[i]['y'] * heightRatio
+        tempList = {'x': pointPositioin[i]['x'] * widthRatio, 'y': pointPositioin[i]['y'] * heightRatio}
         resultList.append(tempList)
 
     # print(resultList)
 
+    # JSON serializable
     resultList = json.dumps(resultList, indent=2)
 
-    response = download_file(request, fileName, resultList)
+    # Create JSON File
+    response = saved_file(fileName, resultList)
 
     return response
 
 
-# TODO: This is to download the file
-def download_file(request, fileName, resultList):
+# TODO: This is to create JSON file
+def saved_file(fileName, resultList):
     """
     This is function is to write the data in file and download it
-    :param request:
-    :param fileName:
-    :param resultList:
+    :param fileName: It will be a name of JSON file
+    :param resultList: The JSON serializable result will be write in a file
     :return:
     """
-    fileObject = open('testData/' + fileName + '.json', 'w')
+    shutil.rmtree("downloadFile")
+    os.mkdir("downloadFile")
+    fileObject = open('downloadFile/' + fileName + '.json', 'w')
     fileObject.write(resultList)
     fileObject.close()
 

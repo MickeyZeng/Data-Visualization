@@ -1,6 +1,8 @@
 import json
+import os
 
-from django.http import HttpResponse
+from django.http import FileResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -235,7 +237,17 @@ def saveScribble(request):
     """
     Process The data
     """
-    result = util.processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth,
-                                  request)
+    result = util.processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth)
 
-    return HttpResponse(json.dumps(result))
+    if result:
+        file_path = 'downloadFile/' + fileName + '.json'
+        try:
+            f = open(file_path, 'rb')
+            response = FileResponse(f)
+            response['Content-Type'] = 'application/octet-stream'  # 设置头信息，告诉浏览器这是个文件
+            response['Content-Disposition'] = 'attachment;filename=' + fileName + '.json'
+            return response
+        except Exception:
+            raise Http404
+
+    raise Http404
