@@ -500,9 +500,13 @@ saveScribbleBtn.addEventListener("click", () => {
       'pointPositioin': JSON.stringify(drawingPanel2.pointPositioin),
     },
     xhrFields: {
+      //确定后端返回的一定是文件类型
+      //To make sure the return style is BLOB('file)
       responseType: 'blob'
     },
     success: function (data) {
+      //这里需要先创建一个<a>标签 然后使用js把它激活 响应Chrome的下载模块
+      //Firstly, <a> has to be implemented to active the download function in browser.
       console.log(data);
       let a = document.createElement('a');
       let url = window.URL.createObjectURL(data);
@@ -514,5 +518,6 @@ saveScribbleBtn.addEventListener("click", () => {
       window.URL.revokeObjectURL(url);
     }
   });
+  //  这里可以加一些用户的提示 让用户知道是否成功下载文件
 
 });
