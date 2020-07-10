@@ -487,37 +487,38 @@ saveScribbleBtn.addEventListener("click", () => {
 
   $.ajax({
     url: "/saveScribble/",
-    type: 'POST',
+    type: "POST",
     data: {
       /* Send original Image Height and Width */
-      'originalImageHeight': originalImageHeight,
-      'originalImageWidth': originalImageWidth,
+      originalImageHeight: originalImageHeight,
+      originalImageWidth: originalImageWidth,
       /* Send the drawing Panel Width*/
-      'drawingPanelWidth': drawingPanelWidth.toString(),
+      drawingPanelWidth: drawingPanelWidth.toString(),
       /* Send File Name */
-      'fileName': fileName,
+      fileName: fileName,
       /* Send the object include Point positions  */
-      'pointPositioin': JSON.stringify(drawingPanel2.pointPositioin),
+      pointPositioin: JSON.stringify(drawingPanel2.pointPositioin),
     },
     xhrFields: {
       //确定后端返回的一定是文件类型
       //To make sure the return style is BLOB('file)
-      responseType: 'blob'
+      responseType: "blob",
     },
     success: function (data) {
       //这里需要先创建一个<a>标签 然后使用js把它激活 响应Chrome的下载模块
       //Firstly, <a> has to be implemented to active the download function in browser.
       console.log(data);
-      let a = document.createElement('a');
+      let a = document.createElement("a");
       let url = window.URL.createObjectURL(data);
       a.href = url;
-      a.download = fileName + '.json';
+      a.download = fileName + ".json";
       document.body.append(a);
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
-    }
+
+      // Snack Bar Msg Goes Here
+    },
   });
   //  这里可以加一些用户的提示 让用户知道是否成功下载文件
-
 });

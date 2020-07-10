@@ -744,6 +744,7 @@ function disNumResult(num) {
 }
 
 //TODO: Get the length of data in JSON
+//TODO: This Function Can Be Rewritten In A Better JS Way
 function getJsonLength(jsonData) {
   var length = 0;
   for (var ever in jsonData) {
