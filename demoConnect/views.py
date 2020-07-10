@@ -1,5 +1,4 @@
 import json
-import os
 
 from django.http import FileResponse
 from django.http import HttpResponse, Http404
@@ -242,6 +241,10 @@ def saveScribble(request):
     if result:
         file_path = 'downloadFile/' + fileName + '.json'
         try:
+            """
+            This function has to return BLOB(file) style
+            这里一定要返回的是文件类型
+            """
             f = open(file_path, 'rb')
             response = FileResponse(f)
             response['Content-Type'] = 'application/octet-stream'  # 设置头信息，告诉浏览器这是个文件

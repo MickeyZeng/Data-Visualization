@@ -1,9 +1,9 @@
 import json
+import os
+import shutil
 
 import numpy as np
 import pandas
-import os
-import shutil
 
 
 # TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
@@ -82,8 +82,17 @@ def saved_file(fileName, resultList):
     :param resultList: The JSON serializable result will be write in a file
     :return:
     """
+    """
+    The files in directory named DownloadFile will be remove first
+    首先清空了downloadFile里面的所有文件
+    """
     shutil.rmtree("downloadFile")
     os.mkdir("downloadFile")
+
+    """
+    Create an file in directory named DownloadFile
+    创建JSON文件到DownloadFile的文件夹下面
+    """
     fileObject = open('downloadFile/' + fileName + '.json', 'w')
     fileObject.write(resultList)
     fileObject.close()
