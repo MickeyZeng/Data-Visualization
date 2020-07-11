@@ -227,25 +227,47 @@ def saveScribble(request):
     Get The data from front-End
     """
 
+    # This is for the original Image size (Including height and width)
     originalImageHeight = int(request.POST.get('originalImageHeight'))
     originalImageWidth = int(request.POST.get('originalImageWidth'))
+
+    # This is for the File name
     fileName = request.POST.get('fileName')
-    pointPositioin = json.loads(request.POST.get('pointPositioin'))
+
+    # This is for positive pens(这个是给 positive 用的)
+    positivePointPositioin = json.loads(request.POST.get('positivePointPositioin'))
+
+    # This is for negative Pens(这个是给 negative 用的)
+    negativePointPostition = json.loads(request.POST.get('negativePointPosition'))
+
+    # This is for the size of drawing panel
     drawingPanelWidth = int(request.POST.get('drawingPanelWidth'))
+
+    # This is for the class of image
+    classLabel = request.POST.get('classLabel')
+
+    # This is for the data of image
     imgData = request.POST.get('imgData')
 
     imgData = util.arrToTensor(imgData, drawingPanelWidth, drawingPanelWidth)
 
     """
-    Process The data
+    Process The data for 
+    positive 
+    &&&&&&&&
+    negative
     """
-    result = util.processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth, imgData)
+    positiveResult = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
+                                          drawingPanelWidth, imgData, classLabel)
+
+    negativeResult = util.processScribble(originalImageHeight, originalImageWidth, fileName, negativePointPostition,
+                                          drawingPanelWidth, imgData, classLabel)
 
     """
     Return a file to front-end
     返回一个文件类型给前端进行下载
     """
-    if result:
+    if positiveResult and negativeResult:
         file_path = 'downloadFile/' + fileName + '.json'
         try:
             """

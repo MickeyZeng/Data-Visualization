@@ -39,9 +39,11 @@ def readFile(file):
 
 
 # TODO: This is to save Scribble (这里是接受上传上来的图片数据 然后保存Scribble为JSON并保存本地)
-def processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth, imgData):
+def processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth, imgData,
+                    classLabel):
     """
     This function would applied all the parameter and create a JSON file saving all the point positions in user computer
+    :param classLabel: The JSON file has to include the ground truth of the picture (JSON file必须包含当前这个scribble的ground truth)
     :param imgData: This is to save the imgData (这个是存储图片的3 dimension数组)
     :param originalImageHeight: Original Image Height (图片的原始高度)
     :param originalImageWidth: Original Image Width (图片的原始宽度)
@@ -72,6 +74,8 @@ def processScribble(originalImageHeight, originalImageWidth, fileName, pointPosi
     测试resultList里面的数据的点回到原来的图片比例后是否正确
     """
     checkResultList(resultList, imgData, originalImageHeight, originalImageWidth)
+
+    # 还没有完成的 要在resultList里面加紧 当前是positive还是negative 和 这个scribble是为了什么ground Truth (后面要完成写的！！)
 
     # JSON serializable
     resultList = json.dumps(resultList, indent=2)
