@@ -232,12 +232,19 @@ def saveScribble(request):
     fileName = request.POST.get('fileName')
     pointPositioin = json.loads(request.POST.get('pointPositioin'))
     drawingPanelWidth = int(request.POST.get('drawingPanelWidth'))
+    imgData = request.POST.get('imgData')
+
+    imgData = util.arrToTensor(imgData, drawingPanelWidth, drawingPanelWidth)
 
     """
     Process The data
     """
-    result = util.processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth)
+    result = util.processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth, imgData)
 
+    """
+    Return a file to front-end
+    返回一个文件类型给前端进行下载
+    """
     if result:
         file_path = 'downloadFile/' + fileName + '.json'
         try:

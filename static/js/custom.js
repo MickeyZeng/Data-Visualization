@@ -91,7 +91,7 @@ class DrawingObject {
   };
   drawing = (e) => {
     if (!this.is_drawing || !this.pen_trigger) return; // Stop Drawing, Stop Function
-
+    console.log(e.offsetX + " *****" + e.offsetY);
     this.drawing_panel_ctx.beginPath();
 
     // Start From
@@ -485,6 +485,8 @@ saveScribbleBtn.addEventListener("click", () => {
   // console.log("所有点的位置 = " + drawingPanel2.pointPositioin[10]['x']);
   // console.log("FileName is = " + fileName);
 
+  updateImage(); //Got the data from the canvas
+
   $.ajax({
     url: "/saveScribble/",
     type: 'POST',
@@ -498,6 +500,8 @@ saveScribbleBtn.addEventListener("click", () => {
       'fileName': fileName,
       /* Send the object include Point positions  */
       'pointPositioin': JSON.stringify(drawingPanel2.pointPositioin),
+      /* Send the pic data (pic in panel) */
+      'imgData': JSON.stringify(upload_image),
     },
     xhrFields: {
       //确定后端返回的一定是文件类型

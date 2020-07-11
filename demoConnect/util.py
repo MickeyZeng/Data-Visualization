@@ -4,6 +4,8 @@ import shutil
 
 import numpy as np
 import pandas
+from PIL import Image
+from matplotlib import pyplot as plt
 
 
 # TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
@@ -37,10 +39,10 @@ def readFile(file):
 
 
 # TODO: This is to save Scribble (这里是接受上传上来的图片数据 然后保存Scribble为JSON并保存本地)
-def processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth):
+def processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth, imgData):
     """
     This function would applied all the parameter and create a JSON file saving all the point positions in user computer
-    :param request: This is to let the user select the download position (传送前端的请求 然后让用户选择JSON文件下载的地方)
+    :param imgData: This is to save the imgData (这个是存储图片的3 dimension数组)
     :param originalImageHeight: Original Image Height (图片的原始高度)
     :param originalImageWidth: Original Image Width (图片的原始宽度)
     :param fileName: The name of file, which will be json File  (该图片的名字)
@@ -64,6 +66,12 @@ def processScribble(originalImageHeight, originalImageWidth, fileName, pointPosi
         resultList.append(tempList)
 
     # print(resultList)
+
+    """
+    Test if the data in resultList is correct or not
+    测试resultList里面的数据的点回到原来的图片比例后是否正确
+    """
+    checkResultList(resultList, imgData, originalImageHeight, originalImageWidth)
 
     # JSON serializable
     resultList = json.dumps(resultList, indent=2)
@@ -98,3 +106,17 @@ def saved_file(fileName, resultList):
     fileObject.close()
 
     return True
+
+
+# TODO: Implement PLT to display and check if the data in result List is correct or not (测试ResultList里面的数据是否是正确的)
+def checkResultList(resultList, imgData, originalImageHeight, originalImageWidth):
+    # 把图片标准按原图显示
+    pic = Image.fromarray(imgData.astype('uint8'), 'RGB').rotate(270).transpose(Image.FLIP_LEFT_RIGHT)
+    pic = pic.resize((originalImageWidth, originalImageHeight), Image.ANTIALIAS)
+    plt.imshow(pic)
+    # plt.plot(100, 100, 'ro')
+    for i in range(len(resultList)):
+        plt.plot(resultList[i]['x'], resultList[i]['y'], '.r-')
+        print(resultList[i])
+    plt.legend()
+    plt.show()
