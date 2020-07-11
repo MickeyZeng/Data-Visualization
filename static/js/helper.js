@@ -174,6 +174,10 @@ function updateImage() {
 // CAM display MiddleWare for each result
 function disCAM_MiddleWare(label, current_index) {
   snackBarDisplay("Fetching result for " + label);
+  // Change The Scribble Label To Current Chosen Label
+  RESULT_LABEL = label;
+  // Clean Up Scribble Canvas
+  drawingPanel2.cleanUpScribbleFromCanvas();
   setTimeout(() => {
     disCAM(label, current_index);
   }, 1000);

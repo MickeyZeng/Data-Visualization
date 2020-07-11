@@ -64,20 +64,23 @@ class DrawingObject {
     this.drawing_panel.width = drawingPanelWidth;
     this.drawing_panel.height = drawingPanelWidth;
     (this.is_drawing = false), (this.LastX = 0), (this.LastY = 0);
-    this.drawing_panel_ctx.strokeStyle = "#BADA55";
+    // this.drawing_panel_ctx.strokeStyle = "#BADA55";
+
     this.drawing_panel_ctx.lineJoin = "round";
     this.drawing_panel_ctx.lineCap = "round";
     this.drawing_panel_ctx.lineWidth = 5;
     this.pen_trigger = pen_trigger;
+    this.keydown = false; // This key down is for negative scribble, Alt key is the key to activate
   }
   pointPositioin = [];
 
   init = () => {
+    this.drawing_panel_ctx.strokeStyle = "#BADA55";
     this.drawing_panel.addEventListener("mousedown", (e) => {
       this.is_drawing = true;
       [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
       // TODO: Remove This Console.log After Label Function
-      console.log(this.LastX, this.LastY);
+      // console.log(this.LastX, this.LastY);
     });
     this.drawing_panel.addEventListener("mousemove", this.drawing);
     this.drawing_panel.addEventListener(
@@ -91,7 +94,8 @@ class DrawingObject {
   };
   drawing = (e) => {
     if (!this.is_drawing || !this.pen_trigger) return; // Stop Drawing, Stop Function
-    console.log(e.offsetX + " *****" + e.offsetY);
+    // document.addEventListener("keydown", (e) => console.log(e));
+
     this.drawing_panel_ctx.beginPath();
 
     // Start From
@@ -112,6 +116,128 @@ class DrawingObject {
     console.log(this.pointPositioin);
     this.pointPositioin = [];
     // this.pointPositioin.yArray = [];
+  }
+}
+
+// Class For Scribble
+class ScribbleObject extends DrawingObject {
+  constructor(panelID, pen_trigger) {
+    super(panelID, pen_trigger);
+  }
+  allInfo = {};
+  init = () => {
+    this.drawing_panel_ctx.strokeStyle = "red"; // Scribble Pen Colour
+    this.drawing_panel.addEventListener("mousedown", (e) => {
+      this.is_drawing = true;
+      [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
+      // TODO: Remove This Console.log After Label Function
+      // console.log(this.LastX, this.LastY);
+    });
+    this.drawing_panel.addEventListener("mousemove", this.drawing);
+    this.drawing_panel.addEventListener(
+      "mouseup",
+      () => (this.is_drawing = false)
+    );
+    this.drawing_panel.addEventListener(
+      "mouseout",
+      () => (this.is_drawing = false)
+    );
+    // Keyboard Event For Negative Scribble
+    document.addEventListener("keyup", (e) => {
+      if (e.keyCode == 18) {
+        this.keydown = false;
+        console.log(e);
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode == 18) {
+        this.keydown = true;
+        console.log(e);
+      }
+    });
+  };
+
+  drawing = (e) => {
+    if (!this.is_drawing || !this.pen_trigger) return; // Stop Drawing, Stop Function
+    // document.addEventListener("keydown", (e) => console.log(e));
+
+    if (this.keydown) {
+      // negative scribble
+      console.log("this is for negative scribble");
+
+      // this.allInfo[RESULT_LABEL] = {
+
+      // }
+      this.drawing_panel_ctx.beginPath();
+      this.drawing_panel_ctx.strokeStyle = "green"; // Scribble Pen Colour
+
+      // Start From
+      this.drawing_panel_ctx.moveTo(this.LastX, this.LastY);
+
+      // Go To
+      this.drawing_panel_ctx.lineTo(e.offsetX, e.offsetY);
+      this.drawing_panel_ctx.stroke();
+
+      // Update LastX, LastY Position
+      [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
+      if (this.allInfo[RESULT_LABEL] == null) {
+        // First Time
+        this.allInfo[RESULT_LABEL] = {
+          positive: [],
+          negative: [],
+        };
+      } else {
+        this.allInfo[RESULT_LABEL].negative.push({
+          x: this.LastX,
+          y: this.LastY,
+        });
+      }
+      return;
+    }
+
+    this.drawing_panel_ctx.beginPath();
+    this.drawing_panel_ctx.strokeStyle = "red"; // Scribble Pen Colour
+
+    // Start From
+    this.drawing_panel_ctx.moveTo(this.LastX, this.LastY);
+
+    // Go To
+    this.drawing_panel_ctx.lineTo(e.offsetX, e.offsetY);
+    this.drawing_panel_ctx.stroke();
+
+    // Update LastX, LastY Position
+    [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
+
+    // Store The Scribble Position
+    if (this.allInfo[RESULT_LABEL] == null) {
+      // First Time
+      this.allInfo[RESULT_LABEL] = {
+        positive: [],
+        negative: [],
+      };
+    } else {
+      this.allInfo[RESULT_LABEL].positive.push({
+        x: this.LastX,
+        y: this.LastY,
+      });
+    }
+    // this.pointPositioin.push({ x: this.LastX, y: this.LastY });
+    // this.allInfo.RESULT_LABEL.positive.push({ x: this.LastX, y: this.LastY });
+    // this.pointPositioin.yArray.push(this.LastY);
+  };
+  cleanUpScribbleFromCanvas() {
+    this.drawing_panel_ctx.clearRect(
+      0,
+      0,
+      this.drawing_panel.width,
+      this.drawing_panel.height
+    );
+  }
+  cleanUpScribbleForTheCurrentImage() {
+    console.log("hello???");
+    this.allInfo[RESULT_LABEL].positive = [];
+    this.allInfo[RESULT_LABEL].negative = [];
+    this.cleanUpScribbleFromCanvas();
   }
 }
 
@@ -234,7 +360,7 @@ featureMapArea.height = featureMapArea.width;
 const drawingPanel1 = new DrawingObject("drawing-area");
 drawingPanel1.init();
 // Scribble Panel - On The Right - #layer3
-const drawingPanel2 = new DrawingObject("layer3");
+const drawingPanel2 = new ScribbleObject("layer3");
 drawingPanel2.init();
 
 // Drwing pen config
@@ -258,6 +384,10 @@ drawingPenTrigger.addEventListener("click", () => {
 // Scribble Trigger
 const scribbleTrigger = document.querySelector("#sribble-trigger");
 scribbleTrigger.addEventListener("click", () => {
+  if (RESULT_LABEL == undefined) {
+    alert("Please Submit The Image First");
+    return;
+  }
   if (drawingPanel2.pen_trigger) {
     alert("Now you cannot scribble");
   } else {
@@ -499,9 +629,9 @@ saveScribbleBtn.addEventListener("click", () => {
       /* Send File Name */
       fileName: fileName,
       /* Send the object include Point positions  */
-      'pointPositioin': JSON.stringify(drawingPanel2.pointPositioin),
+      pointPositioin: JSON.stringify(drawingPanel2.pointPositioin),
       /* Send the pic data (pic in panel) */
-      'imgData': JSON.stringify(upload_image),
+      imgData: JSON.stringify(upload_image),
     },
     xhrFields: {
       //确定后端返回的一定是文件类型
@@ -525,4 +655,11 @@ saveScribbleBtn.addEventListener("click", () => {
     },
   });
   //  这里可以加一些用户的提示 让用户知道是否成功下载文件
+});
+
+// Clean Up Scribble If Draw Wrong
+const cleanUpScribbleBtn = document.querySelector("#clean-up-scribble");
+cleanUpScribbleBtn.addEventListener("click", () => {
+  console.log("??");
+  drawingPanel2.cleanUpScribbleForTheCurrentImage();
 });
