@@ -1,4 +1,6 @@
 import json
+import os
+import shutil
 
 from django.http import FileResponse
 from django.http import HttpResponse, Http404
@@ -226,6 +228,14 @@ def saveScribble(request):
     """
     Get The data from front-End
     """
+    """
+    The files in directory named DownloadFile will be remove first
+    首先清空了downloadFile里面的所有文件
+    """
+    shutil.rmtree("downloadFile")
+    os.mkdir("downloadFile")
+
+    result = True
 
     # This is for the original Image size (Including height and width)
     originalImageHeight = int(request.POST.get('originalImageHeight'))
@@ -234,40 +244,41 @@ def saveScribble(request):
     # This is for the File name
     fileName = request.POST.get('fileName')
 
-    # This is for positive pens(这个是给 positive 用的)
-    positivePointPositioin = json.loads(request.POST.get('positivePointPositioin'))
-
-    # This is for negative Pens(这个是给 negative 用的)
-    negativePointPostition = json.loads(request.POST.get('negativePointPosition'))
+    # This can get all info including class label, positive and negative point position
+    allInfo = json.loads(request.POST.get('allInfo'))
 
     # This is for the size of drawing panel
     drawingPanelWidth = int(request.POST.get('drawingPanelWidth'))
-
-    # This is for the class of image
-    classLabel = request.POST.get('classLabel')
 
     # This is for the data of image
     imgData = request.POST.get('imgData')
 
     imgData = util.arrToTensor(imgData, drawingPanelWidth, drawingPanelWidth)
 
-    """
-    Process The data for 
-    positive 
-    &&&&&&&&
-    negative
-    """
-    positiveResult = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
-                                          drawingPanelWidth, imgData, classLabel)
+    for i in range(len(allInfo)):
+        classLabel = list(allInfo.keys())[i]
 
-    negativeResult = util.processScribble(originalImageHeight, originalImageWidth, fileName, negativePointPostition,
-                                          drawingPanelWidth, imgData, classLabel)
+        positivePointPositioin = allInfo[classLabel]['positive']
+
+        negativePointPostition = allInfo[classLabel]['negative']
+
+        """
+        Process The data for 
+        positive 
+        &&&&&&&&
+        negative
+        """
+        result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
+                                      negativePointPostition, drawingPanelWidth, imgData, classLabel)
+
+        if not result:
+            break
 
     """
     Return a file to front-end
     返回一个文件类型给前端进行下载
     """
-    if positiveResult and negativeResult:
+    if result:
         file_path = 'downloadFile/' + fileName + '.json'
         try:
             """
