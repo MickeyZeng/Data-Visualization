@@ -94,6 +94,7 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
 
 function uploadImageToCanvas(e) {
   MULTIFILES = []; // Clear The Previous Images
+  CURRENTFILEINDEX = 0;
   files = e.target.files;
   for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
     MULTIFILES.push(files[fileIndex]);

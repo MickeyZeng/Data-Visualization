@@ -438,6 +438,7 @@ fileUploadButton.addEventListener("click", () => {
   console.log(csvFile.type);
   console.log(csvFile);
   fd.append("csvFile", csvFile);
+  fd.append("current_index", CURRENTFILEINDEX);
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/subCSV/", true);
   xhr.onreadystatechange = function () {
