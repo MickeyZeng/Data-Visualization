@@ -305,47 +305,58 @@ window.addEventListener("load", (e) => {
 
   // This method will control to display the next image
   const nextButton = document.querySelector("#next-image");
+
   nextButton.addEventListener("click", (e) => {
-    if (CURRENTFILEINDEX < MULTIFILES.length - 1) {
-      CURRENTFILEINDEX++;
+    if (CSV_IMG_SWITCH) {
+      // CSV
     } else {
-      // No, No, No
-      if (MULTIFILES.length == 1) {
-        alert("You only have one image uploaded");
-      } else if (MULTIFILES.length == 0) {
-        alert("Please upload image first");
+      // Normal Image
+      if (CURRENTFILEINDEX < MULTIFILES.length - 1) {
+        CURRENTFILEINDEX++;
       } else {
-        alert("This is the last Image");
+        // No, No, No
+        if (MULTIFILES.length == 1) {
+          alert("You only have one image uploaded");
+        } else if (MULTIFILES.length == 0) {
+          alert("Please upload image first");
+        } else {
+          alert("This is the last Image");
+        }
+        return;
       }
-      return;
+      loadFileToCanvas(
+        MULTIFILES[CURRENTFILEINDEX],
+        (clear = false),
+        (empty = true)
+      );
     }
-    loadFileToCanvas(
-      MULTIFILES[CURRENTFILEINDEX],
-      (clear = false),
-      (empty = true)
-    );
   });
 
   const backButton = document.querySelector("#back-image");
   backButton.addEventListener("click", () => {
-    if (CURRENTFILEINDEX > 0) {
-      CURRENTFILEINDEX--;
+    if (CSV_IMG_SWITCH) {
+      // CSV
     } else {
-      // No, No, No
-      if (MULTIFILES.length == 1) {
-        alert("You only have one image uploaded");
-      } else if (MULTIFILES.length == 0) {
-        alert("Please upload image first");
+      // Normal Image
+      if (CURRENTFILEINDEX > 0) {
+        CURRENTFILEINDEX--;
       } else {
-        alert("This is the first image");
+        // No, No, No
+        if (MULTIFILES.length == 1) {
+          alert("You only have one image uploaded");
+        } else if (MULTIFILES.length == 0) {
+          alert("Please upload image first");
+        } else {
+          alert("This is the first image");
+        }
+        return;
       }
-      return;
+      loadFileToCanvas(
+        MULTIFILES[CURRENTFILEINDEX],
+        (clear = false),
+        (empty = true)
+      );
     }
-    loadFileToCanvas(
-      MULTIFILES[CURRENTFILEINDEX],
-      (clear = false),
-      (empty = true)
-    );
   });
 });
 
@@ -420,6 +431,7 @@ csvUploadInput.addEventListener("change", (e) => {
 const fileUploadButton = document.querySelector("#file-upload-button");
 fileUploadButton.addEventListener("click", () => {
   // Store The Absolute Path To Global Variable
+  CURRENTFILEINDEX = 0; // Reset CURRENTFILEINDEX
   ABSOLUTE_PATH = document.querySelector("#path-to-folder").value;
   console.log(ABSOLUTE_PATH);
   // Error Handling First
