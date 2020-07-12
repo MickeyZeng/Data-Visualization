@@ -23,15 +23,19 @@ def arrToTensor(imgData, width, height):
     return picData
 
 
-# TODO: This is to Read the CSV file (这里是处理上传上来的CSV文件)
-def readFile(file):
+# TODO: This is to Read the CSV file (这里是处理上传上来的CSV文件, 然后返回一个一个文件类型的参数)
+def readFile(file, current_index):
     # This is to read a certain file
     df = pandas.read_csv(file)
     # df = pandas.read_csv('test.csv')
+    # / Users / mickey / Downloads / dataSet 测试路径
     name = df['Ground Truth'].tolist()
     path = df['Path'].tolist()
 
-    result = [name, path]
+    resultName = name[int(current_index)]
+    resultPath = path[int(current_index)]
+
+    result = 0
 
     return result
 

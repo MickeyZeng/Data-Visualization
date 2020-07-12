@@ -216,8 +216,9 @@ def disHeatMap(request):
 @csrf_exempt
 def readCSV(request):
     CSVFile = request.FILES['csvFile']
+    current_index = request.POST.get('current_index')
 
-    result = util.readFile(CSVFile)
+    result = util.readFile(CSVFile, current_index)
 
     return HttpResponse(json.dumps(result))
 
