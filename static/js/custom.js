@@ -234,9 +234,12 @@ class ScribbleObject extends DrawingObject {
     );
   }
   cleanUpScribbleForTheCurrentImage() {
-    console.log("hello???");
     this.allInfo[RESULT_LABEL].positive = [];
     this.allInfo[RESULT_LABEL].negative = [];
+    this.cleanUpScribbleFromCanvas();
+  }
+  cleanUpALL() {
+    this.allInfo = {};
     this.cleanUpScribbleFromCanvas();
   }
 }
@@ -631,7 +634,7 @@ saveScribbleBtn.addEventListener("click", () => {
       /* Send this all Information including class label and negative and positive point position   */
       allInfo: JSON.stringify(drawingPanel2.allInfo),
       /* Send the pic data (pic in panel) */
-      imgData: JSON.stringify(upload_image)
+      imgData: JSON.stringify(upload_image),
     },
     xhrFields: {
       //确定后端返回的一定是文件类型

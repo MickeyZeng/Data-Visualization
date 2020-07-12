@@ -16,19 +16,20 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
   LeaderBoardResult = [];
   clearBothLeaderBoard();
   // Clean Up The Scribble For The New Image
-  drawingPanel2.cleanUpPosition();
+  drawingPanel2.cleanUpALL(); // This Function Will Clean Up The Canvas and allInfo Object
+  RESULT_LABEL = null;
 
   // Second Tab
   const featureMapOriginal = document.querySelector("#feature-map-original");
   const featureMapOriginalCTX = featureMapOriginal.getContext("2d");
 
   // Clean Up Scribble When Comes A New Image
-  drawingPanel2.drawing_panel_ctx.clearRect(
-    0,
-    0,
-    drawingPanel2.drawing_panel.width,
-    drawingPanel2.drawing_panel.height
-  );
+  // drawingPanel2.drawing_panel_ctx.clearRect(
+  //   0,
+  //   0,
+  //   drawingPanel2.drawing_panel.width,
+  //   drawingPanel2.drawing_panel.height
+  // );
 
   if (empty) {
     // Empty Global Var
