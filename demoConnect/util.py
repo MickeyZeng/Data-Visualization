@@ -1,6 +1,4 @@
 import json
-import os
-import shutil
 
 import numpy as np
 import pandas
@@ -39,39 +37,39 @@ def readFile(file):
 
 
 # TODO: This is to save Scribble (这里是接受上传上来的图片数据 然后保存Scribble为JSON并保存本地)
-def processScribble(originalImageHeight, originalImageWidth, fileName, pointPositioin, drawingPanelWidth, imgData):
+def processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPosition, negativePointPositive,
+                    drawingPanelWidth, imgData, classLabel):
     """
     This function would applied all the parameter and create a JSON file saving all the point positions in user computer
+    :param classLabel: The JSON file has to include the ground truth of the picture (JSON file必须包含当前这个scribble的ground truth)
     :param imgData: This is to save the imgData (这个是存储图片的3 dimension数组)
     :param originalImageHeight: Original Image Height (图片的原始高度)
     :param originalImageWidth: Original Image Width (图片的原始宽度)
     :param fileName: The name of file, which will be json File  (该图片的名字)
-    :param pointPositioin: A set include all position of sets   (这是一个Set 里面保存每一个点的X 和 Y 坐标)
+    :param positivePointPosition: A set include all position of sets   (这是一个Set 里面保存每一个点的X 和 Y 坐标)
+    :param negativePointPositive: Same as positivePointPositioin 和positivePointPositioin一样
     :param drawingPanelWidth: The width of drawing panel    (这是原始的画框的宽度 因为这是一个正方形 所以只需要宽度就足够了)
     :return: TRUE OR FALSE
     """
 
-    """
-    Calculate the ratio of Width (Original/Panel) 
-    这个是计算比例(Original/Panel) Original的为分子 Panel为分母
-    Because the panel is square, the width equals height
-    因为画板是正方形 所以长宽是相同的
-    """
-    widthRatio = originalImageWidth / drawingPanelWidth
-    heightRatio = originalImageHeight / drawingPanelWidth
-    resultList = []
+    resultList = {}
 
-    for i in range(len(pointPositioin)):
-        tempList = {'x': pointPositioin[i]['x'] * widthRatio, 'y': pointPositioin[i]['y'] * heightRatio}
-        resultList.append(tempList)
+    positiveList = calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, positivePointPosition,
+                                      'positive')
 
-    # print(resultList)
+    negativeList = calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, negativePointPositive,
+                                      'negative')
+
+    tempList = [positiveList, negativeList]
+
+    resultList[classLabel] = tempList
 
     """
     Test if the data in resultList is correct or not
     测试resultList里面的数据的点回到原来的图片比例后是否正确
     """
-    checkResultList(resultList, imgData, originalImageHeight, originalImageWidth)
+    checkResultList(positiveList['positive'], imgData, originalImageHeight, originalImageWidth)
+    checkResultList(negativeList['negative'], imgData, originalImageHeight, originalImageWidth)
 
     # JSON serializable
     resultList = json.dumps(resultList, indent=2)
@@ -82,6 +80,27 @@ def processScribble(originalImageHeight, originalImageWidth, fileName, pointPosi
     return response
 
 
+# TODO: This is process the point position
+def calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, pointPosition, style):
+    """
+    Calculate the ratio of Width (Original/Panel)
+    这个是计算比例(Original/Panel) Original的为分子 Panel为分母
+    Because the panel is square, the width equals height
+    因为画板是正方形 所以长宽是相同的
+    """
+    tempResult = {}
+    resultList = []
+    widthRatio = originalImageWidth / drawingPanelWidth
+    heightRatio = originalImageHeight / drawingPanelWidth
+
+    for i in range(len(pointPosition)):
+        tempList = {'x': pointPosition[i]['x'] * widthRatio, 'y': pointPosition[i]['y'] * heightRatio}
+        resultList.append(tempList)
+
+    tempResult[style] = resultList
+    return tempResult
+
+
 # TODO: This is to create JSON file
 def saved_file(fileName, resultList):
     """
@@ -90,18 +109,12 @@ def saved_file(fileName, resultList):
     :param resultList: The JSON serializable result will be write in a file
     :return:
     """
-    """
-    The files in directory named DownloadFile will be remove first
-    首先清空了downloadFile里面的所有文件
-    """
-    shutil.rmtree("downloadFile")
-    os.mkdir("downloadFile")
 
     """
     Create an file in directory named DownloadFile
     创建JSON文件到DownloadFile的文件夹下面
     """
-    fileObject = open('downloadFile/' + fileName + '.json', 'w')
+    fileObject = open('downloadFile/' + fileName + '.json', 'a')
     fileObject.write(resultList)
     fileObject.close()
 
@@ -117,6 +130,6 @@ def checkResultList(resultList, imgData, originalImageHeight, originalImageWidth
     # plt.plot(100, 100, 'ro')
     for i in range(len(resultList)):
         plt.plot(resultList[i]['x'], resultList[i]['y'], '.r-')
-        print(resultList[i])
+        # print(resultList[i])
     plt.legend()
     plt.show()

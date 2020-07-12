@@ -628,10 +628,10 @@ saveScribbleBtn.addEventListener("click", () => {
       drawingPanelWidth: drawingPanelWidth.toString(),
       /* Send File Name */
       fileName: fileName,
-      /* Send the object include Point positions  */
-      pointPositioin: JSON.stringify(drawingPanel2.pointPositioin),
+      /* Send this all Information including class label and negative and positive point position   */
+      allInfo: JSON.stringify(drawingPanel2.allInfo),
       /* Send the pic data (pic in panel) */
-      imgData: JSON.stringify(upload_image),
+      imgData: JSON.stringify(upload_image)
     },
     xhrFields: {
       //确定后端返回的一定是文件类型
