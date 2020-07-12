@@ -660,6 +660,5 @@ saveScribbleBtn.addEventListener("click", () => {
 // Clean Up Scribble If Draw Wrong
 const cleanUpScribbleBtn = document.querySelector("#clean-up-scribble");
 cleanUpScribbleBtn.addEventListener("click", () => {
-  console.log("??");
   drawingPanel2.cleanUpScribbleForTheCurrentImage();
 });
