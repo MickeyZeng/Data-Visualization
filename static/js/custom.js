@@ -458,7 +458,10 @@ fileUploadButton.addEventListener("click", () => {
   xhr.open("POST", "/subCSV/", true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
-      // OBJ为BLOB类型 result是String 的label 后面交给你去拿了！！！
+      /**
+       * BJ为BLOB类型 result是String 的label 后面交给你去拿了！！！
+       *
+       * */
       let obj = new Blob([xhr.response]);
       let result = xhr.getResponseHeader("labelName");
       console.log(obj);
