@@ -217,10 +217,11 @@ def disHeatMap(request):
 def readCSV(request):
     CSVFile = request.FILES['csvFile']
     current_index = request.POST.get('current_index')
+    abs_path = request.POST.get('abs_path')
 
-    result = util.readFile(CSVFile, current_index)
+    result = util.readFile(CSVFile, current_index, abs_path)
 
-    return HttpResponse(json.dumps(result))
+    return result
 
 
 # TODO: This is to process the Scribble file and save the points in a file

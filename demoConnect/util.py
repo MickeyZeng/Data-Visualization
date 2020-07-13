@@ -3,6 +3,8 @@ import json
 import numpy as np
 import pandas
 from PIL import Image
+from django.http import FileResponse
+from django.http import Http404
 from matplotlib import pyplot as plt
 
 
@@ -24,7 +26,7 @@ def arrToTensor(imgData, width, height):
 
 
 # TODO: This is to Read the CSV file (这里是处理上传上来的CSV文件, 然后返回一个一个文件类型的参数)
-def readFile(file, current_index):
+def readFile(file, current_index, abs_path):
     # This is to read a certain file
     df = pandas.read_csv(file)
     # df = pandas.read_csv('test.csv')
@@ -33,11 +35,19 @@ def readFile(file, current_index):
     path = df['Path'].tolist()
 
     resultName = name[int(current_index)]
-    resultPath = path[int(current_index)]
+    resultPath = abs_path + path[int(current_index)]
 
-    result = 0
-
-    return result
+    """
+    通过resultName & resultPath 获取文件类型
+    """
+    try:
+        response = FileResponse(open(resultPath, 'rb'))
+        response['Content-Type'] = 'application/octet-stream'  # 设置头信息，告诉浏览器这是个文件
+        response['labelName'] = resultName
+        response.as_attachment = False
+        return response
+    except Exception:
+        raise Http404
 
 
 # TODO: This is to save Scribble (这里是接受上传上来的图片数据 然后保存Scribble为JSON并保存本地)

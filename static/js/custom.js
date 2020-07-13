@@ -449,14 +449,21 @@ fileUploadButton.addEventListener("click", () => {
   let fd = new FormData();
   console.log(csvFile.type);
   console.log(csvFile);
+
   fd.append("csvFile", csvFile);
   fd.append("current_index", CURRENTFILEINDEX);
   fd.append("abs_path", ABSOLUTE_PATH);
   let xhr = new XMLHttpRequest();
+  xhr.responseType = 'blob';
   xhr.open("POST", "/subCSV/", true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
-      let obj = JSON.parse(xhr.responseText);
+      // OBJ为BLOB类型 result是String 的label 后面交给你去拿了！！！
+      let obj = new Blob([xhr.response]);
+      let result = xhr.getResponseHeader("labelName");
+      console.log(obj);
+      console.log(result);
+
       // console.log(obj);
       // let testingImg = "file://" + ABSOLUTE_PATH + "/" + obj[1][0];
       // console.log(testingImg);
