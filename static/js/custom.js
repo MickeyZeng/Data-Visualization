@@ -454,7 +454,7 @@ fileUploadButton.addEventListener("click", () => {
   fd.append("current_index", CURRENTFILEINDEX);
   fd.append("abs_path", ABSOLUTE_PATH);
   let xhr = new XMLHttpRequest();
-  xhr.responseType = 'blob';
+  xhr.responseType = "blob";
   xhr.open("POST", "/subCSV/", true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
@@ -463,15 +463,16 @@ fileUploadButton.addEventListener("click", () => {
        *
        * */
       let obj = new Blob([xhr.response]);
+      // Convert Obj to Blob
+      obj.lastModifiedDate = new Date();
+      obj.name = "test-file-name.jpg";
       let result = xhr.getResponseHeader("labelName");
+      // TODO: Remove The Uncessary Comments Later
+      console.log("obj >>>");
       console.log(obj);
       console.log(result);
-
-      // console.log(obj);
-      // let testingImg = "file://" + ABSOLUTE_PATH + "/" + obj[1][0];
-      // console.log(testingImg);
-      // const testing_img_tag = document.querySelector('#testing-image')
-      // document.querySelector("#testing-img").src = testingImg;
+      // Upload File To All The Canvas
+      loadFileToCanvas(obj);
     }
   };
   xhr.send(fd);
