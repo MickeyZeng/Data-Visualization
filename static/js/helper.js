@@ -183,6 +183,17 @@ function disCAM_MiddleWare(label, current_index) {
   setTimeout(() => {
     disCAM(label, current_index);
   }, 1000);
+  if (drawingPanel2.allInfo[RESULT_LABEL] != undefined) {
+    drawingPanel2.putBackScribble(
+      drawingPanel2.allInfo[RESULT_LABEL].negative,
+      Scribble_Colour.negative
+    ); // Negative Green Label
+
+    drawingPanel2.putBackScribble(
+      drawingPanel2.allInfo[RESULT_LABEL].positive,
+      Scribble_Colour.positive
+    ); // Positive Red Label
+  }
 }
 
 //TODO: Get the heatmap

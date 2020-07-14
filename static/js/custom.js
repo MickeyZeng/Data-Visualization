@@ -30,6 +30,12 @@ let CAM_OPTION = {
   15: "Integrated Gradients (without image multiplication)",
 };
 
+// Scribble Colour Option
+let Scribble_Colour = {
+  negative: "green",
+  positive: "red",
+};
+
 //Different colour map options
 let COLOUR_MAP_VALUE = "viridis";
 let COLOUR_MAP_OPTION = [
@@ -126,7 +132,7 @@ class ScribbleObject extends DrawingObject {
   }
   allInfo = {};
   init = () => {
-    this.drawing_panel_ctx.strokeStyle = "red"; // Scribble Pen Colour
+    this.drawing_panel_ctx.strokeStyle = Scribble_Colour.positive; // Scribble Pen Colour
     this.drawing_panel.addEventListener("mousedown", (e) => {
       this.is_drawing = true;
       [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
@@ -134,25 +140,55 @@ class ScribbleObject extends DrawingObject {
       // console.log(this.LastX, this.LastY);
     });
     this.drawing_panel.addEventListener("mousemove", this.drawing);
-    this.drawing_panel.addEventListener(
-      "mouseup",
-      () => (this.is_drawing = false)
-    );
-    this.drawing_panel.addEventListener(
-      "mouseout",
-      () => (this.is_drawing = false)
-    );
+    this.drawing_panel.addEventListener("mouseup", () => {
+      this.is_drawing = false;
+      try {
+        if (this.keydown) {
+          // Negative
+          if (this.allInfo[RESULT_LABEL] != null) {
+            this.allInfo[RESULT_LABEL].negative.push("break");
+          }
+        } else {
+          // Positive
+          if (this.allInfo[RESULT_LABEL] != null) {
+            this.allInfo[RESULT_LABEL].positive.push("break");
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    this.drawing_panel.addEventListener("mouseout", () => {
+      this.is_drawing = false;
+      /*
+        If This Is Another Stroke, Then Added A Seperator "break" To Indicate This Is Another Stroke,
+        The Reason Is For Putting Back Scribble Onto The Canvas
+      */
+      try {
+        if (this.keydown && this.allInfo[RESULT_LABEL] != null) {
+          // Negative
+          if (this.allInfo[RESULT_LABEL] != null) {
+            this.allInfo[RESULT_LABEL].negative.push("break");
+          }
+        } else {
+          // Positive
+          if (this.allInfo[RESULT_LABEL] != null) {
+            this.allInfo[RESULT_LABEL].positive.push("break");
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    });
     // Keyboard Event For Negative Scribble
     document.addEventListener("keyup", (e) => {
       if (e.keyCode == 18) {
         this.keydown = false;
-        console.log(e);
       }
     });
     document.addEventListener("keydown", (e) => {
       if (e.keyCode == 18) {
         this.keydown = true;
-        console.log(e);
       }
     });
   };
@@ -163,13 +199,9 @@ class ScribbleObject extends DrawingObject {
 
     if (this.keydown) {
       // negative scribble
-      console.log("this is for negative scribble");
 
-      // this.allInfo[RESULT_LABEL] = {
-
-      // }
       this.drawing_panel_ctx.beginPath();
-      this.drawing_panel_ctx.strokeStyle = "green"; // Scribble Pen Colour
+      this.drawing_panel_ctx.strokeStyle = Scribble_Colour.negative; // Scribble Pen Colour
 
       // Start From
       this.drawing_panel_ctx.moveTo(this.LastX, this.LastY);
@@ -196,7 +228,7 @@ class ScribbleObject extends DrawingObject {
     }
 
     this.drawing_panel_ctx.beginPath();
-    this.drawing_panel_ctx.strokeStyle = "red"; // Scribble Pen Colour
+    this.drawing_panel_ctx.strokeStyle = Scribble_Colour.positive; // Scribble Pen Colour
 
     // Start From
     this.drawing_panel_ctx.moveTo(this.LastX, this.LastY);
@@ -225,6 +257,18 @@ class ScribbleObject extends DrawingObject {
     // this.allInfo.RESULT_LABEL.positive.push({ x: this.LastX, y: this.LastY });
     // this.pointPositioin.yArray.push(this.LastY);
   };
+  // This Method Will Restore The Previous Scribble Onto The Canvas
+  putBackScribble(arr, colour) {
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] == "break") continue;
+      this.drawing_panel_ctx.beginPath();
+      this.drawing_panel_ctx.moveTo(arr[i].x, arr[i].y);
+      this.drawing_panel_ctx.lineTo(arr[i + 1].x, arr[i + 1].y);
+      this.drawing_panel_ctx.strokeStyle = colour;
+      this.drawing_panel_ctx.stroke();
+    }
+  }
+
   cleanUpScribbleFromCanvas() {
     this.drawing_panel_ctx.clearRect(
       0,
