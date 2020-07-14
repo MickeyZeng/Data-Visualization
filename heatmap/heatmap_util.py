@@ -1,3 +1,4 @@
+import matplotlib
 import numpy as np
 from PIL import Image
 
@@ -8,6 +9,7 @@ from heatmap import integrated_gradients as ig
 from heatmap import misc_functions as mics
 from heatmap import scorecam as score
 from heatmap import vanilla_backprop as vb
+from matplotlib import pyplot as plt
 
 
 # TODO: This is to display Integrated Gradients
@@ -59,7 +61,7 @@ def gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretra
     # Generate cam mask
     cam = grad_cam.generate_cam(prep_img, target_class)
 
-    heatmap, heatmap_on_image = mics.apply_colormap_on_image(original_image, cam, 'hsv')
+    heatmap, heatmap_on_image = mics.apply_colormap_on_image(original_image, cam, 'viridis')
 
     if type == "gray":
         cam = save_image(cam)
@@ -168,3 +170,11 @@ def save_image(im):
         im = Image.fromarray(im)
 
     return im
+
+
+def plot(tensor, index):
+    tensor = tensor[index]
+    tensor = tensor.detach().squeeze().numpy()
+
+    plt.imshow(tensor)
+    plt.show()

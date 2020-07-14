@@ -7,6 +7,8 @@ from PIL import Image
 import numpy as np
 import torch
 import torch.nn.functional as F
+import heatmap.heatmap_util as hu
+from matplotlib import pyplot as plt
 
 # from misc_functions import get_example_params, save_class_activation_images
 
