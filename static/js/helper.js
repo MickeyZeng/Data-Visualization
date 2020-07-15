@@ -167,11 +167,33 @@ function updateImage() {
 
 // CAM display MiddleWare for each result
 function disCAM_MiddleWare(label, current_index) {
+  // Display Msg
   snackBarDisplay("Fetching result for " + label);
+
   // Change The Scribble Label To Current Chosen Label
   RESULT_LABEL = label;
   // Clean Up Scribble Canvas
   drawingPanel2.cleanUpScribbleFromCanvas();
+
+  // Highlight The Chosen Option
+  const leaderBoard = document.querySelectorAll(
+    "#leader-board-current tbody tr"
+  );
+  // leaderBoard[0].style.color = "red";
+  // .getElementsByTagName("tbody")[0];
+  leaderBoard.forEach((item) => {
+    console.log(item.querySelector("td a").innerText);
+    const labelValue = item.querySelector("td a").innerText;
+    if (labelValue == label) {
+      item.style.backgroundColor = "#15100d";
+    } else {
+      item.style.backgroundColor = "#1c223b";
+    }
+  });
+  console.log(leaderBoard);
+  // leaderBoard.forEach((item) => console.log(item));
+  console.log(typeof leaderBoard);
+
   /*
    Time Out Here Is Just A Small Delay On Purpose
    Which Can Make The Process Smoothy
@@ -282,6 +304,12 @@ function updateTheLeaderBoard(table_id) {
 
   for (let index = 0; index < 5; index++) {
     let newRow = leaderBoardCurrent.insertRow(index);
+    // Defaul The First Row Is Chosen
+    if (index == 0) {
+      if (table_id == "leader-board-current") {
+        newRow.style.backgroundColor = "#15100d";
+      }
+    }
     newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${
       LeaderBoardResult[index].label
     }', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}</a></td> 

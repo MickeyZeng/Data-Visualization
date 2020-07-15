@@ -570,7 +570,7 @@ for (let i = 0; i < Object.keys(CAM_OPTION).length; i++) {
   console.log(CAM_OPTION[i]);
   let li = document.createElement("li");
   let href_a = document.createElement("a");
-  href_a.innerHTML = CAM_OPTION[i];
+  href_a.innerHTML = `${i}. ${CAM_OPTION[i]}`;
   // TODO: Finish Callback Function Instead Of Alert
   href_a.setAttribute("onclick", `sendCAMtoBackEnd(${i})`);
   li.appendChild(href_a);
