@@ -108,7 +108,11 @@ def calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidt
     heightRatio = originalImageHeight / drawingPanelWidth
 
     for i in range(len(pointPosition)):
-        tempList = {'x': pointPosition[i]['x'] * widthRatio, 'y': pointPosition[i]['y'] * heightRatio}
+        if pointPosition[i] == 'break':
+            tempList = 'break'
+            # print(pointPosition[i])
+        else:
+            tempList = {'x': pointPosition[i]['x'] * widthRatio, 'y': pointPosition[i]['y'] * heightRatio}
         resultList.append(tempList)
 
     tempResult[style] = resultList
@@ -143,7 +147,9 @@ def checkResultList(resultList, imgData, originalImageHeight, originalImageWidth
     plt.imshow(pic)
     # plt.plot(100, 100, 'ro')
     for i in range(len(resultList)):
-        plt.plot(resultList[i]['x'], resultList[i]['y'], '.r-')
+        if 'break' not in resultList[i]:
+            print(resultList[i])
+            plt.plot(resultList[i]['x'], resultList[i]['y'], '.r-')
         # print(resultList[i])
     plt.legend()
     plt.show()
