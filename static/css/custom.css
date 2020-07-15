@@ -96,6 +96,14 @@ body {
   /* border: 1px black solid; */
 }
 
+/* Scribble Tool Box */
+.scribble-tool-box {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
 .cam-dropdown {
   margin-top: 5px;
 }
@@ -318,7 +326,7 @@ table tbody tr td .fa-circle {
 
 .control-label {
   font-size: 1rem;
-  display: block;
+  display: inline-block;
   font-weight: 500;
 }
 .control-label:hover {

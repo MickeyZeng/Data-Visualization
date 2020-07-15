@@ -23,14 +23,6 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
   const featureMapOriginal = document.querySelector("#feature-map-original");
   const featureMapOriginalCTX = featureMapOriginal.getContext("2d");
 
-  // Clean Up Scribble When Comes A New Image
-  // drawingPanel2.drawing_panel_ctx.clearRect(
-  //   0,
-  //   0,
-  //   drawingPanel2.drawing_panel.width,
-  //   drawingPanel2.drawing_panel.height
-  // );
-
   if (empty) {
     // Empty Global Var
     LeaderBoardResult = [];
@@ -103,21 +95,21 @@ function uploadImageToCanvas(e) {
   loadFileToCanvas(MULTIFILES[0]);
 }
 
-function drawing(e) {
-  if (!IS_DRAWING || !PEN_TRIGGER) return; // Stop Drawing, Stop Function
+// function drawing(e) {
+//   if (!IS_DRAWING || !PEN_TRIGGER) return; // Stop Drawing, Stop Function
 
-  Drawing_panel_CTX.beginPath();
+//   Drawing_panel_CTX.beginPath();
 
-  // Start From
-  Drawing_panel_CTX.moveTo(LastX, LastY);
+//   // Start From
+//   Drawing_panel_CTX.moveTo(LastX, LastY);
 
-  // Go To
-  Drawing_panel_CTX.lineTo(e.offsetX, e.offsetY);
-  Drawing_panel_CTX.stroke();
+//   // Go To
+//   Drawing_panel_CTX.lineTo(e.offsetX, e.offsetY);
+//   Drawing_panel_CTX.stroke();
 
-  // Update LastX, LastY Position
-  [LastX, LastY] = [e.offsetX, e.offsetY];
-}
+//   // Update LastX, LastY Position
+//   [LastX, LastY] = [e.offsetX, e.offsetY];
+// }
 
 // Update The Pen
 function handleUpdate(e) {
@@ -180,6 +172,11 @@ function disCAM_MiddleWare(label, current_index) {
   RESULT_LABEL = label;
   // Clean Up Scribble Canvas
   drawingPanel2.cleanUpScribbleFromCanvas();
+  /*
+   Time Out Here Is Just A Small Delay On Purpose
+   Which Can Make The Process Smoothy
+  */
+
   setTimeout(() => {
     disCAM(label, current_index);
   }, 1000);

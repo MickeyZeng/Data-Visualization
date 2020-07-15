@@ -460,7 +460,7 @@ eraseAll.addEventListener("click", cleanAllandReDraw);
 
 // Change OverLay Opacity
 const overlayControls = document.querySelector(".overlay-control input");
-console.log(overlayControls);
+// console.log(overlayControls);
 overlayControls.addEventListener("change", handleOpacityChange);
 overlayControls.addEventListener("mousemove", handleOpacityChange);
 // overlay-control

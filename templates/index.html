@@ -119,17 +119,24 @@
 
                 <!-- Drawing Pens -->
                 <div class="drawing-pens">
-                  <a
+                  <button
+                    title="Drawing On Image"
                     class="btn-floating btn-large cyan pulse"
                     id="trigger-canvas"
-                    ><i class="material-icons">edit</i></a
                   >
-                  <a class="btn-floating btn-large red" id="clean-panel-1"
-                    ><i class="material-icons">clear</i></a
+                    <i class="material-icons">edit</i>
+                  </button>
+                  <button
+                    class="btn-floating btn-large red"
+                    title="Clean Up"
+                    id="clean-panel-1"
                   >
+                    <i class="material-icons">clear</i>
+                  </button>
                   <div class="drawing-pens-control">
                     <label class="control-label">Line Width:</label>
                     <input
+                      title="Drawing Pen Stroke Width"
                       id="spacing"
                       type="range"
                       name="spacing"
@@ -139,36 +146,66 @@
                       data-sizing="px"
                     />
                     <label class="control-label">Fill Colour</label>
-                    <input id="base" type="color" name="base" value="#BADA55" />
+                    <input
+                      id="base"
+                      title="Drawing Pen Colour"
+                      type="color"
+                      name="base"
+                      value="#BADA55"
+                    />
                   </div>
-                  <a class="btn-floating btn-large cyan" id="sribble-trigger"
-                    ><i class="material-icons">edit</i></a
-                  >
-                  <button class="btn" id="save-scribble">Save</button>
-                  <a
-                    class="btn-floating btn-large yellow"
-                    id="clean-up-scribble"
-                    ><i class="material-icons">clear</i></a
-                  >
-                  <span>
+
+                  <!-- Scribble Tool Box -->
+                  <div class="scribble-tool-box">
+                    <!-- Scribble Pen -->
+                    <button
+                      title="Scribble Pen"
+                      class="btn-floating btn-large cyan"
+                      id="sribble-trigger"
+                    >
+                      <i class="material-icons">edit</i>
+                    </button>
+                    <!-- Clean Up Button -->
+                    <button
+                      title="Clean Up Scribble For Current Class Label"
+                      class="btn-floating btn-large yellow"
+                      id="clean-up-scribble"
+                    >
+                      <i class="material-icons">clear</i>
+                    </button>
+                    <!-- Scribble Save Button -->
+                    <button
+                      class="btn"
+                      title="Save Scribble"
+                      id="save-scribble"
+                    >
+                      Save
+                    </button>
+                  </div>
+
+                  <!-- <span>
                     <label class="control-label">Scribble Pen Colour</label>
                     <input id="base" type="color" name="base" value="#BADA55"
-                  /></span>
+                  /></span> -->
                 </div>
                 <!-- Drawing Pens End Here -->
 
                 <!-- Prev/ Next Image -->
                 <div class="previous-next-selection">
-                  <a
+                  <button
+                    title="Previous Image"
                     class="btn-floating btn-large waves-effect waves-light red"
                     id="back-image"
-                    ><i class="material-icons">arrow_back</i></a
                   >
-                  <a
+                    <i class="material-icons">arrow_back</i>
+                  </button>
+                  <button
+                    title="Next Image"
                     class="btn-floating btn-large waves-effect waves-light red"
                     id="next-image"
-                    ><i class="material-icons">arrow_forward</i></a
                   >
+                    <i class="material-icons">arrow_forward</i>
+                  </button>
                 </div>
                 <!-- Prev/ Next Image End Here-->
 
@@ -178,6 +215,7 @@
                   <div class="overlay-control">
                     <label class="control-label">Opacity:</label>
                     <input
+                      title="Overlay Opacity adjustment"
                       id="spacing"
                       type="range"
                       name="spacing"
@@ -188,6 +226,7 @@
                     />
                   </div>
                   <button
+                    title="Submit Current Iamge"
                     class="btn waves-effect waves-light"
                     type="submit"
                     name="action"
@@ -378,7 +417,7 @@
                 style="border: 1px black solid;"
               >
                 <div class="network-dropdown-selection">
-                  <div class="color-map">
+                  <div class="">
                     <a
                       class="dropdown-trigger btn"
                       id="colour-map"
@@ -394,21 +433,58 @@
                       </li>
                       <li id="previous"><a href="#!">Resnet 18</a></li>
                       <li id="previous"><a href="#!">ResNet 50</a></li>
-                      <li id="previous"><a href="#!">plasma</a></li>
-                      <li id="previous"><a href="#!">cividis</a></li>
-                      <li id="previous"><a href="#!">twilight</a></li>
-                      <li id="previous"><a href="#!">twilight_shifted</a></li>
-                      <li id="previous"><a href="#!">turbo</a></li>
                     </ul>
                   </div>
                 </div>
-                <div class="upload-custom-weight">
-                  <div class="wrapper-upload">
-                    <input type="file" />
+
+                <!-- File upload -->
+                <!-- Network Arch -->
+                <div class="upload-network-arch">
+                  <div class="file-field input-field">
+                    <div class="btn">
+                      <span>Upload Arch</span>
+                      <input type="file" id="single-upload" />
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text" />
+                    </div>
                   </div>
                 </div>
+
+                <!-- Weights -->
+                <div class="upload-network-weight">
+                  <div class="file-field input-field">
+                    <div class="btn">
+                      <span>Upload Weights</span>
+                      <input type="file" id="single-upload" />
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Class Label -->
+                <div class="upload-network-label">
+                  <div class="file-field input-field">
+                    <div class="btn">
+                      <span>Upload Label</span>
+                      <input type="file" id="single-upload" />
+                    </div>
+                    <div class="file-path-wrapper">
+                      <input class="file-path validate" type="text" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Upload Button -->
+                <button class="btn" id="custom-network-file-upload">
+                  Upload
+                </button>
               </div>
+              <!-- File upload Finished Above-->
             </div>
+            <!-- Left Section Finished Above -->
             <div
               class="right-section"
               style="
@@ -457,7 +533,7 @@
     <script src="{% static 'js/helper.js' %}"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="{% static 'js/custom.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         var elems = document.querySelectorAll(".dropdown-trigger");
