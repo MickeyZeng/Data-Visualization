@@ -135,6 +135,9 @@ class ScribbleObject extends DrawingObject {
     this.drawing_panel_ctx.strokeStyle = Scribble_Colour.positive; // Scribble Pen Colour
     this.drawing_panel.addEventListener("mousedown", (e) => {
       this.is_drawing = true;
+      if (!this.pen_trigger) {
+        alert("Please Submit The Image And Activate Scribble First");
+      }
       [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
       // TODO: Remove This Console.log After Label Function
       // console.log(this.LastX, this.LastY);
@@ -184,17 +187,27 @@ class ScribbleObject extends DrawingObject {
     document.addEventListener("keyup", (e) => {
       if (e.keyCode == 18) {
         this.keydown = false;
+
+        // Change Cursor To Scribble Pen - Red
+        displayPanel.style.cursor =
+          "url(./static/css/image/cursors/scribble-red-pen-25*25.png), auto";
       }
     });
     document.addEventListener("keydown", (e) => {
       if (e.keyCode == 18) {
         this.keydown = true;
+
+        // Change Cursor To Scribble Pen - Green
+        displayPanel.style.cursor =
+          "url(./static/css/image/cursors/scribble-green-pen-25*25.png), auto";
       }
     });
   };
 
   drawing = (e) => {
-    if (!this.is_drawing || !this.pen_trigger) return; // Stop Drawing, Stop Function
+    if (!this.is_drawing || !this.pen_trigger) {
+      return;
+    } // Stop Drawing, Stop Function
     // document.addEventListener("keydown", (e) => console.log(e));
 
     if (this.keydown) {

@@ -144,6 +144,8 @@ body {
 .work-place-wrapper .work-place-1 {
   grid-area: left1;
   background-color: rgb(175, 187, 225);
+  /* cursor: pointer; */
+  cursor: url("./image/cursors/quill3.png"), default;
 }
 
 /* WorkSpace 2 Is the Displaying Panel */
@@ -151,6 +153,7 @@ body {
   grid-area: right1;
   position: relative;
   /* background-color: rgb(41, 10, 154); */
+  cursor: url("./image/cursors/scribble-red-pen-25*25.png"), default;
 }
 
 #display-area {
