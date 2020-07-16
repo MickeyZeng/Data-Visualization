@@ -7,6 +7,8 @@ from django.http import FileResponse
 from django.http import Http404
 from matplotlib import pyplot as plt
 
+from ResNet50 import json_to_dict as jd
+
 
 # TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
 def arrToTensor(imgData, width, height):
@@ -68,14 +70,22 @@ def processScribble(originalImageHeight, originalImageWidth, fileName, positiveP
 
     resultList = {}
 
+    index = jd.dis_index(classLabel)
+
+    labelInfoList = {'index': index}
+
     positiveList = calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, positivePointPosition,
                                       'positive')
 
     negativeList = calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, negativePointPositive,
                                       'negative')
 
-    tempList = [positiveList, negativeList]
+    tempList = [labelInfoList, positiveList, negativeList]
 
+    # Save the original size in the JSON file
+    resultList["originalSize"] = {'width': originalImageWidth, 'height': originalImageHeight}
+
+    # Save the point position and index in JSON file
     resultList[classLabel] = tempList
 
     """
