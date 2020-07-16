@@ -365,6 +365,8 @@ window.addEventListener("load", (e) => {
   nextButton.addEventListener("click", (e) => {
     if (CSV_IMG_SWITCH) {
       // CSV
+      CURRENTFILEINDEX++;
+      // ABSOLUTE_PATH
     } else {
       // Normal Image
       if (CURRENTFILEINDEX < MULTIFILES.length - 1) {
@@ -392,6 +394,10 @@ window.addEventListener("load", (e) => {
   backButton.addEventListener("click", () => {
     if (CSV_IMG_SWITCH) {
       // CSV
+      if (CURRENTFILEINDEX > 0) {
+        CURRENTFILEINDEX--;
+        // ABSOLUTE_PATH
+      }
     } else {
       // Normal Image
       if (CURRENTFILEINDEX > 0) {
