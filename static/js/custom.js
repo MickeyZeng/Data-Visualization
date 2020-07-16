@@ -205,9 +205,8 @@ class ScribbleObject extends DrawingObject {
   };
 
   drawing = (e) => {
-    if (!this.is_drawing || !this.pen_trigger) {
-      return;
-    } // Stop Drawing, Stop Function
+    if (!this.is_drawing || !this.pen_trigger) return;
+    // Stop Drawing, Stop Function
     // document.addEventListener("keydown", (e) => console.log(e));
 
     if (this.keydown) {
