@@ -13,8 +13,6 @@ from demoConnect import util
 from heatmap import heatmap_util as heatUtil
 from heatmap import misc_functions as mics
 
-# Global Instance to save the file
-CSFile = 0
 
 def testThreeDimension(request):
     """
@@ -217,13 +215,12 @@ def disHeatMap(request):
 # TODO: This is to read the CSV file
 @csrf_exempt
 def readCSV(request):
-    if len(request.POST.FILES) > 0:
+    CSVFile = 0
+
+    if len(request.FILES) > 0:
         CSVFile = request.FILES['csvFile']
     current_index = request.POST.get('current_index')
     abs_path = request.POST.get('abs_path')
-
-    if CSVFile == 0:
-        return Http404
 
     result = util.readFile(CSVFile, current_index, abs_path)
 

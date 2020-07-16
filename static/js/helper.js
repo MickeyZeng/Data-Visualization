@@ -822,3 +822,41 @@ function displayNet() {
   };
   xhr.send(fd); // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
 }
+
+// Send the request to back-end (发送请求到后端)
+function switchPic(currentIndex, abs_path) {
+
+  if (currentIndex < 0) {
+    alert("This is the first Image!");
+    return;
+  }
+  if (parseInt(currentIndex) === parseInt(CSVFILELISTLENGTH)) {
+    CURRENTFILEINDEX--;
+    alert("This is last image");
+    return
+  }
+
+  let fd = new FormData(); //Like a form data
+  fd.append('current_index', currentIndex);
+  fd.append('abs_path', abs_path);
+
+  let xhr = new XMLHttpRequest();
+  xhr.responseType = "blob";  // IT IS REALLY REALLY ESSENTIAL
+  xhr.open("POST", "/subCSV/", true);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      let obj = new Blob([xhr.response]);
+      // Convert Obj to Blob
+      obj.lastModifiedDate = new Date();
+      obj.name = "test-file-name1.jpg";
+      let result = xhr.getResponseHeader("labelName");
+      CSVFILELISTLENGTH = xhr.getResponseHeader("fileLength");
+      // console.log(result);
+      // console.log(length);
+      // console.log(obj);
+      loadFileToCanvas(obj);
+    }
+  };
+  xhr.send(fd);
+}

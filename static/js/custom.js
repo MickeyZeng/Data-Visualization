@@ -10,6 +10,8 @@ let LeaderBoardResult = []; // For Leader Board
 let originalImageHeight;
 let originalImageWidth;
 
+let CSVFILELISTLENGTH = 0
+
 //Different CAM picture options
 let CAM_OPTION = {
   0: "Please Choose An Option",
@@ -367,6 +369,7 @@ window.addEventListener("load", (e) => {
       // CSV
       CURRENTFILEINDEX++;
       // ABSOLUTE_PATH
+      switchPic(CURRENTFILEINDEX, ABSOLUTE_PATH);
     } else {
       // Normal Image
       if (CURRENTFILEINDEX < MULTIFILES.length - 1) {
@@ -397,6 +400,7 @@ window.addEventListener("load", (e) => {
       if (CURRENTFILEINDEX > 0) {
         CURRENTFILEINDEX--;
         // ABSOLUTE_PATH
+        switchPic(CURRENTFILEINDEX, ABSOLUTE_PATH);
       }
     } else {
       // Normal Image

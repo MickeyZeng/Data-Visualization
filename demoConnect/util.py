@@ -1,5 +1,4 @@
 import json
-
 import numpy as np
 import pandas
 from PIL import Image
@@ -9,6 +8,7 @@ from matplotlib import pyplot as plt
 
 from ResNet50 import json_to_dict as jd
 
+df = 0
 
 # TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
 def arrToTensor(imgData, width, height):
@@ -30,7 +30,12 @@ def arrToTensor(imgData, width, height):
 # TODO: This is to Read the CSV file (这里是处理上传上来的CSV文件, 然后返回一个一个文件类型的参数)
 def readFile(file, current_index, abs_path):
     # This is to read a certain file
-    df = pandas.read_csv(file)
+    global df
+    if file != 0:
+        df = pandas.read_csv(file)
+
+    if len(df) == 0 and file == 0:
+        return Http404
     # df = pandas.read_csv('test.csv')
     # / Users / mickey / Downloads / dataSet 测试路径
     name = df['Ground Truth'].tolist()
@@ -46,6 +51,7 @@ def readFile(file, current_index, abs_path):
         response = FileResponse(open(resultPath, 'rb'))
         response['Content-Type'] = 'application/octet-stream'  # 设置头信息，告诉浏览器这是个文件
         response['labelName'] = resultName
+        response['fileLength'] = len(name)
         response.as_attachment = False
         return response
     except Exception:
