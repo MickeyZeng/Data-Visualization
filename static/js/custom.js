@@ -10,7 +10,7 @@ let LeaderBoardResult = []; // For Leader Board
 let originalImageHeight;
 let originalImageWidth;
 
-let CSVFILELISTLENGTH = 0
+let CSVFILELISTLENGTH = 0;
 
 //Different CAM picture options
 let CAM_OPTION = {
@@ -401,6 +401,11 @@ window.addEventListener("load", (e) => {
         CURRENTFILEINDEX--;
         // ABSOLUTE_PATH
         switchPic(CURRENTFILEINDEX, ABSOLUTE_PATH);
+      }
+      // Hand The First image Case
+      if (CURRENTFILEINDEX == 0) {
+        alert("This is the first Image");
+        return;
       }
     } else {
       // Normal Image
