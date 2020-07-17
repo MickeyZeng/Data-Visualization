@@ -323,12 +323,20 @@ function updateTheLeaderBoard(table_id) {
     <td>${LeaderBoardResult[index].rate}</td>
     <td>${
       table_id == "leader-board-previous" ? "#" : LeaderBoardResult[index].rank
-      //  == "+"
-      // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
-      // : LeaderBoardResult[index].rank[0] == "-"
-      // ? "<i class=fa-caret-up>" + "</i>" + LeaderBoardResult[index].rank
-      // : LeaderBoardResult[index].rank
     }</td> 
+    `;
+  }
+  let tempResult = LeaderBoardResult.filter(
+    (item) => item.label == GROUND_TRUTH
+  );
+  console.log(tempResult.length);
+  if (tempResult.length == 0) {
+    let newRow = leaderBoardCurrent.insertRow(LeaderBoardResult.length);
+    newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX)">${GROUND_TRUTH}
+         <span class="new badge" data-badge-caption="">gt</span>
+    </a></td> 
+    <td>xx%</td>
+    <td>${table_id == "leader-board-previous" ? "#" : "xx Rank"}</td> 
     `;
   }
 }
