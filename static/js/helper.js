@@ -312,7 +312,14 @@ function updateTheLeaderBoard(table_id) {
     }
     newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${
       LeaderBoardResult[index].label
-    }', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}</a></td> 
+    }', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}
+    ${
+      LeaderBoardResult[index].label == GROUND_TRUTH
+        ? '<span class="new badge" data-badge-caption="">gt</span> '
+        : ""
+    }
+    
+    </a></td> 
     <td>${LeaderBoardResult[index].rate}</td>
     <td>${
       table_id == "leader-board-previous" ? "#" : LeaderBoardResult[index].rank
@@ -825,7 +832,6 @@ function displayNet() {
 
 // Send the request to back-end (发送请求到后端)
 function switchPic(currentIndex, abs_path) {
-
   if (currentIndex < 0) {
     alert("This is the first Image!");
     return;
@@ -833,15 +839,15 @@ function switchPic(currentIndex, abs_path) {
   if (parseInt(currentIndex) === parseInt(CSVFILELISTLENGTH)) {
     CURRENTFILEINDEX--;
     alert("This is last image");
-    return
+    return;
   }
 
   let fd = new FormData(); //Like a form data
-  fd.append('current_index', currentIndex);
-  fd.append('abs_path', abs_path);
+  fd.append("current_index", currentIndex);
+  fd.append("abs_path", abs_path);
 
   let xhr = new XMLHttpRequest();
-  xhr.responseType = "blob";  // IT IS REALLY REALLY ESSENTIAL
+  xhr.responseType = "blob"; // IT IS REALLY REALLY ESSENTIAL
   xhr.open("POST", "/subCSV/", true);
 
   xhr.onreadystatechange = function () {
@@ -851,6 +857,7 @@ function switchPic(currentIndex, abs_path) {
       obj.lastModifiedDate = new Date();
       obj.name = "test-file-name1.jpg";
       let result = xhr.getResponseHeader("labelName");
+      GROUND_TRUTH = result;
       CSVFILELISTLENGTH = xhr.getResponseHeader("fileLength");
       // console.log(result);
       // console.log(length);

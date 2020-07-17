@@ -5,6 +5,8 @@ CURRENTFILEINDEX = 0; // current file load on the canvas
 let upload_image; // the 3d array for pic Data
 let CANVAS1DATA;
 
+let GROUND_TRUTH;
+
 let modelMode = true; // True is 2D & False is 3D
 let LeaderBoardResult = []; // For Leader Board
 let originalImageHeight;
