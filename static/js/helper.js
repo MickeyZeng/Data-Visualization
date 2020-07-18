@@ -128,7 +128,11 @@ function handleOpacityChange(e) {
 
 // Clean Drawing Panel-1 And Redraw
 function cleanAllandReDraw() {
-  loadFileToCanvas(MULTIFILES[CURRENTFILEINDEX], true);
+  if (CSV_IMG_SWITCH) {
+    loadFileToCanvas(CSV_IMAGE_FILE, true);
+  } else {
+    loadFileToCanvas(MULTIFILES[CURRENTFILEINDEX], true);
+  }
 }
 
 //TODO: Update the upload_image data in 3D array
@@ -330,7 +334,7 @@ function updateTheLeaderBoard(table_id) {
     (item) => item.label == GROUND_TRUTH
   );
   console.log(tempResult.length);
-  if (tempResult.length == 0) {
+  if (tempResult.length == 0 && CSV_IMG_SWITCH) {
     let newRow = leaderBoardCurrent.insertRow(LeaderBoardResult.length);
     newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX)">${GROUND_TRUTH}
          <span class="new badge" data-badge-caption="">gt</span>
@@ -840,10 +844,6 @@ function displayNet() {
 
 // Send the request to back-end (发送请求到后端)
 function switchPic(currentIndex, abs_path) {
-  if (currentIndex < 0) {
-    alert("This is the first Image!");
-    return;
-  }
   if (parseInt(currentIndex) === parseInt(CSVFILELISTLENGTH)) {
     CURRENTFILEINDEX--;
     alert("This is last image");
@@ -870,6 +870,8 @@ function switchPic(currentIndex, abs_path) {
       // console.log(result);
       // console.log(length);
       // console.log(obj);
+      // Assign File Obj To Global Variable CSV_IMAGE_FILE
+      CSV_IMAGE_FILE = obj;
       loadFileToCanvas(obj);
     }
   };

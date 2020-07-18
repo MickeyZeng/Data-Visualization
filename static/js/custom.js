@@ -1,3 +1,5 @@
+// This Object Is The Center Control All The Settings
+GLOBAL_SETTING = {};
 // Global Variables
 MULTIFILES = [];
 CURRENTFILEINDEX = 0; // current file load on the canvas
@@ -5,7 +7,8 @@ CURRENTFILEINDEX = 0; // current file load on the canvas
 let upload_image; // the 3d array for pic Data
 let CANVAS1DATA;
 
-let GROUND_TRUTH;
+let GROUND_TRUTH; // Ground Truth Class Label
+let CSV_IMAGE_FILE; // Image File Received From Backend By CSV
 
 let modelMode = true; // True is 2D & False is 3D
 let LeaderBoardResult = []; // For Leader Board
@@ -64,6 +67,10 @@ let NEURAL_NETWORK_OPTION = [
 ];
 
 let CURRENT_CAM = 1; // CAM Starts From 1 To 15
+/*
+RESULT_LABEL is very important global variable
+It can control the which scribble current is labeling, which label for cam.
+*/
 let RESULT_LABEL;
 
 // Drawing Function - For Drawing On The Image
@@ -399,15 +406,15 @@ window.addEventListener("load", (e) => {
   backButton.addEventListener("click", () => {
     if (CSV_IMG_SWITCH) {
       // CSV
-      if (CURRENTFILEINDEX > 0) {
-        CURRENTFILEINDEX--;
-        // ABSOLUTE_PATH
-        switchPic(CURRENTFILEINDEX, ABSOLUTE_PATH);
-      }
       // Hand The First image Case
       if (CURRENTFILEINDEX == 0) {
         alert("This is the first Image");
         return;
+      }
+      if (CURRENTFILEINDEX > 0) {
+        CURRENTFILEINDEX--;
+        // ABSOLUTE_PATH
+        switchPic(CURRENTFILEINDEX, ABSOLUTE_PATH);
       }
     } else {
       // Normal Image
@@ -544,6 +551,8 @@ fileUploadButton.addEventListener("click", () => {
       console.log("obj >>>");
       console.log(obj);
       console.log(result);
+      // Assign File Obj To Global Variable CSV_IMAGE_FILE
+      CSV_IMAGE_FILE = obj;
       // Upload File To All The Canvas
       loadFileToCanvas(obj);
     }
@@ -752,7 +761,9 @@ saveScribbleBtn.addEventListener("click", () => {
       a.remove();
       window.URL.revokeObjectURL(url);
 
+      // TODO: Edit Msg
       // Snack Bar Msg Goes Here
+      snackBarDisplay("Downloading...");
     },
   });
   //  这里可以加一些用户的提示 让用户知道是否成功下载文件
