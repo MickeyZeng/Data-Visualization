@@ -1,21 +1,26 @@
 // This Object Is The Center Control All The Settings
+/*
+GLOBAL_SETTING:
+1. User can select the number of rows for the leader board results
+2. Refact the code, put some global var in it
+*/
 GLOBAL_SETTING = {};
 // Global Variables
 MULTIFILES = [];
 CURRENTFILEINDEX = 0; // current file load on the canvas
 
 let upload_image; // the 3d array for pic Data
-let CANVAS1DATA;
+let CANVAS1DATA; // Canvas Data
 
 let GROUND_TRUTH; // Ground Truth Class Label
 let CSV_IMAGE_FILE; // Image File Received From Backend By CSV
 
 let modelMode = true; // True is 2D & False is 3D
 let LeaderBoardResult = []; // For Leader Board
-let originalImageHeight;
-let originalImageWidth;
+let originalImageHeight; // The Original Image Height
+let originalImageWidth; // The Original Image Width
 
-let CSVFILELISTLENGTH = 0;
+let CSVFILELISTLENGTH = 0; // the length of images that CSV file contains
 
 //Different CAM picture options
 let CAM_OPTION = {
@@ -71,7 +76,7 @@ let CURRENT_CAM = 1; // CAM Starts From 1 To 15
 RESULT_LABEL is very important global variable
 It can control the which scribble current is labeling, which label for cam.
 */
-let RESULT_LABEL;
+let RESULT_LABEL; // See above
 
 // Drawing Function - For Drawing On The Image
 class DrawingObject {
