@@ -501,7 +501,6 @@ eraseAll.addEventListener("click", cleanAllandReDraw);
 
 // Change OverLay Opacity
 const overlayControls = document.querySelector(".overlay-control input");
-// console.log(overlayControls);
 overlayControls.addEventListener("change", handleOpacityChange);
 overlayControls.addEventListener("mousemove", handleOpacityChange);
 // overlay-control
@@ -675,7 +674,6 @@ csv_image_switch.addEventListener("change", (e) => {
   CSV_IMG_SWITCH = !CSV_IMG_SWITCH;
   if (CSV_IMG_SWITCH) {
     // display CSV
-
     upload_image_section.style.display = "none";
     upload_csv_section.style.display = "block";
   } else {
