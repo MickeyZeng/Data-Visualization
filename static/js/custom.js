@@ -763,10 +763,10 @@ saveScribbleBtn.addEventListener("click", () => {
 
       // TODO: Edit Msg
       // Snack Bar Msg Goes Here
+      //  这里可以加一些用户的提示 让用户知道是否成功下载文件
       snackBarDisplay("Downloading...");
     },
   });
-  //  这里可以加一些用户的提示 让用户知道是否成功下载文件
 });
 
 // Clean Up Scribble If Draw Wrong
