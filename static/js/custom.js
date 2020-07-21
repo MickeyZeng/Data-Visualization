@@ -724,9 +724,6 @@ saveScribbleBtn.addEventListener("click", () => {
 
     fileName --> 当前文件的名字，后台存的时候可以用file名字，这里提供的是带后缀的文件名
   */
-  // console.log("原图比例 = " + originalImageHeight + "\t" + originalImageWidth);
-  // console.log("所有点的位置 = " + drawingPanel2.pointPositioin[10]['x']);
-  // console.log("FileName is = " + fileName);
 
   updateImage(); //Got the data from the canvas
 
@@ -776,4 +773,47 @@ saveScribbleBtn.addEventListener("click", () => {
 const cleanUpScribbleBtn = document.querySelector("#clean-up-scribble");
 cleanUpScribbleBtn.addEventListener("click", () => {
   drawingPanel2.cleanUpScribbleForTheCurrentImage();
+});
+
+// Customize Network
+const uploadCustomizeNetworkFileBtn = document.querySelector(
+  "#custom-network-file-upload"
+);
+uploadCustomizeNetworkFileBtn.addEventListener("click", () => {
+  const allFilesObj = document.querySelectorAll(
+    // Select all the files
+    "#upload-arch-file, #upload-weights-file, #upload-label-file"
+  );
+  // Clean up allFiles to prevent bugs
+  const allFiles = [];
+  /*
+    0 is arch
+    1 is weights
+    2 is class label
+  */
+  allFilesObj.forEach((item) => {
+    /* 
+      Some error handling here to prevent user did not submit enough file
+    */
+    if (item.files[0] == undefined) {
+      snackBarDisplay(
+        "Error! Missing Fatal Files, Please Check All Files",
+        5000
+      );
+      return;
+    }
+    // Get each file
+    console.log(item.files[0]);
+    allFiles.push(item.files[0]);
+  });
+
+  // Send to back end to process
+  /* 
+  Docs:
+    allFiles is an array which has all the files
+    allFiles[0] - arch 网络结构
+    allFiles[1] - weights 
+    allFiles[2] - class label
+  */
+  console.log(allFiles);
 });
