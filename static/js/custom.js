@@ -559,6 +559,8 @@ fileUploadButton.addEventListener("click", () => {
       // Assign File Obj To Global Variable CSV_IMAGE_FILE
       CSV_IMAGE_FILE = obj;
       // Upload File To All The Canvas
+      let result = xhr.getResponseHeader("labelName");
+      GROUND_TRUTH = result;
       loadFileToCanvas(obj);
     }
   };
