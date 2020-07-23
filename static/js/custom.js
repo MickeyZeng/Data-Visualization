@@ -548,6 +548,7 @@ fileUploadButton.addEventListener("click", () => {
        * */
       let obj = new Blob([xhr.response]);
       // Convert Obj to Blob
+      console.log(obj);
       obj.lastModifiedDate = new Date();
       obj.name = "test-file-name.jpg";
       let result = xhr.getResponseHeader("labelName");
@@ -716,7 +717,13 @@ document.getElementById("disNetwork").addEventListener("click", () => {
 // Save Scribble
 const saveScribbleBtn = document.querySelector("#save-scribble");
 saveScribbleBtn.addEventListener("click", () => {
-  let fileName = MULTIFILES[CURRENTFILEINDEX].name;
+  // let fileName = MULTIFILES[CURRENTFILEINDEX].name;
+  let fileName;
+  if (CSV_IMG_SWITCH) {
+    fileName = CSV_IMAGE_FILE.name;
+  } else {
+    fileName = MULTIFILES[CURRENTFILEINDEX].name;
+  }
   /*
     originalImageHeight, originalImageWidth --> 原图的Height/ Width
 
