@@ -29,6 +29,7 @@ urlpatterns = [
     path('heatMap/', views.disHeatMap),
     path('subCSV/', views.readCSV),
     path('saveScribble/', views.saveScribble),
+    path('processFile/', views.processCustomNetwork),
     path('', views.homepage),
 ]
 

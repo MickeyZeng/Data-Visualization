@@ -1,4 +1,7 @@
 import json
+import os
+import shutil
+
 import numpy as np
 import pandas
 from PIL import Image
@@ -169,3 +172,15 @@ def checkResultList(resultList, imgData, originalImageHeight, originalImageWidth
         # print(resultList[i])
     plt.legend()
     plt.show()
+
+
+# TODO: PROCESS the custom neural network File
+def processFile(arch, weights, label):
+    # 1. Clean the directory named customNetwork (清空customNetwork的文件)
+    shutil.rmtree("customNetwork")
+    os.mkdir("customNetwork")
+
+    # 2. 查看文件类型
+
+
+    return True
