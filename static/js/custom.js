@@ -550,7 +550,8 @@ fileUploadButton.addEventListener("click", () => {
       // Convert Obj to Blob
       console.log(obj);
       obj.lastModifiedDate = new Date();
-      obj.name = "test-file-name.jpg";
+      let blobFileName = xhr.getResponseHeader("fileName");
+      obj.name = blobFileName;
       // TODO: Remove The Uncessary Comments Later
       console.log("obj >>>");
       console.log(obj);

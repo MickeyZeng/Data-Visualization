@@ -173,6 +173,7 @@ function updateImage() {
 function disCAM_MiddleWare(label, current_index) {
   // Display Msg
   snackBarDisplay("Fetching result for " + label);
+  console.log(label);
 
   // Change The Scribble Label To Current Chosen Label
   RESULT_LABEL = label;
@@ -188,9 +189,15 @@ function disCAM_MiddleWare(label, current_index) {
   leaderBoard.forEach((item) => {
     console.log(item.querySelector("td a").innerText);
     const labelValue = item.querySelector("td a").innerText;
+    console.log("hello value", label, "+++++++++++++", labelValue);
+    console.log(typeof labelValue);
+    console.log("----------------------------");
+    console.log(typeof label);
     if (labelValue == label) {
+      console.log("okokokokok!!!!!!!!!!!!!!!!!!!!!!!");
       item.style.backgroundColor = "#15100d";
     } else {
+      console.log("nonononono!!!!!!!!!!!!!!!!!!!!!!!!");
       item.style.backgroundColor = "#1c223b";
     }
   });
@@ -316,14 +323,13 @@ function updateTheLeaderBoard(table_id) {
     }
     newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${
       LeaderBoardResult[index].label
-    }', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}
+    }', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}</a>
     ${
       LeaderBoardResult[index].label == GROUND_TRUTH
         ? '<span class="new badge" data-badge-caption="">gt</span> '
         : ""
     }
-    
-    </a></td> 
+    </td> 
     <td>${LeaderBoardResult[index].rate}</td>
     <td>${
       table_id == "leader-board-previous" ? "#" : LeaderBoardResult[index].rank
@@ -336,9 +342,9 @@ function updateTheLeaderBoard(table_id) {
   console.log(tempResult.length);
   if (tempResult.length == 0 && CSV_IMG_SWITCH) {
     let newRow = leaderBoardCurrent.insertRow(LeaderBoardResult.length);
-    newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX)">${GROUND_TRUTH}
-         <span class="new badge" data-badge-caption="">gt</span>
-    </a></td> 
+    newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX)">${GROUND_TRUTH}</a>
+    <span class="new badge" data-badge-caption="">gt</span>
+    </td> 
     <td>xx%</td>
     <td>${table_id == "leader-board-previous" ? "#" : "xx Rank"}</td> 
     `;
@@ -863,7 +869,8 @@ function switchPic(currentIndex, abs_path) {
       let obj = new Blob([xhr.response]);
       // Convert Obj to Blob
       obj.lastModifiedDate = new Date();
-      obj.name = "test-file-name1.jpg";
+      let blobFileName = xhr.getResponseHeader("fileName");
+      obj.name = blobFileName;
       let result = xhr.getResponseHeader("labelName");
       GROUND_TRUTH = result;
       CSVFILELISTLENGTH = xhr.getResponseHeader("fileLength");
