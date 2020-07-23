@@ -299,3 +299,20 @@ def saveScribble(request):
             raise Http404
 
     raise Http404
+
+
+# TODO: This is to process the neural network configuration
+#  (4 types of configurations including:
+#  1. Type of network
+#  2. Network Arch
+#  3. Network Weights
+#  4. Network Labels
+@csrf_exempt
+def processCustomNetwork(request):
+    # Receive three files
+    arch = request.FILES['arch']
+    weights = request.FILES['weights']
+    label = request.FILES['label']
+    # Process the files
+    result = util.processFile(arch, weights, label)
+    return HttpResponse(result)

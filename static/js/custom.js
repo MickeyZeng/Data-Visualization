@@ -816,4 +816,22 @@ uploadCustomizeNetworkFileBtn.addEventListener("click", () => {
     allFiles[2] - class label
   */
   console.log(allFiles);
+
+  //Sending the request to back-end
+  let fd = new FormData(); //Like a form data
+
+  fd.append("arch", allFiles[0]);
+  fd.append("weights", allFiles[1]);
+  fd.append("label", allFiles[2]);
+
+  let xhr = new XMLHttpRequest();
+
+  xhr.open("POST", "/processFile/", true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4) {
+      var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+      console.log(obj);
+    }
+  };
+  xhr.send(fd); // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
 });
