@@ -46,6 +46,9 @@ def readFile(file, current_index, abs_path):
 
     resultName = name[int(current_index)]
     resultPath = abs_path + path[int(current_index)]
+    fileName = path[int(current_index)].split('/')[1]
+
+    print("the name of file is " + fileName)
 
     """
     通过resultName & resultPath 获取文件类型
@@ -55,6 +58,7 @@ def readFile(file, current_index, abs_path):
         response['Content-Type'] = 'application/octet-stream'  # 设置头信息，告诉浏览器这是个文件
         response['labelName'] = resultName
         response['fileLength'] = len(name)
+        response['fileName'] = fileName
         response.as_attachment = False
         return response
     except Exception:
@@ -181,6 +185,5 @@ def processFile(arch, weights, label):
     os.mkdir("customNetwork")
 
     # 2. 查看文件类型
-
 
     return True
