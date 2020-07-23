@@ -551,12 +551,10 @@ fileUploadButton.addEventListener("click", () => {
       console.log(obj);
       obj.lastModifiedDate = new Date();
       obj.name = "test-file-name.jpg";
-      let result = xhr.getResponseHeader("labelName");
       // TODO: Remove The Uncessary Comments Later
       console.log("obj >>>");
       console.log(obj);
-      console.log(result);
-      GROUND_TRUTH = result;
+      // console.log(result);
       // Assign File Obj To Global Variable CSV_IMAGE_FILE
       CSV_IMAGE_FILE = obj;
       // Upload File To All The Canvas
