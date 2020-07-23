@@ -556,6 +556,7 @@ fileUploadButton.addEventListener("click", () => {
       console.log("obj >>>");
       console.log(obj);
       console.log(result);
+      GROUND_TRUTH = result;
       // Assign File Obj To Global Variable CSV_IMAGE_FILE
       CSV_IMAGE_FILE = obj;
       // Upload File To All The Canvas
