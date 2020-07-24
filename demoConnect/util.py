@@ -1,15 +1,15 @@
 import json
 import os
-import shutil
 
 import numpy as np
 import pandas
 from PIL import Image
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
 from django.http import Http404
 from matplotlib import pyplot as plt
 
 from ResNet50 import json_to_dict as jd
+from demoConnect.settings import BASE_DIR
 
 df = 0
 
@@ -180,10 +180,29 @@ def checkResultList(resultList, imgData, originalImageHeight, originalImageWidth
 
 # TODO: PROCESS the custom neural network File
 def processFile(arch, weights, label):
-    # 1. Clean the directory named customNetwork (清空customNetwork的文件)
-    shutil.rmtree("customNetwork")
-    os.mkdir("customNetwork")
+    # 2. Check the type of file (查看文件类型)
+    if (getFileName(arch) != "py") or (getFileName(weights) != "pth") or (getFileName(label) != "json"):
+        return False
 
-    # 2. 查看文件类型
+    # 3. Check if there is a function named getNetwork in arch file (检查arch文件是否有getNetWork函数)
+    download_file(arch, 'arch.py')
+    download_file(weights, 'weight.pth')
+    download_file(label, 'label.json')
+    return True
 
+
+# TODO: To extract the name of file 得到后缀名
+def getFileName(file):
+    fileName = file._get_name().split(".")[-1]
+    # print(fileName)
+    return fileName
+
+
+# TODO: Download the file in a directory
+def download_file(file, name):
+    dir = os.path.join(os.path.join(BASE_DIR, 'customNetwork'))
+    destination = open(os.path.join(dir, name), 'wb+')
+    for chunk in file.chunks():
+        destination.write(chunk)
+    destination.close()
     return True
