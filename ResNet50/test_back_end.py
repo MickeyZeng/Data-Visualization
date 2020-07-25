@@ -25,8 +25,9 @@ picData = 0
 cmp = ""
 
 
-def mc_Resnet(img, netName):
+def mc_Resnet(img, netName, jsonType):
     """
+    :param jsonType: This is to let the resnet has different dictionary to translate the result
     :param img:
     :param netName:
     :TODO: Process the file by resNet
@@ -62,8 +63,15 @@ def mc_Resnet(img, netName):
     # 控制在三位
     outputs_numpy = np.around(outputs_numpy, 3)
 
-    # Got the json file by the path
-    dictionary = jtd.json_to_dict("ResNet50/imagenet-simple-labels.json")
+    # Got the json file by the path 0 => default JSON ; 1 => custom JSON
+    if jsonType == 0:
+        jsonPath = "ResNet50/imagenet-simple-labels.json"
+    elif jsonType == 1:
+        jsonPath = "customNetwork/label.json"
+    else:
+        return False
+
+    dictionary = jtd.json_to_dict(jsonPath)
     result = []
     resultRate = []
     # for i in range(top_k_idx):

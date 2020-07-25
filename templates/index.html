@@ -419,28 +419,29 @@
                 <div class="network-dropdown-selection">
                   <div class="">
                     <a
-                      class="dropdown-trigger btn"
-                      id="colour-map"
-                      href=" "
-                      data-target="dropdown2"
+                            class="dropdown-trigger btn"
+                            id="colour-map"
+                            href=" "
+                            data-target="dropdown2"
                     >
-                      NetWork
+                        NetWork
                     </a>
-                    <!-- Dropdown Structure -->
-                    <ul id="dropdown2" class="dropdown-content">
-                      <li id="previous" data-value="viridis">
-                        <a href="#!">viridis</a>
-                      </li>
-                      <li id="previous"><a href="#!">Resnet 18</a></li>
-                      <li id="previous"><a href="#!">ResNet 50</a></li>
-                    </ul>
+                      <!-- Dropdown Structure -->
+                      <ul id="dropdown2" class="dropdown-content">
+                          <li id="previous" data-value="viridis">
+                              <a href="#!">viridis</a>
+                          </li>
+                          <!-- 在这里要添加其他Resnet的选项 然后最好有一个全局变量确定当前用户的选择是什么 这样传给后台好使用 -->
+                          <li id="previous"><a href="#!">Resnet 18</a></li>
+                          <li id="previous"><a href="#!">ResNet 50</a></li>
+                      </ul>
                   </div>
                 </div>
 
-                <!-- File upload -->
-                <!-- Network Arch -->
-                <div id="files-upload-area">
-                  <div class="upload-network-arch">
+                  <!-- File upload -->
+                  <!-- Network Arch -->
+                  <div id="files-upload-area">
+                      <div class="upload-network-arch">
                     <div class="file-field input-field">
                       <div class="btn">
                         <span>Upload Arch</span>

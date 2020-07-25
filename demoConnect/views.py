@@ -57,10 +57,15 @@ def uploadFile(request):
     height = request.POST.get('height')
     netName = request.POST.get('netName')
 
+    # That is for test, I implement netName => custom and json => custom as well
+    # netName = 'custom'
+    jsonType = 1
+
     picData = util.arrToTensor(imgData, width, height)
 
     # " 放入训练好的神经网络 进行训练 并返回结果 "
-    resultDict = resnet.mc_Resnet(picData, netName)
+    '''这里暂时把JSON的选项选为1 表示自定义的的 如果为0 就为默认的'''
+    resultDict = resnet.mc_Resnet(picData, netName, jsonType)
 
     return HttpResponse(json.dumps(resultDict))
 
