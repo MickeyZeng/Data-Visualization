@@ -58,7 +58,7 @@ def uploadFile(request):
     netName = request.POST.get('netName')
 
     # That is for test, I implement netName => custom and json => custom as well
-    # netName = 'custom'
+    netName = 'custom'
     jsonType = 1
 
     picData = util.arrToTensor(imgData, width, height)

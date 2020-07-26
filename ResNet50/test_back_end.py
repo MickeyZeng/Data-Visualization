@@ -39,7 +39,10 @@ def mc_Resnet(img, netName, jsonType):
     # resnet50.load_state_dict(torch.load('resnet152.pth'))
 
     resnet = gnn.get_neural_network(netName)
-    resnet.eval()
+
+    # The custom neural network has no attribute for eval
+    if netName != 'custom':
+        resnet.eval()
 
     print(">>>>> HERE?? >>>>>>")
 
