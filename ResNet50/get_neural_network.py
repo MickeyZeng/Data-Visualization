@@ -33,5 +33,6 @@ def get_custom_network():
     pthPath = "customNetwork/weight.pth"
     import customNetwork.arch as ca
     resnet = ca.get_network(2)
-    resnet = resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
+    resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
+    # net.load_state_dict(torch.load(args.reload_path))
     return resnet

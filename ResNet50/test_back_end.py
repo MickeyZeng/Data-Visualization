@@ -56,7 +56,7 @@ def mc_Resnet(img, netName, jsonType):
 
     outputs = outputs.squeeze()
 
-    top_k = 5
+    top_k = 2
     top_k = top_k * (-1)
     outputs_numpy = outputs.detach().numpy()
 
