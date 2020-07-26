@@ -4,7 +4,7 @@ import os
 import numpy as np
 import pandas
 from PIL import Image
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse
 from django.http import Http404
 from matplotlib import pyplot as plt
 
@@ -12,6 +12,7 @@ from ResNet50 import json_to_dict as jd
 from demoConnect.settings import BASE_DIR
 
 df = 0
+
 
 # TODO: This is to transform array to tensor (太多地方用到 封装为方法 防止过多的复制)
 def arrToTensor(imgData, width, height):

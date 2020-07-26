@@ -4,6 +4,11 @@ import json
 
 
 def json_to_dict(path):
+    """
+    :param path:
+    :return:
+    TODO: This is to load the json file
+    """
     with open(path, 'r') as f:
         temp = json.load(f)
         # print(temp)
@@ -11,6 +16,11 @@ def json_to_dict(path):
 
 
 def dis_index(label):
+    """
+    :param label: the label name
+    :return: label index
+    TODO: This is to return the index of label
+    """
     temp = json_to_dict("ResNet50/imagenet-simple-labels.json")
     for i in range(len(temp)):
         if temp[i] == label:
