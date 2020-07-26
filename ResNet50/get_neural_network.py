@@ -26,13 +26,12 @@ def get_neural_network(name):
 
 
 def get_custom_network():
-    '''
+    """
     TODO: This is to get the custom network
     :return:
-    '''
+    """
     pthPath = "customNetwork/weight.pth"
     import customNetwork.arch as ca
     resnet = ca.get_network(2)
     resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
-    # net.load_state_dict(torch.load(args.reload_path))
     return resnet

@@ -56,7 +56,17 @@ def mc_Resnet(img, netName, jsonType):
 
     outputs = outputs.squeeze()
 
-    top_k = 2
+    # Got the json file by the path 0 => default JSON ; 1 => custom JSON
+    if jsonType == 0:
+        jsonPath = "ResNet50/imagenet-simple-labels.json"
+    elif jsonType == 1:
+        jsonPath = "customNetwork/label.json"
+    else:
+        return False
+
+    # This is to get the right number of results
+    top_k = jtd.get_length(jsonType, jsonPath)
+
     top_k = top_k * (-1)
     outputs_numpy = outputs.detach().numpy()
 
@@ -66,13 +76,7 @@ def mc_Resnet(img, netName, jsonType):
     # 控制在三位
     outputs_numpy = np.around(outputs_numpy, 3)
 
-    # Got the json file by the path 0 => default JSON ; 1 => custom JSON
-    if jsonType == 0:
-        jsonPath = "ResNet50/imagenet-simple-labels.json"
-    elif jsonType == 1:
-        jsonPath = "customNetwork/label.json"
-    else:
-        return False
+
 
     dictionary = jtd.json_to_dict(jsonPath)
     result = []
