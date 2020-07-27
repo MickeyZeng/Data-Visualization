@@ -33,7 +33,6 @@ class SimpleNet(nn.Module):
         self.pred_func = nn.Sigmoid()
 
     def forward(self, input):
-
         with torch.no_grad():
             features = self.net(input)
 
@@ -70,5 +69,6 @@ class SimpleNet(nn.Module):
         return torch.cat(act_maps, dim=1)
 
 
-def get_network(output_size):
+def get_network():
+    output_size = 2
     return SimpleNet(output_size)

@@ -4,6 +4,11 @@ from torchvision.models.resnet import model_urls
 
 
 def get_neural_network(name):
+    """
+    :param name: Neural Network name
+    :return: The neural network instance
+    TODO: IF the name is 'custom', it will be read the uploaded file, otherwise, return the pre-trained neural network
+    """
     if name == 'custom':
         resnet = get_custom_network()
         return resnet
@@ -28,10 +33,10 @@ def get_neural_network(name):
 def get_custom_network():
     """
     TODO: This is to get the custom network
-    :return:
+    :return: customize neural network
     """
     pthPath = "customNetwork/weight.pth"
     import customNetwork.arch as ca
-    resnet = ca.get_network(2)
+    resnet = ca.get_network()
     resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
     return resnet

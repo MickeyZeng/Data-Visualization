@@ -29,10 +29,10 @@ cmp = ""
 def mc_Resnet(img, netName, jsonType):
     """
     :param jsonType: This is to let the resnet has different dictionary to translate the result
-    :param img:
-    :param netName:
-    :TODO: Process the file by resNet
+    :param img: the data of Input image
+    :param netName: The image will be processed by the type of neural network
     :return: the result in JSON
+    :TODO: Process the file by resNet
     """
     # This is for applying different nets to process image
     # resnet = torch.hub.load('pytorch/vision:v0.6.0', netName, pretrained=True)
@@ -45,7 +45,7 @@ def mc_Resnet(img, netName, jsonType):
     if netName != 'custom':
         resnet.eval()
 
-    print(">>>>> HERE?? >>>>>>")
+    # print(">>>>> HERE?? >>>>>>")
 
     input_image = preProcessImg(img)
     input_image = input_image.unsqueeze(0)
