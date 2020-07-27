@@ -313,7 +313,7 @@ function updateTheLeaderBoard(table_id) {
     .getElementsByTagName("tbody")[0];
   leaderBoardCurrent.innerHTML = "";
 
-  for (let index = 0; index < 5; index++) {
+  for (let index = 0; index < LeaderBoardResult.length; index++) {
     let newRow = leaderBoardCurrent.insertRow(index);
     // Defaul The First Row Is Chosen
     if (index == 0) {
@@ -352,7 +352,8 @@ function updateTheLeaderBoard(table_id) {
 }
 
 function fillLeaderBoardArray(resultObj) {
-  for (let i = 0; i < 5; i++) {
+  console.log(resultObj.label.length);
+  for (let i = 0; i < resultObj.label.length; i++) {
     let label = resultObj["label"][i];
     let rate = `${resultObj["rate"][i] * 100}`;
     rate = parseFloat(rate).toFixed(2) + "%";
@@ -364,7 +365,7 @@ function fillLeaderBoardArray(resultObj) {
 
 function calculateRankChange(newResult) {
   LeaderBoardResult = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < newResult.label.length; i++) {
     let label = newResult["label"][i];
     let rate = `${newResult["rate"][i] * 100}`;
     rate = parseFloat(rate).toFixed(2) + "%";
