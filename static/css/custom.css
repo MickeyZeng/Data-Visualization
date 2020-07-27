@@ -397,6 +397,10 @@ table tbody tr td .fa-circle {
   border-top: 1px silver solid;
 }
 
+#files-upload-area {
+  display: none;
+}
+
 /* Snack Bar */
 #snackbar {
   display: flex;

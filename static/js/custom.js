@@ -4,7 +4,17 @@ GLOBAL_SETTING:
 1. User can select the number of rows for the leader board results
 2. Refact the code, put some global var in it
 */
-GLOBAL_SETTING = {};
+GLOBAL_SETTING = {
+  userSelectedNetwork: "",
+  NEURAL_NETWORK_OPTION: [
+    "resnet18",
+    "resnet34",
+    "resnet50",
+    "resnet101",
+    "resnet152",
+    "Custom",
+  ],
+};
 // Global Variables
 MULTIFILES = [];
 CURRENTFILEINDEX = 0; // current file load on the canvas
@@ -63,13 +73,6 @@ let COLOUR_MAP_OPTION = [
 
 // To choose different neural network
 let neural_network_value = "resnet50";
-let NEURAL_NETWORK_OPTION = [
-  "resnet50",
-  "resnet18",
-  "resnet34",
-  "resnet101",
-  "resnet152",
-];
 
 let CURRENT_CAM = 1; // CAM Starts From 1 To 15
 /*
@@ -844,3 +847,29 @@ uploadCustomizeNetworkFileBtn.addEventListener("click", () => {
   };
   xhr.send(fd); // 不能直接发文件对象到后台，但是发 fd 这个对象是可以的
 });
+
+// Custom Network Dropdown For User To Select
+let networkSelectionDropDown = document.querySelector("#dropdown2");
+GLOBAL_SETTING.NEURAL_NETWORK_OPTION.forEach((item) => {
+  let li = document.createElement("li");
+  let href_a = document.createElement("a");
+  href_a.innerHTML = `${item}`;
+  // TODO: Finish Callback Function Instead Of Alert
+  href_a.setAttribute("onclick", `userSelectedNetworkOption("${item}")`);
+  li.appendChild(href_a);
+  networkSelectionDropDown.appendChild(li);
+});
+
+function userSelectedNetworkOption(networkName) {
+  GLOBAL_SETTING.userSelectedNetwork = networkName;
+  let fileUploadArea = document.querySelector("#files-upload-area");
+  if (GLOBAL_SETTING.userSelectedNetwork == "Custom") {
+    fileUploadArea.style.display = "block";
+    snackBarDisplay(
+      "You Selected Custom Network Option, Please Uplaod All The Files"
+    );
+  } else {
+    fileUploadArea.style.display = "none";
+    snackBarDisplay(`You Have Selected ${networkName}`);
+  }
+}
