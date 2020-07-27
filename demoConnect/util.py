@@ -11,6 +11,7 @@ from matplotlib import pyplot as plt
 from ResNet50 import json_to_dict as jd
 from demoConnect.settings import BASE_DIR
 
+# Judge if the file is changed or not (判断是否上传了新的CSV)
 df = 0
 
 
