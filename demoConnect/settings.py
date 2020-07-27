@@ -135,3 +135,6 @@ STATICFILES_DIRS = (
 
 # To extend the Max memory size
 DATA_UPLOAD_MAX_MEMORY_SIZE = 524288000
+
+# Let service ignore the directory
+SILENCED_SYSTEM_CHECKS = ["/customNetwork/"]

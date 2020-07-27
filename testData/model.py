@@ -43,7 +43,7 @@ class SimpleNet(nn.Module):
         cams = \
             cams - torch.log(torch.exp(output).sum(dim=1, keepdim=True) / num_classes).view(-1, 1, 1, 1)
         cams = nn.functional.relu(cams)
-        return output, cams
+        return output
 
     def loss(self, logits, targets):
         return self.loss_func(logits, targets)
@@ -69,5 +69,6 @@ class SimpleNet(nn.Module):
         return torch.cat(act_maps, dim=1)
 
 
-def get_network(output_size):
+def get_network():
+    output_size = 2
     return SimpleNet(output_size)

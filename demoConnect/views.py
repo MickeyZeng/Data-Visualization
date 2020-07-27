@@ -56,7 +56,12 @@ def uploadFile(request):
     width = request.POST.get('width')
     height = request.POST.get('height')
     netName = request.POST.get('netName')
-    jsonType = request.POST.get('jsonType')
+    # jsonType = request.POST.get('jsonType')
+
+    if netName == 'custom':
+        jsonType = 1
+    else:
+        jsonType = 0
 
     # That is for test, I implement netName => custom and json => custom as well
     # netName = 'custom'

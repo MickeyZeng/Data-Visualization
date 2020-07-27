@@ -5,14 +5,14 @@ GLOBAL_SETTING:
 2. Refact the code, put some global var in it
 */
 GLOBAL_SETTING = {
-  userSelectedNetwork: "",
+  userSelectedNetwork: "resnet50",
   NEURAL_NETWORK_OPTION: [
     "resnet18",
     "resnet34",
     "resnet50",
     "resnet101",
     "resnet152",
-    "Custom",
+    "custom",
   ],
 };
 // Global Variables
@@ -580,7 +580,7 @@ document.getElementById("submitPic").addEventListener("click", () => {
   fd.append("width", upload_image.length);
   fd.append("height", upload_image[0].length);
   fd.append("imgData", JSON.stringify(upload_image));
-  fd.append("netName", neural_network_value);
+  fd.append("netName", GLOBAL_SETTING.userSelectedNetwork);
   console.log("hello -----> current index is: " + CURRENTFILEINDEX);
   let tracking_index = CURRENTFILEINDEX;
 
@@ -841,7 +841,7 @@ uploadCustomizeNetworkFileBtn.addEventListener("click", () => {
   xhr.open("POST", "/processFile/", true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
-      var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
+      let obj = xhr.responseText; // 将获取的源代码转化为JSON格式
       console.log(obj);
     }
   };
@@ -863,10 +863,10 @@ GLOBAL_SETTING.NEURAL_NETWORK_OPTION.forEach((item) => {
 function userSelectedNetworkOption(networkName) {
   GLOBAL_SETTING.userSelectedNetwork = networkName;
   let fileUploadArea = document.querySelector("#files-upload-area");
-  if (GLOBAL_SETTING.userSelectedNetwork == "Custom") {
+  if (GLOBAL_SETTING.userSelectedNetwork == "custom") {
     fileUploadArea.style.display = "block";
     snackBarDisplay(
-      "You Selected Custom Network Option, Please Uplaod All The Files"
+        "You Selected Custom Network Option, Please Uplaod All The Files"
     );
   } else {
     fileUploadArea.style.display = "none";
