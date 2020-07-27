@@ -194,7 +194,7 @@ def processFile(arch, weights, label):
     # 4. Check if there is a function named "get_network" in the arch file (检查arch文件里面是否有一个叫"get_network"的方法)
     import customNetwork.arch as ca
     try:
-        test = ca.get_network()
+        ca.get_network()
     except Exception:
         print("There is no function named get_network in arch file.")
         return False
