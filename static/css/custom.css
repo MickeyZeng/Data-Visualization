@@ -27,7 +27,7 @@ body {
   padding: 0;
   /* border-bottom: 2px solid rgb(126, 118, 118); */
   /* border-bottom: 1px solid rgba(37, 33, 138, 0.3); */
-  background-color: #f57c01;
+  background-color: #102538;
   height: 8vh;
   -webkit-box-shadow: 1px 11px 26px -12px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 1px 11px 26px -12px rgba(0, 0, 0, 0.75);
@@ -37,7 +37,7 @@ body {
 .tab {
   cursor: pointer;
   padding: 10px;
-  color: #f4c19b;
+  color: #eee;
   font-weight: 600;
 }
 

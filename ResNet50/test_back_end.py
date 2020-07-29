@@ -53,7 +53,7 @@ def mc_Resnet(img, netName, jsonType):
     with torch.no_grad():
         outputs = resnet(input_image)
 
-    outputs = torch.stack([nn.Softmax(dim=0)(i) for i in outputs])
+    outputs = nn.Softmax(dim=1)(outputs)
 
     outputs = outputs.squeeze()
 
