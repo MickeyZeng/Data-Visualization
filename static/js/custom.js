@@ -673,9 +673,14 @@ function snackBarDisplay(msg, duration = 3000) {
   // Default display duration is 3s
   const x = document.getElementById("snackbar");
   x.className = "show";
+  x.style.webkitAnimation = `fadein 0.5s, fadeout 0.5s ${duration}s`;
+  x.style.animation = `fadein 0.5s, fadeout 0.5s ${duration}s`;
   x.innerHTML = msg;
   setTimeout(function () {
     x.className = x.className.replace("show", "");
+    // Remeber to clean up the style, otherwise it will be a bug only display the animation once
+    x.style.webkitAnimation = "";
+    x.style.animation = "";
   }, duration);
 }
 
