@@ -14,7 +14,13 @@ GLOBAL_SETTING = {
     "resnet152",
     "custom",
   ],
+  // This object controls the cursor looking
+  Scribble_Pen_Cursor: {
+    red: "url(./static/css/image/cursors/scribble-red-pen-25*25.png), auto",
+    green: "url(./static/css/image/cursors/scribble-green-pen-25*25.png), auto",
+  },
 };
+
 // Global Variables
 MULTIFILES = [];
 CURRENTFILEINDEX = 0; // current file load on the canvas
@@ -156,6 +162,8 @@ class ScribbleObject extends DrawingObject {
       this.is_drawing = true;
       if (!this.pen_trigger) {
         alert("Please Submit The Image And Activate Scribble First");
+        // Inform the User and then Terminate the function
+        return;
       }
       [this.LastX, this.LastY] = [e.offsetX, e.offsetY];
       // TODO: Remove This Console.log After Label Function
@@ -208,8 +216,8 @@ class ScribbleObject extends DrawingObject {
         this.keydown = false;
 
         // Change Cursor To Scribble Pen - Red
-        displayPanel.style.cursor =
-          "url(./static/css/image/cursors/scribble-red-pen-25*25.png), auto";
+        displayPanel.style.cursor = GLOBAL_SETTING.Scribble_Pen_Cursor.red;
+        // "url(./static/css/image/cursors/scribble-red-pen-25*25.png), auto";
       }
     });
     document.addEventListener("keydown", (e) => {
@@ -217,8 +225,8 @@ class ScribbleObject extends DrawingObject {
         this.keydown = true;
 
         // Change Cursor To Scribble Pen - Green
-        displayPanel.style.cursor =
-          "url(./static/css/image/cursors/scribble-green-pen-25*25.png), auto";
+        displayPanel.style.cursor = GLOBAL_SETTING.Scribble_Pen_Cursor.green;
+        // "url(./static/css/image/cursors/scribble-green-pen-25*25.png), auto";
       }
     });
   };
@@ -855,7 +863,10 @@ GLOBAL_SETTING.NEURAL_NETWORK_OPTION.forEach((item) => {
   let href_a = document.createElement("a");
   href_a.innerHTML = `${item}`;
   // TODO: Finish Callback Function Instead Of Alert
-  href_a.setAttribute("onclick", `userSelectedNetworkOption("${item}")`);
+  href_a.addEventListener("click", (e) => {
+    e.preventDefault();
+    userSelectedNetworkOption(item);
+  });
   li.appendChild(href_a);
   networkSelectionDropDown.appendChild(li);
 });
@@ -866,7 +877,7 @@ function userSelectedNetworkOption(networkName) {
   if (GLOBAL_SETTING.userSelectedNetwork == "custom") {
     fileUploadArea.style.display = "block";
     snackBarDisplay(
-        "You Selected Custom Network Option, Please Uplaod All The Files"
+      "You Selected Custom Network Option, Please Uplaod All The Files"
     );
   } else {
     fileUploadArea.style.display = "none";
