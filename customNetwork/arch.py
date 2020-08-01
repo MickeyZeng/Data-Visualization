@@ -43,7 +43,7 @@ class SimpleNet(nn.Module):
         cams = \
             cams - torch.log(torch.exp(output).sum(dim=1, keepdim=True) / num_classes).view(-1, 1, 1, 1)
         cams = nn.functional.relu(cams)
-        return output
+        return output,cams
 
     def loss(self, logits, targets):
         return self.loss_func(logits, targets)
@@ -67,18 +67,6 @@ class SimpleNet(nn.Module):
             act_maps.append((features * cls_weights[i].view(1, -1, 1, 1)).sum(dim=1, keepdim=True)
                             + cls_bias[i].view(1, -1, 1, 1))
         return torch.cat(act_maps, dim=1)
-
-    # This function is an effective cam function
-    def get_cam_fast(self, features, classifier):
-        cls_weights = classifier[-1].weight
-        cls_bias = classifier[-1].bias
-
-        cls_weights = cls_weights.permute(1, 0)
-        cls_weights = cls_weights.view(1, cls_weights.shape[0], 1, 1, cls_weights.shape[1])
-        act_maps = (features.view(list(features.shape) + [1]) * cls_weights).sum(dim=1)
-        act_maps = act_maps.permute(0, 3, 1, 2) + cls_bias.view(1, -1, 1, 1)
-
-        return act_maps
 
 
 def get_network():

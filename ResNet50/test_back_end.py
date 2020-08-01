@@ -5,7 +5,6 @@ This is the source for machine learning
 
 import json
 
-import matplotlib
 import numpy as np
 import torch
 import torch.nn as nn
@@ -18,7 +17,7 @@ from torchsummary import summary
 import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
 
-matplotlib.use('agg')
+# matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
@@ -76,9 +75,6 @@ def mc_Resnet(img, netName, jsonType):
 
     # 控制在三位
     outputs_numpy = np.around(outputs_numpy, 3)
-
-
-
     dictionary = jtd.json_to_dict(jsonPath)
     result = []
     resultRate = []
