@@ -12,13 +12,14 @@ import torch.nn as nn
 import torchvision.models as models
 import torchvision.transforms as transforms
 from PIL import Image
+import matplotlib
 from matplotlib import pyplot as plt
 from torchsummary import summary
 
 import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
 
-# matplotlib.use('agg')
+matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
@@ -54,7 +55,8 @@ def mc_Resnet(img, netName, jsonType):
     outputs = resnet(input_image)
 
     # Save the input image
-    source_image = torch.tensor(np.expand_dims(np.swapaxes(np.swapaxes(img, 2, 1), 1, 0), axis=0))
+    source_image = torch.tensor(np.expand_dims(
+        np.swapaxes(np.swapaxes(img, 2, 1), 1, 0), axis=0))
 
     # outputs有时候会有两个tensor的结果 一个为最后的分类结果 一个是attention map
     test = ""
@@ -433,10 +435,13 @@ def augment_images(source_images, cams):
         # max_value = np.max(att_maps)
         for l in range(min(att_maps.shape[0], 4)):
             att_map = att_maps[l]
-            att_map = cv2.resize(att_map, source_images.shape[2:], interpolation=cv2.INTER_CUBIC)
+            att_map = cv2.resize(
+                att_map, source_images.shape[2:], interpolation=cv2.INTER_CUBIC)
 
-            min_value = np.min(np.min(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
-            max_value = np.max(np.max(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
+            min_value = np.min(
+                np.min(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
+            max_value = np.max(
+                np.max(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
             att_map = (att_map - min_value) / (max_value - min_value)
 
             # # text to display
@@ -450,7 +455,8 @@ def augment_images(source_images, cams):
             att_map_uint8 = (att_map * 255).astype(np.uint8)
             att_map_uint8 = cv2.applyColorMap(att_map_uint8, cv2.COLORMAP_JET)
 
-            augmented = cv2.addWeighted(sim_uint8, 1.0, att_map_uint8, 0.5, 0.0)
+            augmented = cv2.addWeighted(
+                sim_uint8, 1.0, att_map_uint8, 0.5, 0.0)
             # utils.plot_image(augmented)
 
             # if labels[im_idx] == preds[im_idx]:
@@ -465,7 +471,8 @@ def augment_images(source_images, cams):
             augmented = augmented[[2, 1, 0], :, :] / 255.
             augmented_images.append(torch.tensor(augmented))
 
-            im_toshow = np.swapaxes(np.swapaxes(augmented_images[0].detach().numpy(), 0, 1), 1, 2)
+            im_toshow = np.swapaxes(np.swapaxes(
+                augmented_images[0].detach().numpy(), 0, 1), 1, 2)
             testImage = Image.fromarray((im_toshow * 255).astype(np.uint8))
             testImage = testImage.rotate(-90).transpose(Image.FLIP_LEFT_RIGHT)
 

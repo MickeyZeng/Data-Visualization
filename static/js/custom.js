@@ -596,15 +596,31 @@ document.getElementById("submitPic").addEventListener("click", () => {
   xhr.open("POST", "/upload_file/", true);
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
+      console.log(xhr.responseText);
       var obj = JSON.parse(xhr.responseText); // 将获取的源代码转化为JSON格式
       console.table(obj);
-      RESULT_LABEL = obj[0].label[0];
-      // Update Leader Board
-      updateLeaderBoard(obj);
+      RESULT_LABEL = obj.result[0].label[0];
+      console.log("passing" + obj.result + "++++");
+      // no cam result
+      if (obj.cam.length == 0) {
+        obj = obj.result;
+        // Update Leader Board
+        updateLeaderBoard(obj);
 
-      console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
-      disCAM(RESULT_LABEL, tracking_index);
-      // disResult(obj); // Display the current result
+        console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
+        disCAM(RESULT_LABEL, tracking_index);
+        // disResult(obj); // Display the current result
+      } else {
+        drawImage("layer2", obj.cam);
+        setTimeout(() => {
+          snackBarDisplay("Fetched Result", 3000);
+        }, 1000);
+        obj = obj.result;
+        // Update Leader Board
+        updateLeaderBoard(obj);
+        // have cam result
+        console.log("yeah else");
+      }
     }
   };
   xhr.send(fd);

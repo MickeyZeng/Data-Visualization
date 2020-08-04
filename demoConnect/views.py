@@ -72,8 +72,9 @@ def uploadFile(request):
     # " 放入训练好的神经网络 进行训练 并返回结果 "
     '''这里暂时把JSON的选项选为1 表示自定义的的 如果为0 就为默认的'''
     tempResult, camImage = resnet.mc_Resnet(picData, netName, jsonType)
-
-    resultDict = [tempResult, camImage]
+    if len(camImage) != 0:
+        camImage = camImage.tolist()
+    resultDict = {'result': tempResult, 'cam': camImage}
 
     return HttpResponse(json.dumps(resultDict))
 
@@ -138,87 +139,87 @@ def disHeatMap(request):
         # For Vanilla Backpropagation Saliency
         color = True
         heatArray = heatUtil.vanillaBS(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
-                                   color)
+                                       color)
 
     elif heatType == "2":
         # For Vanilla Backpropagation Saliency
         color = False
         heatArray = heatUtil.vanillaBS(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
-                                   color)
+                                       color)
 
     elif heatType == "3":
         # For Colored Guided Backpropagation
         color = True
         negative = False
         heatArray = heatUtil.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
-                                   color, negative)
+                                       color, negative)
 
     elif heatType == "4":
         # For Guided Backpropagation Saliency (No Colored)
         color = False
         negative = False
         heatArray = heatUtil.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
-                                   color, negative)
+                                       color, negative)
 
     elif heatType == "5":
         # For Guided Backpropagation Negative Saliency
         color = True
         negative = "2"
         heatArray = heatUtil.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
-                                   color, negative)
+                                       color, negative)
 
     elif heatType == "6":
         # For Guided Backpropagation Positive Saliency
         color = True
         negative = "1"
         heatArray = heatUtil.coloredGB(original_image, prep_img, target_class, file_name_to_export, pretrained_model, width,
-                                   color, negative)
+                                       color, negative)
 
     elif heatType == "7":
         # For Gradient-weighted Class Activation Map (Activation Map)
         type = "gray"
         heatArray = heatUtil.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
-                                  width)
+                                      width)
 
     elif heatType == "8":
         type = "colored"
         heatArray = heatUtil.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
-                                  width)
+                                      width)
 
     elif heatType == "9":
         type = "onImage"
         heatArray = heatUtil.gradeCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
-                                  width)
+                                      width)
 
     elif heatType == "10":
         type = "gray"
         heatArray = heatUtil.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
-                                  width)
+                                      width)
 
     elif heatType == "11":
         type = "colored"
         heatArray = heatUtil.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
-                                  width)
+                                      width)
 
     elif heatType == "12":
         # For score-weighted
         type = "onImage"
         heatArray = heatUtil.scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
-                                  width)
+                                      width)
 
     elif heatType == "13":
         type = "colored"
         heatArray = heatUtil.guidedCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
-                                   width)
+                                       width)
 
     elif heatType == "14":
         type = "gray"
         heatArray = heatUtil.guidedCAM(original_image, prep_img, target_class, file_name_to_export, pretrained_model, type,
-                                   width)
+                                       width)
 
     elif heatType == "15":
         heatArray = heatUtil.integradePic(original_image, prep_img, target_class, file_name_to_export, pretrained_model,
-                                      width)
+                                          width)
 
     resultList = [heatArray.tolist()]
 
@@ -305,8 +306,10 @@ def saveScribble(request):
             """
             f = open(file_path, 'rb')
             response = FileResponse(f)
-            response['Content-Type'] = 'application/octet-stream'  # 设置头信息，告诉浏览器这是个文件
-            response['Content-Disposition'] = 'attachment;filename=' + fileName + '.json'
+            # 设置头信息，告诉浏览器这是个文件
+            response['Content-Type'] = 'application/octet-stream'
+            response['Content-Disposition'] = 'attachment;filename=' + \
+                fileName + '.json'
             return response
         except Exception:
             raise Http404
