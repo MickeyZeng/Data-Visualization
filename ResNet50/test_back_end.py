@@ -13,6 +13,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 from matplotlib import pyplot as plt
 from torchsummary import summary
+import cv2
 
 import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
@@ -49,13 +50,23 @@ def mc_Resnet(img, netName, jsonType):
     input_image = preProcessImg(img)
     input_image = input_image.unsqueeze(0)
 
-    with torch.no_grad():
-        outputs = resnet(input_image)
+    # with torch.no_grad():
+    outputs = resnet(input_image)
+
+    # Save the input image
+    source_image = torch.tensor(np.expand_dims(np.swapaxes(np.swapaxes(img, 2, 1), 1, 0), axis=0))
+
+    # outputs有时候会有两个tensor的结果 一个为最后的分类结果 一个是attention map
+    if len(outputs) == 2:
+        attentionMap = outputs[1]
+        outputs = outputs[0]
+
+    test = augment_images(source_image, attentionMap)
+    im_toshow = np.swapaxes(np.swapaxes(test[0].detach().numpy(), 0, 1), 1, 2)
 
     outputs = nn.Softmax(dim=1)(outputs)
 
     outputs = outputs.squeeze()
-
     # Got the json file by the path 0 => default JSON ; 1 => custom JSON
     if jsonType == 0:
         jsonPath = "ResNet50/imagenet-simple-labels.json"
@@ -407,6 +418,54 @@ def preProcessImg(img):
     input_image = t(pic)
 
     return input_image
+
+
+def augment_images(source_images, cams):
+    augmented_images = list()
+    for im_idx, sim in enumerate(source_images):
+        # the image
+        sim = sim.numpy()
+        sim = np.moveaxis(sim, (0, 1, 2), (2, 0, 1))
+
+        # attention map
+        att_maps = cams[im_idx].detach().cpu().numpy()
+        # min_value = 0 # np.min(att_maps)
+        # max_value = np.max(att_maps)
+        for l in range(min(att_maps.shape[0], 4)):
+            att_map = att_maps[l]
+            att_map = cv2.resize(att_map, source_images.shape[2:], interpolation=cv2.INTER_CUBIC)
+
+            min_value = np.min(np.min(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
+            max_value = np.max(np.max(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
+            att_map = (att_map - min_value) / (max_value - min_value)
+
+            # # text to display
+            # l = labels[im_idx].item()
+            # p = preds[im_idx].item()
+            # disp_str = 'L{}P{}'.format(int(l) if l.is_integer() else '{:0.3f}'.format(l),
+            #                            int(p) if p.is_integer() else '{:0.3f}'.format(p))
+
+            # to uint8
+            sim_uint8 = (sim * 255).astype(np.uint8)
+            att_map_uint8 = (att_map * 255).astype(np.uint8)
+            att_map_uint8 = cv2.applyColorMap(att_map_uint8, cv2.COLORMAP_JET)
+
+            augmented = cv2.addWeighted(sim_uint8, 1.0, att_map_uint8, 0.5, 0.0)
+            # utils.plot_image(augmented)
+
+            # if labels[im_idx] == preds[im_idx]:
+            #     text_color = (0, 255, 63)
+            # else:
+            #     text_color = (0, 63, 255)
+            # augmented = cv2.putText(augmented, disp_str, (10, 30),
+            #                         cv2.FONT_HERSHEY_SIMPLEX, 1,
+            #                         text_color, 2, cv2.LINE_AA)
+
+            augmented = np.moveaxis(augmented, (0, 1, 2), (1, 2, 0))
+            augmented = augmented[[2, 1, 0], :, :] / 255.
+            augmented_images.append(torch.tensor(augmented))
+
+    return augmented_images
 
 # if __name__ == "__main__":
 #     mc_Resnet50(file)
