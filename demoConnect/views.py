@@ -71,7 +71,9 @@ def uploadFile(request):
 
     # " 放入训练好的神经网络 进行训练 并返回结果 "
     '''这里暂时把JSON的选项选为1 表示自定义的的 如果为0 就为默认的'''
-    resultDict = resnet.mc_Resnet(picData, netName, jsonType)
+    tempResult, camImage = resnet.mc_Resnet(picData, netName, jsonType)
+
+    resultDict = [tempResult, camImage]
 
     return HttpResponse(json.dumps(resultDict))
 

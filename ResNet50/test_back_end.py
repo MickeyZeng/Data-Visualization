@@ -5,6 +5,7 @@ This is the source for machine learning
 
 import json
 
+import cv2
 import numpy as np
 import torch
 import torch.nn as nn
@@ -13,7 +14,6 @@ import torchvision.transforms as transforms
 from PIL import Image
 from matplotlib import pyplot as plt
 from torchsummary import summary
-import cv2
 
 import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
@@ -57,12 +57,12 @@ def mc_Resnet(img, netName, jsonType):
     source_image = torch.tensor(np.expand_dims(np.swapaxes(np.swapaxes(img, 2, 1), 1, 0), axis=0))
 
     # outputs有时候会有两个tensor的结果 一个为最后的分类结果 一个是attention map
+    test = ""
     if len(outputs) == 2:
         attentionMap = outputs[1]
+        test = augment_images(source_image, attentionMap)
+        test = np.array(test)
         outputs = outputs[0]
-
-    test = augment_images(source_image, attentionMap)
-    im_toshow = np.swapaxes(np.swapaxes(test[0].detach().numpy(), 0, 1), 1, 2)
 
     outputs = nn.Softmax(dim=1)(outputs)
 
@@ -110,7 +110,7 @@ def mc_Resnet(img, netName, jsonType):
 
     print(resultDict)
 
-    return resultDict
+    return resultDict, test
 
 
 def displayNet():
@@ -465,7 +465,11 @@ def augment_images(source_images, cams):
             augmented = augmented[[2, 1, 0], :, :] / 255.
             augmented_images.append(torch.tensor(augmented))
 
-    return augmented_images
+            im_toshow = np.swapaxes(np.swapaxes(augmented_images[0].detach().numpy(), 0, 1), 1, 2)
+            testImage = Image.fromarray((im_toshow * 255).astype(np.uint8))
+            testImage = testImage.rotate(-90).transpose(Image.FLIP_LEFT_RIGHT)
+
+    return testImage
 
 # if __name__ == "__main__":
 #     mc_Resnet50(file)
