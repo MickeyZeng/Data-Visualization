@@ -6,13 +6,13 @@ This is the source for machine learning
 import json
 
 import cv2
+import matplotlib
 import numpy as np
 import torch
 import torch.nn as nn
 import torchvision.models as models
 import torchvision.transforms as transforms
 from PIL import Image
-import matplotlib
 from matplotlib import pyplot as plt
 from torchsummary import summary
 
@@ -29,6 +29,7 @@ cmp = ""
 
 def mc_Resnet(img, netName, jsonType):
     """
+    :param customizeLabel:
     :param jsonType: This is to let the resnet has different dictionary to translate the result
     :param img: the data of Input image
     :param netName: The image will be processed by the type of neural network
@@ -59,11 +60,12 @@ def mc_Resnet(img, netName, jsonType):
         np.swapaxes(np.swapaxes(img, 2, 1), 1, 0), axis=0))
 
     # outputs有时候会有两个tensor的结果 一个为最后的分类结果 一个是attention map
-    test = ""
+    resultCAM = []
     if len(outputs) == 2:
         attentionMap = outputs[1]
         test = augment_images(source_image, attentionMap)
-        test = np.array(test)
+        for index in range(len(test)):
+            resultCAM.append(np.array(test[index]).tolist())
         outputs = outputs[0]
 
     outputs = nn.Softmax(dim=1)(outputs)
@@ -112,7 +114,7 @@ def mc_Resnet(img, netName, jsonType):
 
     print(resultDict)
 
-    return resultDict, test
+    return resultDict, resultCAM
 
 
 def displayNet():
@@ -424,6 +426,7 @@ def preProcessImg(img):
 
 def augment_images(source_images, cams):
     augmented_images = list()
+    resultCAM = list()
     for im_idx, sim in enumerate(source_images):
         # the image
         sim = sim.numpy()
@@ -472,11 +475,11 @@ def augment_images(source_images, cams):
             augmented_images.append(torch.tensor(augmented))
 
             im_toshow = np.swapaxes(np.swapaxes(
-                augmented_images[0].detach().numpy(), 0, 1), 1, 2)
+                augmented_images[l].detach().numpy(), 0, 1), 1, 2)
             testImage = Image.fromarray((im_toshow * 255).astype(np.uint8))
-            testImage = testImage.rotate(-90).transpose(Image.FLIP_LEFT_RIGHT)
-
-    return testImage
+            # testImage = testImage.rotate(-90).transpose(Image.FLIP_LEFT_RIGHT)
+            resultCAM.append(testImage)
+    return resultCAM
 
 # if __name__ == "__main__":
 #     mc_Resnet50(file)
