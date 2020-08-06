@@ -19,6 +19,7 @@ GLOBAL_SETTING = {
     red: "url(./static/css/image/cursors/scribble-red-pen-25*25.png), auto",
     green: "url(./static/css/image/cursors/scribble-green-pen-25*25.png), auto",
   },
+  customCAM: null,
 };
 
 // Global Variables
@@ -603,21 +604,20 @@ document.getElementById("submitPic").addEventListener("click", () => {
       console.log("passing" + obj.result + "++++");
       // no cam result
       if (obj.cam.length == 0) {
-        obj = obj.result;
         // Update Leader Board
-        updateLeaderBoard(obj);
+        updateLeaderBoard(obj.result);
 
         console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
         disCAM(RESULT_LABEL, tracking_index);
         // disResult(obj); // Display the current result
       } else {
-        drawImage("layer2", obj.cam[1]);
+        GLOBAL_SETTING.customCAM = obj.cam;
+        drawImage("layer2", obj.cam[0]);
         setTimeout(() => {
           snackBarDisplay("Fetched Result", 3000);
         }, 1000);
-        obj = obj.result;
         // Update Leader Board
-        updateLeaderBoard(obj);
+        updateLeaderBoard(obj.result);
         // have cam result
         console.log("yeah else");
       }

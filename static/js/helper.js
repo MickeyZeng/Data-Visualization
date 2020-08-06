@@ -170,7 +170,11 @@ function updateImage() {
 }
 
 // CAM display MiddleWare for each result
-function disCAM_MiddleWare(label, current_index) {
+function disCAM_MiddleWare(label, current_index, index = undefined) {
+  if (GLOBAL_SETTING.userSelectedNetwork == "custom") {
+    drawImage("layer2", GLOBAL_SETTING.customCAM[index]);
+    return;
+  }
   // Display Msg
   snackBarDisplay("Fetching result for " + label);
   console.log(label);
@@ -323,7 +327,7 @@ function updateTheLeaderBoard(table_id) {
     }
     newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${
       LeaderBoardResult[index].label
-    }', CURRENTFILEINDEX)">${LeaderBoardResult[index].label}</a>
+    }', CURRENTFILEINDEX, ${index})">${LeaderBoardResult[index].label}</a>
     ${
       LeaderBoardResult[index].label == GROUND_TRUTH
         ? '<span class="new badge" data-badge-caption="">gt</span> '
@@ -342,7 +346,7 @@ function updateTheLeaderBoard(table_id) {
   console.log(tempResult.length);
   if (tempResult.length == 0 && CSV_IMG_SWITCH) {
     let newRow = leaderBoardCurrent.insertRow(LeaderBoardResult.length);
-    newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX)">${GROUND_TRUTH}</a>
+    newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX, ${index})">${GROUND_TRUTH}</a>
     <span class="new badge" data-badge-caption="">gt</span>
     </td> 
     <td>xx%</td>
