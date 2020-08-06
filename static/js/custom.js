@@ -611,7 +611,7 @@ document.getElementById("submitPic").addEventListener("click", () => {
         disCAM(RESULT_LABEL, tracking_index);
         // disResult(obj); // Display the current result
       } else {
-        drawImage("layer2", obj.cam[0]);
+        drawImage("layer2", obj.cam[1]);
         setTimeout(() => {
           snackBarDisplay("Fetched Result", 3000);
         }, 1000);
