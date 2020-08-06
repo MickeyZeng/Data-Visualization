@@ -454,9 +454,9 @@ def augment_images(source_images, cams):
             sim_uint8 = (sim * 255).astype(np.uint8)
             att_map_uint8 = (att_map * 255).astype(np.uint8)
             att_map_uint8 = cv2.applyColorMap(att_map_uint8, cv2.COLORMAP_JET)
-
-            augmented = cv2.addWeighted(
-                sim_uint8, 1.0, att_map_uint8, 0.5, 0.0)
+            augmented = att_map_uint8
+            # augmented = cv2.addWeighted(
+            #     sim_uint8, 1.0, att_map_uint8, 0.5, 0.0)
             # utils.plot_image(augmented)
 
             # if labels[im_idx] == preds[im_idx]:
