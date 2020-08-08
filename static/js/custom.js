@@ -792,20 +792,23 @@ saveScribbleBtn.addEventListener("click", () => {
     success: function (data) {
       //这里需要先创建一个<a>标签 然后使用js把它激活 响应Chrome的下载模块
       //Firstly, <a> has to be implemented to active the download function in browser.
-      console.log(data);
-      let a = document.createElement("a");
-      let url = window.URL.createObjectURL(data);
-      a.href = url;
-      a.download = fileName + ".json";
-      document.body.append(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+
+      // console.log(data);
+      // let a = document.createElement("a");
+      // let url = window.URL.createObjectURL(data);
+      // a.href = url;
+      // a.download = fileName + ".json";
+      // document.body.append(a);
+      // a.click();
+      // a.remove();
+      // window.URL.revokeObjectURL(url);
 
       // TODO: Edit Msg
       // Snack Bar Msg Goes Here
       //  这里可以加一些用户的提示 让用户知道是否成功下载文件
-      snackBarDisplay("Downloading...");
+      snackBarDisplay(
+        "Success, Please Check downLoadFile folder for your result!"
+      );
     },
   });
 });
