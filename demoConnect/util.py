@@ -3,6 +3,7 @@ import os
 
 import numpy as np
 import pandas
+import torch
 from PIL import Image
 from django.http import FileResponse
 from django.http import Http404
@@ -216,3 +217,15 @@ def download_file(file, name):
         destination.write(chunk)
     destination.close()
     return True
+
+
+# TODO: Some function for only two label (专门是为了二分问题设计的 转化显示出来的概率)
+def transfer_rate(input):
+    # value = input.squeeze().detach().numpy()
+    #
+    # if value > 0.5:
+    #     input = torch.tensor([value, 1 - value])
+    # else:
+    #     input = torch.tensor([1 - value, value])
+
+    return input

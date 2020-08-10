@@ -6,7 +6,6 @@ This is the source for machine learning
 import json
 
 import cv2
-import matplotlib
 import numpy as np
 import torch
 import torch.nn as nn
@@ -18,8 +17,9 @@ from torchsummary import summary
 
 import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
+import demoConnect.util as du
 
-matplotlib.use('agg')
+# matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
@@ -67,8 +67,10 @@ def mc_Resnet(img, netName, jsonType):
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
         outputs = outputs[0]
-
-    outputs = nn.Softmax(dim=1)(outputs)
+        outputs = torch.sigmoid(outputs)
+        outputs = du.transfer_rate(outputs)
+    else:
+        outputs = nn.Softmax(dim=1)(outputs)
 
     outputs = outputs.squeeze()
     # Got the json file by the path 0 => default JSON ; 1 => custom JSON
@@ -79,11 +81,12 @@ def mc_Resnet(img, netName, jsonType):
     else:
         return False
 
+    outputs_numpy = outputs.detach().numpy()
+
     # This is to get the right number of results
-    top_k = jtd.get_length(jsonType, jsonPath)
+    top_k = min(jtd.get_length(jsonType, jsonPath), outputs_numpy.size)
 
     top_k = top_k * (-1)
-    outputs_numpy = outputs.detach().numpy()
 
     top_k_idx = outputs_numpy.argsort()[top_k:][::-1]
     print(top_k_idx)
@@ -100,8 +103,16 @@ def mc_Resnet(img, netName, jsonType):
         # 因为Json的是从1开始的 所以需要-1
         result.append(dictionary[top_k_idx[i]])
 
-    for j in top_k_idx:
-        resultRate.append(str(outputs_numpy[j]))
+    if outputs_numpy.size == 1:
+        if outputs_numpy > 0.5:
+            result.clear()
+            result.append(dictionary[1])
+            resultRate.append(str(outputs_numpy))
+        else:
+            resultRate.append(str(1 - outputs_numpy))
+    else:
+        for j in top_k_idx:
+            resultRate.append(str(outputs_numpy[j]))
 
     # print(result)
     # print(outputs_numpy[top_k_idx])
