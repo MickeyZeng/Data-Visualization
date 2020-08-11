@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torchvision.models as models
-from torch.nn import functional as F
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -60,7 +59,7 @@ class SimpleNet(nn.Module):
         if 'resnet' in target_info['network'] or 'resnext' in target_info['network']:
             modules = modules[:-2]
         elif 'densenet' in target_info['network'] or 'vgg' in target_info['network'] or \
-             'mobilenet' in target_info['network']:
+                'mobilenet' in target_info['network']:
             modules = modules[:-1]
 
         self.net = nn.Sequential(*modules)
@@ -112,7 +111,8 @@ class SimpleNet(nn.Module):
                 if self.target_info['cls_cols_dict'][c_name] < 100:
                     cls_maps.append(self.get_cam_fast(features, self.classifiers[c_name]))
 
-        return regression_logits, binary_cls_logits, cls_logits, regression_maps, binary_cls_maps, cls_maps
+        # return regression_logits, binary_cls_logits, cls_logits, regression_maps, binary_cls_maps, cls_maps
+        return binary_cls_logits, binary_cls_maps
 
     def loss(self, logits, targets):
         return self.loss_func(logits, targets)
@@ -147,7 +147,7 @@ class SimpleNet(nn.Module):
 
         cls_weights = cls_weights.permute(1, 0)
         cls_weights = cls_weights.view(1, cls_weights.shape[0], 1, 1, cls_weights.shape[1])
-        act_maps = (features.view(list(features.shape)+[1]) * cls_weights).sum(dim=1)
+        act_maps = (features.view(list(features.shape) + [1]) * cls_weights).sum(dim=1)
         act_maps = act_maps.permute(0, 3, 1, 2) + cls_bias.view(1, -1, 1, 1)
 
         return act_maps
@@ -155,11 +155,11 @@ class SimpleNet(nn.Module):
 
 def get_network():
     target_info = {'gen_cam_map': 1,
-               'network': 'resnet50',
-               'pretrained': True,
-               'regression_cols': [],
-               'binary_cls_cols': [
-                   'label'
-               ],
-               'cls_cols_dict': {}}
+                   'network': 'resnet50',
+                   'pretrained': True,
+                   'regression_cols': [],
+                   'binary_cls_cols': [
+                       'label'
+                   ],
+                   'cls_cols_dict': {}}
     return SimpleNet(target_info)

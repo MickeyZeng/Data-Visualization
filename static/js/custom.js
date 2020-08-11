@@ -784,6 +784,7 @@ saveScribbleBtn.addEventListener("click", () => {
       allInfo: JSON.stringify(drawingPanel2.allInfo),
       /* Send the pic data (pic in panel) */
       imgData: JSON.stringify(upload_image),
+      customized: "True",
     },
     xhrFields: {
       //确定后端返回的一定是文件类型
@@ -794,15 +795,15 @@ saveScribbleBtn.addEventListener("click", () => {
       //这里需要先创建一个<a>标签 然后使用js把它激活 响应Chrome的下载模块
       //Firstly, <a> has to be implemented to active the download function in browser.
 
-      // console.log(data);
-      // let a = document.createElement("a");
-      // let url = window.URL.createObjectURL(data);
-      // a.href = url;
-      // a.download = fileName + ".json";
-      // document.body.append(a);
-      // a.click();
-      // a.remove();
-      // window.URL.revokeObjectURL(url);
+      console.log(data);
+      let a = document.createElement("a");
+      let url = window.URL.createObjectURL(data);
+      a.href = url;
+      a.download = fileName + ".json";
+      document.body.append(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
 
       // TODO: Edit Msg
       // Snack Bar Msg Goes Here

@@ -15,13 +15,17 @@ def json_to_dict(path):
         return temp
 
 
-def dis_index(label):
+def dis_index(label, flag=None):
     """
     :param label: the label name
     :return: label index
     TODO: This is to return the index of label
     """
-    temp = json_to_dict("ResNet50/imagenet-simple-labels.json")
+    if flag == "True":
+        temp = json_to_dict("customNetwork/label.json")
+    else:
+        temp = json_to_dict("ResNet50/imagenet-simple-labels.json")
+
     for i in range(len(temp)):
         if temp[i] == label:
             return i

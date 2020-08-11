@@ -254,6 +254,9 @@ def saveScribble(request):
 
     result = True
 
+    # TO Test the neural network is customized or not!!!
+    flag = request.POST.get('customized')
+
     # This is for the original Image size (Including height and width)
     originalImageHeight = int(request.POST.get('originalImageHeight'))
     originalImageWidth = int(request.POST.get('originalImageWidth'))
@@ -286,7 +289,7 @@ def saveScribble(request):
         negative
         """
         result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
-                                      negativePointPostition, drawingPanelWidth, imgData, classLabel)
+                                      negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
 
         if not result:
             break
@@ -305,7 +308,7 @@ def saveScribble(request):
             f = open(file_path, 'rb')
             response = FileResponse(f)
             # 设置头信息，告诉浏览器这是个文件
-            response['Content-Type'] = 'application/octet-stream'
+            response['content-Type'] = 'application/octet-stream'
             response['Content-Disposition'] = 'attachment;filename=' + \
                 fileName + '.json'
             return response

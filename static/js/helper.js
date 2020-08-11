@@ -345,6 +345,7 @@ function updateTheLeaderBoard(table_id) {
   );
   console.log(tempResult.length);
   if (tempResult.length == 0 && CSV_IMG_SWITCH) {
+    for (let index = 0; index < 1; index++) {
     let newRow = leaderBoardCurrent.insertRow(LeaderBoardResult.length);
     newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX, ${index})">${GROUND_TRUTH}</a>
     <span class="new badge" data-badge-caption="">gt</span>
@@ -352,6 +353,7 @@ function updateTheLeaderBoard(table_id) {
     <td>xx%</td>
     <td>${table_id == "leader-board-previous" ? "#" : "xx Rank"}</td> 
     `;
+    }
   }
 }
 

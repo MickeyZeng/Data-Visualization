@@ -6,6 +6,7 @@ This is the source for machine learning
 import json
 
 import cv2
+import matplotlib
 import numpy as np
 import torch
 import torch.nn as nn
@@ -19,7 +20,7 @@ import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
 import demoConnect.util as du
 
-# matplotlib.use('agg')
+matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0

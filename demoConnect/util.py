@@ -3,7 +3,6 @@ import os
 
 import numpy as np
 import pandas
-import torch
 from PIL import Image
 from django.http import FileResponse
 from django.http import Http404
@@ -71,9 +70,10 @@ def readFile(file, current_index, abs_path):
 
 # TODO: This is to save Scribble (这里是接受上传上来的图片数据 然后保存Scribble为JSON并保存本地)
 def processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPosition, negativePointPositive,
-                    drawingPanelWidth, imgData, classLabel):
+                    drawingPanelWidth, imgData, classLabel, flag):
     """
     This function would applied all the parameter and create a JSON file saving all the point positions in user computer
+    :param flag:
     :param classLabel: The JSON file has to include the ground truth of the picture (JSON file必须包含当前这个scribble的ground truth)
     :param imgData: This is to save the imgData (这个是存储图片的3 dimension数组)
     :param originalImageHeight: Original Image Height (图片的原始高度)
@@ -87,7 +87,8 @@ def processScribble(originalImageHeight, originalImageWidth, fileName, positiveP
 
     resultList = {}
 
-    index = jd.dis_index(classLabel)
+    # 如果是Customized的话 需要走另外的json
+    index = jd.dis_index(classLabel, flag=flag)
 
     labelInfoList = {'index': index}
 
@@ -109,8 +110,8 @@ def processScribble(originalImageHeight, originalImageWidth, fileName, positiveP
     Test if the data in resultList is correct or not
     测试resultList里面的数据的点回到原来的图片比例后是否正确
     """
-    checkResultList(positiveList['positive'], imgData, originalImageHeight, originalImageWidth)
-    checkResultList(negativeList['negative'], imgData, originalImageHeight, originalImageWidth)
+    # checkResultList(positiveList['positive'], imgData, originalImageHeight, originalImageWidth)
+    # checkResultList(negativeList['negative'], imgData, originalImageHeight, originalImageWidth)
 
     # JSON serializable
     resultList = json.dumps(resultList, indent=2)
