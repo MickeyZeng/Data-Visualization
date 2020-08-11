@@ -1,4 +1,4 @@
-// This Object Is The Center Control All The Settings
+// his Object Is The Center Control All The Settings
 /*
 GLOBAL_SETTING:
 1. User can select the number of rows for the leader board results
@@ -605,6 +605,7 @@ document.getElementById("submitPic").addEventListener("click", () => {
       // no cam result
       if (obj.cam.length == 0) {
         // Update Leader Board
+	console.log(obj.result)
         updateLeaderBoard(obj.result);
 
         console.log("hello again -----> current index is: " + CURRENTFILEINDEX);

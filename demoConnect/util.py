@@ -44,8 +44,9 @@ def readFile(file, current_index, abs_path):
         return Http404
     # df = pandas.read_csv('test.csv')
     # / Users / mickey / Downloads / dataSet 测试路径
-    name = df['Ground Truth'].tolist()
-    path = df['Path'].tolist()
+    name = df['label'].tolist()
+    # name = df['Ground Truth'].tolist()
+    path = df['image_path'].tolist()
 
     resultName = name[int(current_index)]
     resultPath = abs_path + path[int(current_index)]
