@@ -2,6 +2,7 @@ import json
 import os
 import shutil
 
+import numpy as np
 from django.http import FileResponse
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
@@ -275,6 +276,9 @@ def saveScribble(request):
 
     imgData = util.arrToTensor(imgData, drawingPanelWidth, drawingPanelWidth)
 
+    # Create a numpy
+    totalNumpy = np.empty([int(originalImageWidth), int(originalImageHeight)])
+
     for i in range(len(allInfo)):
         classLabel = list(allInfo.keys())[i]
 
@@ -291,15 +295,24 @@ def saveScribble(request):
         result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
                                       negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
 
+        tempNumpy = util.processNumpy(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
+                                      negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
+
+        if i == 0:
+            totalNumpy = tempNumpy
+        else:
+            totalNumpy = np.vstack(tempNumpy, totalNumpy)
+
         if not result:
             break
 
     """
-    Return a file to front-end
-    返回一个文件类型给前端进行下载
+    Return a file to front-end and save the numpy file
+    返回一个文件类型给前端进行下载, 和保存一个Numpy数组文件
     """
     if result:
-        file_path = 'downloadFile/' + fileName + '.json'
+        np.save('downloadFile/' + fileName + '.npy', totalNumpy)
+        file_path = 'downloadFile/' + fileName + '.npy'
         try:
             """
             This function has to return BLOB(file) style
@@ -310,7 +323,7 @@ def saveScribble(request):
             # 设置头信息，告诉浏览器这是个文件
             response['content-Type'] = 'application/octet-stream'
             response['Content-Disposition'] = 'attachment;filename=' + \
-                fileName + '.json'
+                fileName + '.npy'
             return response
         except Exception:
             raise Http404
