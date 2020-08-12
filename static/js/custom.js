@@ -768,7 +768,12 @@ saveScribbleBtn.addEventListener("click", () => {
   */
 
   updateImage(); //Got the data from the canvas
-
+  const isCustom;
+  if (GLOBAL_SETTING.userSelectedNetwork == 'custom') {
+    isCustom = "True";
+  } else {
+    isCustom = "False";
+  }
   $.ajax({
     url: "/saveScribble/",
     type: "POST",
@@ -784,7 +789,8 @@ saveScribbleBtn.addEventListener("click", () => {
       allInfo: JSON.stringify(drawingPanel2.allInfo),
       /* Send the pic data (pic in panel) */
       imgData: JSON.stringify(upload_image),
-      customized: "True",
+      // New added
+      customized: isCustom
     },
     xhrFields: {
       //确定后端返回的一定是文件类型
