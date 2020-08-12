@@ -799,7 +799,7 @@ saveScribbleBtn.addEventListener("click", () => {
       let a = document.createElement("a");
       let url = window.URL.createObjectURL(data);
       a.href = url;
-      a.download = fileName + ".json";
+      a.download = fileName + ".npy";
       document.body.append(a);
       a.click();
       a.remove();

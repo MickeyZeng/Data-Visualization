@@ -68,6 +68,43 @@ def readFile(file, current_index, abs_path):
         raise Http404
 
 
+# TODO: This is to create a numpy saving postive and negative scribble
+def processNumpy(originalImageHeight, originalImageWidth, fileName, positivePointPosition, negativePointPositive,
+                 drawingPanelWidth, imgData, classLabel, flag):
+    resultList = {}
+
+    # 如果是Customized的话 需要走另外的json
+    index = jd.dis_index(classLabel, flag=flag)
+
+    labelInfoList = {'index': index}
+
+    positiveList = calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, positivePointPosition,
+                                      'positive')
+
+    negativeList = calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, negativePointPositive,
+                                      'negative')
+
+    testNumpy = np.empty([int(originalImageWidth), int(originalImageHeight)])
+
+    testNumpy = createNumpy(positiveList, testNumpy, 1)
+    testNumpy = createNumpy(negativeList, testNumpy, -1)
+
+    return testNumpy
+
+
+# TODO: Read the list and put the number in numpy array
+def createNumpy(arrayList, testNumpy, type):
+    if type == 1:
+        arrayList = arrayList['positive']
+    else:
+        arrayList = arrayList['negative']
+    for i in arrayList:
+        if i != 'break':
+            testNumpy[int(i['x'])][int(i['y'])] = type
+
+    return testNumpy
+
+
 # TODO: This is to save Scribble (这里是接受上传上来的图片数据 然后保存Scribble为JSON并保存本地)
 def processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPosition, negativePointPositive,
                     drawingPanelWidth, imgData, classLabel, flag):
