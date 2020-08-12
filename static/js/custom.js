@@ -605,7 +605,7 @@ document.getElementById("submitPic").addEventListener("click", () => {
       // no cam result
       if (obj.cam.length == 0) {
         // Update Leader Board
-	console.log(obj.result)
+        console.log(obj.result);
         updateLeaderBoard(obj.result);
 
         console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
@@ -768,8 +768,8 @@ saveScribbleBtn.addEventListener("click", () => {
   */
 
   updateImage(); //Got the data from the canvas
-  const isCustom;
-  if (GLOBAL_SETTING.userSelectedNetwork == 'custom') {
+  let isCustom;
+  if (GLOBAL_SETTING.userSelectedNetwork == "custom") {
     isCustom = "True";
   } else {
     isCustom = "False";
@@ -790,7 +790,7 @@ saveScribbleBtn.addEventListener("click", () => {
       /* Send the pic data (pic in panel) */
       imgData: JSON.stringify(upload_image),
       // New added
-      customized: isCustom
+      customized: isCustom,
     },
     xhrFields: {
       //确定后端返回的一定是文件类型
