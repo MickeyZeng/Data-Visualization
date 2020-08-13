@@ -7,10 +7,16 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
   // Query Select Displaying Panel
   const canvasDisplay = document.querySelector("#display-area");
   const ctxDisplay = canvasDisplay.getContext("2d");
+  // ez way to prevent bugs
+  canvasDisplay.width = drawingPanelWidth;
+  canvasDisplay.height = drawingPanelWidth;
 
   // Layer 2
   const layer2 = document.querySelector("#layer2");
   const layer2CTX = layer2.getContext("2d");
+  // ez way to prevent bugs
+  layer2.width = drawingPanelWidth;
+  layer2.height = drawingPanelWidth;
   layer2CTX.clearRect(0, 0, layer2.width, layer2.height);
   // Empty Global Var
   LeaderBoardResult = [];
@@ -41,26 +47,62 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
       console.log(image.height);
       originalImageWidth = image.width;
       originalImageHeight = image.height;
+      // Logic for control aspect ratio
+      let startX = 0;
+      let startY = 0;
+      let aspectRatio = GLOBAL_SETTING.aspectRatio;
+      if (aspectRatio) {
+        if (originalImageWidth >= originalImageHeight) {
+          // width is dominance
+          // let ratio = drawingPanelWidth / originalImageWidth;
+          let ratio = originalImageWidth / originalImageHeight;
+          console.log("the aspect ratio is " + ratio);
+          image.width = drawingPanelWidth;
+          image.height = drawingPanelWidth / ratio;
+
+          // adjust start point
+          startY = drawingPanelWidth / 2 - image.height / 2;
+        } else {
+          // height is dominance
+          let ratio = originalImageHeight / originalImageWidth;
+          image.height = drawingPanelWidth;
+          image.width = drawingPanelWidth / ratio;
+          // adjust start point
+          startX = drawingPanelWidth / 2 - image.width / 2;
+        }
+      } else {
+        image.width *= drawingPanelWidth / image.width;
+        image.height *= drawingPanelWidth / image.height;
+      }
       // if (image.height > drawingPanelWidth) {
       // }
 
       // TODO: Keep Aspect Ratio Option
       // Right Now Can Only Fit In
-      image.width *= drawingPanelWidth / image.width;
+      // image.width *= drawingPanelWidth / image.width;
       console.log(drawingPanelWidth);
-      image.height *= drawingPanelWidth / image.height;
+      // image.height *= drawingPanelWidth / image.height;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       console.log(canvas.width);
-      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      // ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      ctx.drawImage(
+        image,
+        aspectRatio ? startX : 0,
+        aspectRatio ? startY : 0,
+        image.width,
+        image.height
+      );
       if (!clear) {
         ctxDisplay.clearRect(0, 0, canvasDisplay.width, canvasDisplay.height);
         ctxDisplay.drawImage(
           image,
-          0,
-          0,
-          canvasDisplay.width,
-          canvasDisplay.height
+          aspectRatio ? startX : 0,
+          aspectRatio ? startY : 0,
+          image.width,
+          image.height
+          // canvasDisplay.width,
+          // canvasDisplay.height
         );
         featureMapOriginalCTX.clearRect(
           0,
@@ -346,8 +388,8 @@ function updateTheLeaderBoard(table_id) {
   console.log(tempResult.length);
   if (tempResult.length == 0 && CSV_IMG_SWITCH) {
     for (let index = 0; index < 1; index++) {
-    let newRow = leaderBoardCurrent.insertRow(LeaderBoardResult.length);
-    newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX, ${index})">${GROUND_TRUTH}</a>
+      let newRow = leaderBoardCurrent.insertRow(LeaderBoardResult.length);
+      newRow.innerHTML = `<td><a onclick="disCAM_MiddleWare('${GROUND_TRUTH}', CURRENTFILEINDEX, ${index})">${GROUND_TRUTH}</a>
     <span class="new badge" data-badge-caption="">gt</span>
     </td> 
     <td>xx%</td>

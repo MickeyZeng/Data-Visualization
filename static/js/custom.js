@@ -20,6 +20,7 @@ GLOBAL_SETTING = {
     green: "url(./static/css/image/cursors/scribble-green-pen-25*25.png), auto",
   },
   customCAM: null,
+  aspectRatio: false,
 };
 
 // Global Variables
@@ -605,7 +606,7 @@ document.getElementById("submitPic").addEventListener("click", () => {
       // no cam result
       if (obj.cam.length == 0) {
         // Update Leader Board
-	console.log(obj.result)
+        console.log(obj.result);
         updateLeaderBoard(obj.result);
 
         console.log("hello again -----> current index is: " + CURRENTFILEINDEX);
@@ -790,7 +791,7 @@ saveScribbleBtn.addEventListener("click", () => {
       /* Send the pic data (pic in panel) */
       imgData: JSON.stringify(upload_image),
       // New added
-      customized: isCustom
+      customized: isCustom,
     },
     xhrFields: {
       //确定后端返回的一定是文件类型
@@ -916,3 +917,15 @@ function userSelectedNetworkOption(networkName) {
     snackBarDisplay(`You Have Selected ${networkName}`);
   }
 }
+
+const aspectRatioControl = document.querySelector("#aspect-ratio-control");
+aspectRatioControl.addEventListener("click", () => {
+  GLOBAL_SETTING.aspectRatio = !GLOBAL_SETTING.aspectRatio;
+  console.log(GLOBAL_SETTING.aspectRatio);
+  if (MULTIFILES[0]) {
+    loadFileToCanvas(MULTIFILES[0]);
+  }
+  snackBarDisplay(
+    `You Have Select Aspect Ratio Option To ${GLOBAL_SETTING.aspectRatio}`
+  );
+});
