@@ -215,6 +215,14 @@ function updateImage() {
 function disCAM_MiddleWare(label, current_index, index = undefined) {
   if (GLOBAL_SETTING.userSelectedNetwork == "custom") {
     drawImage("layer2", GLOBAL_SETTING.customCAM[index]);
+    leaderBoard.forEach((item) => {
+      const labelValue = item.querySelector("td a").innerText;
+      if (labelValue == label) {
+        item.style.backgroundColor = "#15100d";
+      } else {
+        item.style.backgroundColor = "#1c223b";
+      }
+    });
     return;
   }
   // Display Msg
