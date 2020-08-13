@@ -885,6 +885,7 @@ uploadCustomizeNetworkFileBtn.addEventListener("click", () => {
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
       let obj = xhr.responseText; // 将获取的源代码转化为JSON格式
+      snackBarDisplay("Upload Successful");
       console.log(obj);
     }
   };

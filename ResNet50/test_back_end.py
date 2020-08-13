@@ -6,7 +6,6 @@ This is the source for machine learning
 import json
 
 import cv2
-import matplotlib
 import numpy as np
 import torch
 import torch.nn as nn
@@ -20,7 +19,7 @@ import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
 import demoConnect.util as du
 
-matplotlib.use('agg')
+# matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
@@ -55,7 +54,7 @@ def mc_Resnet(img, netName, jsonType):
 
     # with torch.no_grad():
     outputs = resnet(input_image)
-
+    # outputs[1][0] = outputs[1][0].softmax(dim=1)
     # Save the input image
     source_image = torch.tensor(np.expand_dims(
         np.swapaxes(np.swapaxes(img, 2, 1), 1, 0), axis=0))
@@ -68,7 +67,7 @@ def mc_Resnet(img, netName, jsonType):
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
         outputs = outputs[0][0]
-        outputs = torch.sigmoid(outputs)
+        outputs = torch.softmax(outputs, dim=1)
         outputs = du.transfer_rate(outputs)
     else:
         outputs = nn.Softmax(dim=1)(outputs)
@@ -453,6 +452,7 @@ def augment_images(source_images, cams):
             att_map = cv2.resize(
                 att_map, source_images.shape[2:], interpolation=cv2.INTER_CUBIC)
 
+            # att_map = np.clip(att_map, 0, 1)
             min_value = np.min(
                 np.min(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
             max_value = np.max(

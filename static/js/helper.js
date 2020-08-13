@@ -215,6 +215,17 @@ function updateImage() {
 function disCAM_MiddleWare(label, current_index, index = undefined) {
   if (GLOBAL_SETTING.userSelectedNetwork == "custom") {
     drawImage("layer2", GLOBAL_SETTING.customCAM[index]);
+
+      // Change The Scribble Label To Current Chosen Label
+  RESULT_LABEL = label;
+  // Clean Up Scribble Canvas
+  drawingPanel2.cleanUpScribbleFromCanvas();
+
+    // Highlight The Chosen Option
+    const leaderBoard = document.querySelectorAll(
+        "#leader-board-current tbody tr"
+    );
+
     leaderBoard.forEach((item) => {
       const labelValue = item.querySelector("td a").innerText;
       if (labelValue == label) {
@@ -223,6 +234,18 @@ function disCAM_MiddleWare(label, current_index, index = undefined) {
         item.style.backgroundColor = "#1c223b";
       }
     });
+      if (drawingPanel2.allInfo[RESULT_LABEL] != undefined) {
+    drawingPanel2.putBackScribble(
+      drawingPanel2.allInfo[RESULT_LABEL].negative,
+      Scribble_Colour.negative
+    ); // Negative Green Label
+
+    drawingPanel2.putBackScribble(
+      drawingPanel2.allInfo[RESULT_LABEL].positive,
+      Scribble_Colour.positive
+    ); // Positive Red Label
+  }
+
     return;
   }
   // Display Msg
