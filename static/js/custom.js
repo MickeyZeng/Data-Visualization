@@ -20,6 +20,7 @@ GLOBAL_SETTING = {
     green: "url(./static/css/image/cursors/scribble-green-pen-25*25.png), auto",
   },
   customCAM: null,
+  aspectRatio: false,
 };
 
 // Global Variables
@@ -916,3 +917,15 @@ function userSelectedNetworkOption(networkName) {
     snackBarDisplay(`You Have Selected ${networkName}`);
   }
 }
+
+const aspectRatioControl = document.querySelector("#aspect-ratio-control");
+aspectRatioControl.addEventListener("click", () => {
+  GLOBAL_SETTING.aspectRatio = !GLOBAL_SETTING.aspectRatio;
+  console.log(GLOBAL_SETTING.aspectRatio);
+  if (MULTIFILES[0]) {
+    loadFileToCanvas(MULTIFILES[0]);
+  }
+  snackBarDisplay(
+    `You Have Select Aspect Ratio Option To ${GLOBAL_SETTING.aspectRatio}`
+  );
+});
