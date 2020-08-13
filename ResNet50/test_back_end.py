@@ -64,10 +64,10 @@ def mc_Resnet(img, netName, jsonType):
     resultCAM = []
     if len(outputs) == 2:
         attentionMap = outputs[1]
-        test = augment_images(source_image, attentionMap)
+        test = augment_images(source_image, attentionMap[0])
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
-        outputs = outputs[0]
+        outputs = outputs[0][0]
         outputs = torch.sigmoid(outputs)
         outputs = du.transfer_rate(outputs)
     else:

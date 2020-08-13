@@ -928,6 +928,8 @@ function switchPic(currentIndex, abs_path) {
       // console.log(obj);
       // Assign File Obj To Global Variable CSV_IMAGE_FILE
       CSV_IMAGE_FILE = obj;
+      MULTIFILES = [];
+      MULTIFILES[0] = obj;
       loadFileToCanvas(obj);
     }
   };

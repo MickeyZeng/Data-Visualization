@@ -571,6 +571,8 @@ fileUploadButton.addEventListener("click", () => {
       // console.log(result);
       // Assign File Obj To Global Variable CSV_IMAGE_FILE
       CSV_IMAGE_FILE = obj;
+      MULTIFILES = [];
+      MULTIFILES[0] = obj;
       // Upload File To All The Canvas
       let result = xhr.getResponseHeader("labelName");
       GROUND_TRUTH = result;
@@ -806,7 +808,7 @@ saveScribbleBtn.addEventListener("click", () => {
       let a = document.createElement("a");
       let url = window.URL.createObjectURL(data);
       a.href = url;
-      a.download = fileName + ".txt";
+      a.download = fileName + ".npy";
       document.body.append(a);
       a.click();
       a.remove();
@@ -922,8 +924,11 @@ const aspectRatioControl = document.querySelector("#aspect-ratio-control");
 aspectRatioControl.addEventListener("click", () => {
   GLOBAL_SETTING.aspectRatio = !GLOBAL_SETTING.aspectRatio;
   console.log(GLOBAL_SETTING.aspectRatio);
-  if (MULTIFILES[0]) {
+  if (CSV_IMG_SWITCH && MULTIFILES[0]) {
     loadFileToCanvas(MULTIFILES[0]);
+  }
+  else if (MULTIFILES[CURRENTFILEINDEX]) {
+    loadFileToCanvas(MULTIFILES[CURRENTFILEINDEX]);
   }
   snackBarDisplay(
     `You Have Select Aspect Ratio Option To ${GLOBAL_SETTING.aspectRatio}`
