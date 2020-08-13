@@ -311,8 +311,9 @@ def saveScribble(request):
     返回一个文件类型给前端进行下载, 和保存一个Numpy数组文件
     """
     if result:
-        np.save('downloadFile/' + fileName + '.npy', totalNumpy)
-        file_path = 'downloadFile/' + fileName + '.npy'
+        # np.save('downloadFile/' + fileName + '.npy', totalNumpy)
+        np.savetxt('downloadFile/' + fileName + '.txt', totalNumpy)
+        file_path = 'downloadFile/' + fileName + '.txt'
         try:
             """
             This function has to return BLOB(file) style
@@ -323,7 +324,7 @@ def saveScribble(request):
             # 设置头信息，告诉浏览器这是个文件
             response['content-Type'] = 'application/octet-stream'
             response['Content-Disposition'] = 'attachment;filename=' + \
-                fileName + '.npy'
+                fileName + '.txt'
             return response
         except Exception:
             raise Http404

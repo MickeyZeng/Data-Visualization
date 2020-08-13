@@ -768,7 +768,7 @@ saveScribbleBtn.addEventListener("click", () => {
   */
 
   updateImage(); //Got the data from the canvas
-  const isCustom;
+  let isCustom;
   if (GLOBAL_SETTING.userSelectedNetwork == 'custom') {
     isCustom = "True";
   } else {
@@ -805,7 +805,7 @@ saveScribbleBtn.addEventListener("click", () => {
       let a = document.createElement("a");
       let url = window.URL.createObjectURL(data);
       a.href = url;
-      a.download = fileName + ".npy";
+      a.download = fileName + ".txt";
       document.body.append(a);
       a.click();
       a.remove();

@@ -1,6 +1,7 @@
 import json
 import os
 
+import cv2
 import numpy as np
 import pandas
 from PIL import Image
@@ -49,7 +50,7 @@ def readFile(file, current_index, abs_path):
 
     resultName = name[int(current_index)]
     resultPath = abs_path + path[int(current_index)]
-    fileName = path[int(current_index)].split('/')[1]
+    fileName = path[int(current_index)].split('/')[0] + "_" + path[int(current_index)].split('/')[1]
 
     print("the name of file is " + fileName)
 
@@ -84,23 +85,42 @@ def processNumpy(originalImageHeight, originalImageWidth, fileName, positivePoin
     negativeList = calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, negativePointPositive,
                                       'negative')
 
-    testNumpy = np.empty([int(originalImageWidth), int(originalImageHeight)])
+    testNumpy = np.zeros((int(originalImageHeight), int(originalImageWidth)), dtype=np.int8)
 
-    testNumpy = createNumpy(positiveList, testNumpy, 1)
-    testNumpy = createNumpy(negativeList, testNumpy, -1)
+    testNumpy = createNumpy(positiveList, negativeList, testNumpy)
 
     return testNumpy
 
 
 # TODO: Read the list and put the number in numpy array
-def createNumpy(arrayList, testNumpy, type):
-    if type == 1:
-        arrayList = arrayList['positive']
-    else:
-        arrayList = arrayList['negative']
-    for i in arrayList:
-        if i != 'break':
-            testNumpy[int(i['x'])][int(i['y'])] = type
+def createNumpy(positive, negative, testNumpy):
+    for i in range(len(positive['positive']) - 1):
+        if positive['positive'][i] == 'break':
+            continue
+        if positive['positive'][i + 1] == 'break':
+            continue
+        start_point = (int(positive['positive'][i]['x']), int(positive['positive'][i]['y']))
+        end_point = (int(positive['positive'][i + 1]['x']), int(positive['positive'][i + 1]['y']))
+        thickness = 5
+        testNumpy = cv2.line(testNumpy, start_point, end_point, 1, thickness)
+
+    for i in range(len(negative['negative']) - 1):
+        if negative['negative'][i] == 'break':
+            continue
+        if negative['negative'][i + 1] == 'break':
+            continue
+        start_point = (int(negative['negative'][i]['x']), int(negative['negative'][i]['y']))
+        end_point = (int(negative['negative'][i + 1]['x']), int(negative['negative'][i + 1]['y']))
+        thickness = 5
+        testNumpy = cv2.line(testNumpy, start_point, end_point, 2, thickness)
+
+    # for i in positive['positive']:
+    #     if i != 'break':
+    #         testNumpy[int(i['y'])][int(i['x'])] = 1
+    #
+    # for i in negative['negative']:
+    #     if i != 'break':
+    #         testNumpy[int(i['y'])][int(i['x'])] = -1
 
     return testNumpy
 
