@@ -62,6 +62,8 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
 
           // adjust start point
           startY = drawingPanelWidth / 2 - image.height / 2;
+          console.log("the panding is " + startY);
+
         } else {
           // height is dominance
           let ratio = originalImageHeight / originalImageWidth;
@@ -69,6 +71,7 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
           image.width = drawingPanelWidth / ratio;
           // adjust start point
           startX = drawingPanelWidth / 2 - image.width / 2;
+          console.log("the panding is " + startX);
         }
       } else {
         image.width *= drawingPanelWidth / image.width;

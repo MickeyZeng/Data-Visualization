@@ -276,6 +276,14 @@ def saveScribble(request):
 
     imgData = util.arrToTensor(imgData, drawingPanelWidth, drawingPanelWidth)
 
+    # Ground Truth
+    groundTruth = request.POST.get('groundTruth')
+
+    if len(groundTruth) == 0:
+        groundTruth = -1
+    else:
+        groundTruth = jtd.dis_index(groundTruth, flag=flag)
+
     # Create a numpy
     totalNumpy = np.empty([int(originalImageWidth), int(originalImageHeight)])
 
@@ -292,8 +300,8 @@ def saveScribble(request):
         &&&&&&&&
         negative
         """
-        result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
-                                      negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
+        # result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
+        #                               negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
 
         tempNumpy = util.processNumpy(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
                                       negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
@@ -301,7 +309,7 @@ def saveScribble(request):
         if i == 0:
             totalNumpy = tempNumpy
         else:
-            totalNumpy = np.vstack(tempNumpy, totalNumpy)
+            totalNumpy = np.stack((totalNumpy, tempNumpy))
 
         if not result:
             break

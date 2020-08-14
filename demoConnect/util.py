@@ -189,8 +189,45 @@ def calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidt
     """
     tempResult = {}
     resultList = []
+
+    drawingPanelHeight = drawingPanelWidth
+
+    # source_size = [originalImageWidth, originalImageHeight]
+    # max_size = max(source_size)
+    # new_size = (max_size, max_size)
+    #
+    # start_x = int((new_size[0] - source_size[0]) / 2)
+    # end_x = start_x + source_size[0]
+    #
+    # start_y = int((new_size[1] - source_size[1]) / 2)
+    # end_y = start_y + source_size[1]
+    #
+    # testNumpy = [np.array([[p['x'], p['y']]]) for p in pointPosition if p != 'break']
+    # testNumpy = np.concatenate(testNumpy)
+    #
+    # testNumpy = testNumpy.astype(np.float) / drawingPanelWidth * max_size - np.array([[start_x, start_y]])
+    # tempResult = testNumpy.tolist()
+    #
+    # return tempResult
+
+    padding = 0
+    if originalImageWidth < originalImageHeight:
+        padding = (drawingPanelWidth - drawingPanelWidth * (originalImageWidth / originalImageHeight)) / 2
+        drawingPanelWidth = drawingPanelWidth - (padding * 2)
+        for i in range(len(pointPosition)):
+            if pointPosition[i] == 'break':
+                continue
+            pointPosition[i]['x'] = pointPosition[i]['x'] - padding
+    else:
+        padding = (drawingPanelHeight - (drawingPanelHeight * (originalImageHeight / originalImageWidth))) / 2
+        drawingPanelHeight = drawingPanelHeight - (padding * 2)
+        for i in range(len(pointPosition)):
+            if pointPosition[i] == 'break':
+                continue
+            pointPosition[i]['y'] = pointPosition[i]['y'] - padding
+
     widthRatio = originalImageWidth / drawingPanelWidth
-    heightRatio = originalImageHeight / drawingPanelWidth
+    heightRatio = originalImageHeight / drawingPanelHeight
 
     for i in range(len(pointPosition)):
         if pointPosition[i] == 'break':

@@ -757,8 +757,10 @@ const saveScribbleBtn = document.querySelector("#save-scribble");
 saveScribbleBtn.addEventListener("click", () => {
   // let fileName = MULTIFILES[CURRENTFILEINDEX].name;
   let fileName;
+  let gtForBackEnd = '';
   if (CSV_IMG_SWITCH) {
     fileName = CSV_IMAGE_FILE.name;
+    gtForBackEnd = GROUND_TRUTH
   } else {
     fileName = MULTIFILES[CURRENTFILEINDEX].name;
   }
@@ -794,6 +796,8 @@ saveScribbleBtn.addEventListener("click", () => {
       imgData: JSON.stringify(upload_image),
       // New added
       customized: isCustom,
+      // Ground Truth value
+      groundTruth: gtForBackEnd,
     },
     xhrFields: {
       //确定后端返回的一定是文件类型
