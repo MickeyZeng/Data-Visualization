@@ -300,8 +300,8 @@ def saveScribble(request):
         &&&&&&&&
         negative
         """
-        result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
-                                      negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
+        # result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
+        #                               negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
 
         tempNumpy = util.processNumpy(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
                                       negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
