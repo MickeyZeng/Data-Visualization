@@ -300,8 +300,8 @@ def saveScribble(request):
         &&&&&&&&
         negative
         """
-        # result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
-        #                               negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
+        result = util.processScribble(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
+                                      negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
 
         tempNumpy = util.processNumpy(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
                                       negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
@@ -313,6 +313,11 @@ def saveScribble(request):
 
         if not result:
             break
+
+    if len(totalNumpy) == 2:
+        # Change the axis for result Numpy
+        totalNumpy = np.swapaxes(totalNumpy, 0, 1)
+        totalNumpy = np.swapaxes(totalNumpy, 1, 2)
 
     """
     Return a file to front-end and save the numpy file
