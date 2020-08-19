@@ -19,7 +19,8 @@ import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
 import demoConnect.util as du
 
-# matplotlib.use('agg')
+import matplotlib
+matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
