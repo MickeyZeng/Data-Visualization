@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 
 import cv2
 import numpy as np
@@ -69,9 +70,9 @@ def readFile(file, current_index, abs_path):
         raise Http404
 
 
-# TODO: This is to create a numpy saving postive and negative scribble
+# TODO: This is to create a numpy saving postive and negative scribble (Type for line)
 def processNumpy(originalImageHeight, originalImageWidth, fileName, positivePointPosition, negativePointPositive,
-                 drawingPanelWidth, imgData, classLabel, flag):
+                 drawingPanelWidth, imgData, classLabel, flag, typeScribble):
     resultList = {}
 
     # 如果是Customized的话 需要走另外的json
@@ -85,9 +86,51 @@ def processNumpy(originalImageHeight, originalImageWidth, fileName, positivePoin
     negativeList = calculatedPosition(originalImageWidth, originalImageHeight, drawingPanelWidth, negativePointPositive,
                                       'negative')
 
-    testNumpy = np.zeros((int(originalImageHeight), int(originalImageWidth)), dtype=np.int8)
+    if typeScribble == "box":
+        testNumpy = np.ones((int(originalImageHeight), int(originalImageWidth)), dtype=np.int8)
 
-    testNumpy = createNumpy(positiveList, negativeList, testNumpy)
+        testNumpy = createBox(positiveList, negativeList, testNumpy)
+
+    else:
+        testNumpy = np.zeros((int(originalImageHeight), int(originalImageWidth)), dtype=np.int8)
+
+        testNumpy = createNumpy(positiveList, negativeList, testNumpy)
+
+    return testNumpy
+
+
+# TODO: Read the list and put the number in numpy array
+def createBox(positive, negative, testNumpy):
+    minX = sys.maxsize
+    maxX = 0
+    minY = sys.maxsize
+    maxY = 0
+
+    # 只能让positive画
+    for i in range(len(positive['positive']) - 1):
+        if positive['positive'][i] == 'break':
+            continue
+        if positive['positive'][i + 1] == 'break':
+            continue
+
+        if int(positive['positive'][i]['x']) > maxX:
+            maxX = int(positive['positive'][i]['x'])
+        if int(positive['positive'][i]['x']) < minX:
+            minX = int(positive['positive'][i]['x'])
+
+        if int(positive['positive'][i]['y']) > maxY:
+            maxY = int(positive['positive'][i]['y'])
+        if int(positive['positive'][i]['y']) < minY:
+            minY = int(positive['positive'][i]['y'])
+        # start_point = (int(positive['positive'][i]['x']), int(positive['positive'][i]['y']))
+        # end_point = (int(positive['positive'][i + 1]['x']), int(positive['positive'][i + 1]['y']))
+
+    if minX == sys.maxsize and maxX == 0 and minY == sys.maxsize and maxY == 0:
+        testNumpy = np.zeros(testNumpy.shape, dtype=np.int8)
+    else:
+        thickness = -1
+        # Positive scribble is 2
+        testNumpy = cv2.rectangle(testNumpy, (minX, minY), (maxX, maxY), 2, thickness)
 
     return testNumpy
 

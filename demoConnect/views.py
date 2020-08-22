@@ -279,6 +279,13 @@ def saveScribble(request):
     # Ground Truth
     groundTruth = request.POST.get('groundTruth')
 
+    # Get the type of scribble including bounding box and simple line
+    # 现在会有两种的scribble的 一种是bounding box 和 简单划线的
+    # 数值 Value : box & line
+    typeScribble = request.POST.get('typeScribble')
+    # This code is for test!!
+    typeScribble = "box"
+
     if len(groundTruth) == 0:
         groundTruth = -1
     else:
@@ -304,7 +311,8 @@ def saveScribble(request):
         #                               negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
 
         tempNumpy = util.processNumpy(originalImageHeight, originalImageWidth, fileName, positivePointPositioin,
-                                      negativePointPostition, drawingPanelWidth, imgData, classLabel, flag)
+                                      negativePointPostition, drawingPanelWidth, imgData, classLabel, flag,
+                                      typeScribble)
 
         if i == 0:
             totalNumpy = tempNumpy
