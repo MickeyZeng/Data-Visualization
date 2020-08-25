@@ -68,7 +68,8 @@ def mc_Resnet(img, netName, jsonType):
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
         outputs = outputs[0][0]
-        outputs = torch.softmax(outputs, dim=1)
+        outputs = torch.sigmoid(outputs)
+        # outputs = torch.softmax(outputs, dim=1)
         outputs = du.transfer_rate(outputs)
     else:
         outputs = nn.Softmax(dim=1)(outputs)
@@ -423,26 +424,27 @@ def preProcessImg(img):
     # plt.imshow(pic)
     # plt.show()
 
-    # normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-    #                                  std=[0.229, 0.224, 0.225])
-    # t = transforms.Compose([
-    #     transforms.Resize(256),
-    #     transforms.CenterCrop(224),
-    #     transforms.ToTensor(),
-    #     normalize,
-    # ])
+    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                     std=[0.229, 0.224, 0.225])
+    t = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        normalize,
+    ])
 
     # normalize = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+
     # pic = np.load("/Users/mickey/document/Master of computer science/Project/cifar10/data.npy")[18551]
     # pic = Image.fromarray(pic, 'RGB')
 
-    t = transforms.Compose([
-        transforms.Resize(32, interpolation=Image.NEAREST),
-        # transforms.Resize(224, interpolation=Image.BICUBIC),
-        # transforms.CenterCrop(32),
-        transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
-    ])
+    # t = transforms.Compose([
+    #     transforms.Resize(32, interpolation=Image.NEAREST),
+    #     # transforms.Resize(224, interpolation=Image.BICUBIC),
+    #     # transforms.CenterCrop(32),
+    #     transforms.ToTensor(),
+    #     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+    # ])
 
     input_image = t(pic)
 
@@ -463,7 +465,7 @@ def augment_images(source_images, cams):
         # max_value = np.max(att_maps)
 
         # Mickey: 我手动改了min -> max了
-        for l in range(max(att_maps.shape[0], 10)):
+        for l in range(min(att_maps.shape[0], 10)):
             att_map = att_maps[l]
             att_map = cv2.resize(
                 att_map, source_images.shape[2:], interpolation=cv2.INTER_CUBIC)

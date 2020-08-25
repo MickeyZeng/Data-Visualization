@@ -2,6 +2,9 @@
 :root {
   --line-weight: 5;
   --line-colour: "#BADA55";
+  --primary-colour: #5a98da;
+  --secondary-colour: #5a98da;
+  /*--secondary-colour: #67d8ee;*/
   box-sizing: content-box;
 }
 
@@ -39,6 +42,7 @@ body {
   padding: 10px;
   color: #eee;
   font-weight: 600;
+  font-size: 2rem;
 }
 
 .tab.active {
@@ -93,7 +97,7 @@ body {
 
 /* Drawing Pens */
 .drawing-pens {
-  /* border: 1px black solid; */
+   border-bottom: 5px silver solid;
 }
 
 /* Scribble Tool Box */
@@ -222,8 +226,9 @@ body {
   /* text-align: center; */
 }
 .leader-board-title h5 {
-  margin-bottom: 1.5rem;
+  margin-bottom: .5rem;
   font-weight: 800;
+  font-size: 2.5rem;
 }
 
 .leader-board table {
@@ -473,3 +478,11 @@ table tbody tr td .fa-circle {
   }
 }
 /* Snack Bar */
+
+.btn {
+  background-color: var(--primary-colour) !important;
+}
+
+.material-icons {
+  background-color: var(--secondary-colour) !important;
+}
