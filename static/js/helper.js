@@ -4,6 +4,7 @@ function loadFileToCanvas(currentFile, clear = false, empty = false) {
   // Query Select Drawing Panel
   const canvas = document.querySelector("#drawing-area");
   const ctx = canvas.getContext("2d");
+  ctx.imageSmoothingEnabled = false
   // Query Select Displaying Panel
   const canvasDisplay = document.querySelector("#display-area");
   const ctxDisplay = canvasDisplay.getContext("2d");

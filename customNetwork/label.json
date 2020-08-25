@@ -1,12 +1,12 @@
 [
-  "airplanes",
-  "cars",
-  "birds",
-  "cats",
+  "airplane",
+  "car",
+  "bird",
+  "cat",
   "deer",
-  "dogs",
-  "frogs",
-  "horses",
-  "ships",
-  "trucks"
+  "dog",
+  "frog",
+  "horse",
+  "ship",
+  "truck"
 ]

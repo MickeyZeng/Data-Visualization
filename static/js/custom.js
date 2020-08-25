@@ -807,7 +807,7 @@ saveScribbleBtn.addEventListener("click", () => {
     success: function (data) {
       //这里需要先创建一个<a>标签 然后使用js把它激活 响应Chrome的下载模块
       //Firstly, <a> has to be implemented to active the download function in browser.
-
+      fileName = fileName.split(".")[0];
       console.log(data);
       let a = document.createElement("a");
       let url = window.URL.createObjectURL(data);

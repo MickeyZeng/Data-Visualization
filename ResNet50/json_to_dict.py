@@ -45,8 +45,8 @@ def get_length(jsonType, jsonPath):
         return 5
     elif jsonType == 1:
         length = len(json_to_dict(jsonPath))
-        if length >= 5:
-            return 5
+        if length >= 10:
+            return 10
         else:
             return length
     return 0

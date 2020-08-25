@@ -18,9 +18,8 @@ from torchsummary import summary
 import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
 import demoConnect.util as du
-import matplotlib
 
-matplotlib.use('agg')
+# matplotlib.use('agg')
 
 numOfResult = 0
 rank = 0
@@ -45,8 +44,8 @@ def mc_Resnet(img, netName, jsonType):
     resnet = gnn.get_neural_network(netName)
 
     # The custom neural network has no attribute for eval
-    if netName != 'custom':
-        resnet.eval()
+    # if netName != 'custom':
+    resnet.eval()
 
     # print(">>>>> HERE?? >>>>>>")
 
@@ -64,6 +63,7 @@ def mc_Resnet(img, netName, jsonType):
     resultCAM = []
     if len(outputs) == 2:
         attentionMap = outputs[1]
+        # attentionMap = torch.softmax(attentionMap[0], dim=1)
         test = augment_images(source_image, attentionMap[0])
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
@@ -417,18 +417,31 @@ def tempOutput(num, img, index, colorMap, netName):
 # TODO: This is to process img to be a legal size
 def preProcessImg(img):
     pic = Image.fromarray(img.astype('uint8'), 'RGB')
-    pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)
+    # pic = pic.resize((224, 224), Image.ANTIALIAS).rotate(270)
+    pic = pic.rotate(270)
     pic = pic.transpose(Image.FLIP_LEFT_RIGHT)
-    plt.imshow(pic)
-    plt.show()
+    # plt.imshow(pic)
+    # plt.show()
 
-    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225])
+    # normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+    #                                  std=[0.229, 0.224, 0.225])
+    # t = transforms.Compose([
+    #     transforms.Resize(256),
+    #     transforms.CenterCrop(224),
+    #     transforms.ToTensor(),
+    #     normalize,
+    # ])
+
+    # normalize = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+    # pic = np.load("/Users/mickey/document/Master of computer science/Project/cifar10/data.npy")[18551]
+    # pic = Image.fromarray(pic, 'RGB')
+
     t = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
+        transforms.Resize(32, interpolation=Image.NEAREST),
+        # transforms.Resize(224, interpolation=Image.BICUBIC),
+        # transforms.CenterCrop(32),
         transforms.ToTensor(),
-        normalize,
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
     ])
 
     input_image = t(pic)
@@ -448,7 +461,9 @@ def augment_images(source_images, cams):
         att_maps = cams[im_idx].detach().cpu().numpy()
         # min_value = 0 # np.min(att_maps)
         # max_value = np.max(att_maps)
-        for l in range(min(att_maps.shape[0], 4)):
+
+        # Mickey: 我手动改了min -> max了
+        for l in range(max(att_maps.shape[0], 10)):
             att_map = att_maps[l]
             att_map = cv2.resize(
                 att_map, source_images.shape[2:], interpolation=cv2.INTER_CUBIC)

@@ -14,6 +14,8 @@ from demoConnect import util
 from heatmap import heatmap_util as heatUtil
 from heatmap import misc_functions as mics
 
+np.set_printoptions(suppress=True)
+
 
 def testThreeDimension(request):
     """
@@ -258,12 +260,21 @@ def saveScribble(request):
     # TO Test the neural network is customized or not!!!
     flag = request.POST.get('customized')
 
+    # Got the json file by the path 0 => default JSON ; 1 => custom JSON
+    if flag == 'True':
+        jsonType = 1
+        jsonPath = "customNetwork/label.json"
+    else:
+        jsonType = 0
+        jsonPath = "ResNet50/imagenet-simple-labels.json"
+
     # This is for the original Image size (Including height and width)
     originalImageHeight = int(request.POST.get('originalImageHeight'))
     originalImageWidth = int(request.POST.get('originalImageWidth'))
 
     # This is for the File name
     fileName = request.POST.get('fileName')
+    fileName = fileName.split(".")[0]
 
     # This can get all info including class label, positive and negative point position
     allInfo = json.loads(request.POST.get('allInfo'))
@@ -284,15 +295,17 @@ def saveScribble(request):
     # 数值 Value : box & line
     typeScribble = request.POST.get('typeScribble')
     # This code is for test!!
-    typeScribble = "box"
+    typeScribble = "boxe"
 
-    if len(groundTruth) == 0:
-        groundTruth = -1
-    else:
-        groundTruth = jtd.dis_index(groundTruth, flag=flag)
+    # if len(groundTruth) == 0:
+    #     groundTruth = -1
+    # else:
+    #     groundTruth = jtd.dis_index(groundTruth, flag=flag)
 
     # Create a numpy
-    totalNumpy = np.empty([int(originalImageWidth), int(originalImageHeight)])
+
+    totalNumpy = np.empty([jtd.get_length(jsonType, jsonPath), int(originalImageHeight), int(originalImageWidth)])
+    # totalNumpy = np.empty(int(originalImageWidth), int(originalImageHeight)])
 
     for i in range(len(allInfo)):
         classLabel = list(allInfo.keys())[i]
@@ -314,10 +327,12 @@ def saveScribble(request):
                                       negativePointPostition, drawingPanelWidth, imgData, classLabel, flag,
                                       typeScribble)
 
-        if i == 0:
-            totalNumpy = tempNumpy
-        else:
-            totalNumpy = np.stack((totalNumpy, tempNumpy))
+        totalNumpy[int(jtd.dis_index(classLabel, flag=flag))] = tempNumpy
+
+        # if i == 0:
+        #     totalNumpy = tempNumpy
+        # else:
+        #     totalNumpy = np.stack((totalNumpy, tempNumpy))
 
         if not result:
             break
