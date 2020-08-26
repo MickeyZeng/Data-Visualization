@@ -304,7 +304,8 @@ def saveScribble(request):
 
     # Create a numpy
 
-    totalNumpy = np.empty([jtd.get_length(jsonType, jsonPath), int(originalImageHeight), int(originalImageWidth)])
+    totalNumpy = np.zeros([int(jtd.get_length(jsonType, jsonPath)), int(originalImageHeight), int(originalImageWidth)],
+                          dtype=np.int8)
     # totalNumpy = np.empty(int(originalImageWidth), int(originalImageHeight)])
 
     for i in range(len(allInfo)):
