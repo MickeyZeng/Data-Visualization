@@ -330,7 +330,7 @@ def processFile(arch, weights, label):
 
     # 3. Check if there is a function named getNetwork in arch file (检查arch文件是否有getNetWork函数)
     download_file(arch, 'arch.py')
-    download_file(weights, 'weight.pth')
+    download_file(weights, 'Attentionweight.pth')
     download_file(label, 'label.json')
 
     # 4. Check if there is a function named "get_network" in the arch file (检查arch文件里面是否有一个叫"get_network"的方法)

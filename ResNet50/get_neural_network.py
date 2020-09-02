@@ -35,7 +35,7 @@ def get_custom_network():
     TODO: This is to get the custom network
     :return: customize neural network
     """
-    pthPath = "customNetwork/weight.pth"
+    pthPath = "customNetwork/Attentionweight.pth"
     import customNetwork.arch as ca
     resnet = ca.get_network()
     resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))

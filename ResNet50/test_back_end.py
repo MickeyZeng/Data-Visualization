@@ -45,7 +45,7 @@ def mc_Resnet(img, netName, jsonType):
 
     # The custom neural network has no attribute for eval
     # if netName != 'custom':
-    resnet.eval()
+    # resnet.eval()
 
     # print(">>>>> HERE?? >>>>>>")
 
@@ -54,6 +54,7 @@ def mc_Resnet(img, netName, jsonType):
 
     # with torch.no_grad():
     outputs = resnet(input_image)
+    print(outputs[0])
     # outputs[1][0] = outputs[1][0].softmax(dim=1)
     # Save the input image
     source_image = torch.tensor(np.expand_dims(
@@ -424,13 +425,19 @@ def preProcessImg(img):
     # plt.imshow(pic)
     # plt.show()
 
-    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225])
+    # pic = Image.open(
+    #     "/Users/mickey/document/Master of computer science/Project/data/rotated/rotated_png/26/IM-0004-0002.png")
+    # if pic.mode != 'RGB':
+    #     pic = pic.convert('RGB')
+    # pic = border_padding(pic)
+
+    # normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+    #                                  std=[0.229, 0.224, 0.225])
     t = transforms.Compose([
         transforms.Resize(256),
-        transforms.CenterCrop(224),
+        # transforms.CenterCrop(224),
         transforms.ToTensor(),
-        normalize,
+        # normalize,
     ])
 
     # normalize = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
@@ -449,6 +456,42 @@ def preProcessImg(img):
     input_image = t(pic)
 
     return input_image
+
+
+# pad the boarder of the short dimension to square image, image is considered as HxWxC
+def border_padding(image, padding_value=0, extra_padding_pixels=0):
+    import numpy as np
+    from PIL.Image import Image as pil_image_type
+    from PIL import Image as PIL_Image
+    # import cv2
+    def image_size(image):
+        if type(image) == pil_image_type:
+            sz = image.size[::-1]
+        elif type(image) == np.ndarray:
+            sz = image.shape[:2]
+        else:
+            raise ValueError('Unsupported image type: {}'.format(type(image)))
+
+        return sz
+
+    source_size = image_size(image)
+    max_size = max(source_size) + extra_padding_pixels * 2
+    new_size = (max_size, max_size)
+
+    start_x = int((new_size[0] - source_size[0]) / 2)
+    end_x = start_x + source_size[0]
+
+    start_y = int((new_size[1] - source_size[1]) / 2)
+    end_y = start_y + source_size[1]
+
+    if type(image) == pil_image_type:
+        padded_image = PIL_Image.new("RGB", new_size, color=padding_value)
+        padded_image.paste(image, (start_y, start_x))
+    elif type(image) == np.ndarray:
+        padded_image = np.ones(list(new_size) + [image.shape[2]], dtype=image.dtype) * padding_value
+        padded_image[start_x:end_x, start_y:end_y] = image
+
+    return padded_image
 
 
 def augment_images(source_images, cams):
