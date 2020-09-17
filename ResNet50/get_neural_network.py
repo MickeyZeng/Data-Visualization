@@ -35,14 +35,22 @@ def get_custom_network():
     TODO: This is to get the custom network
     :return: customize neural network
     """
+    # 骨折图
     # pthPath = "customNetwork/weight.pth"
     # import customNetwork.arch as ca
     # resnet = ca.get_network()
     # resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
 
-    import cifar10.seg_model as cs
-    resnet = cs.get_network()
-    pthPath = "cifar10/net_e100_cifar10.pth"
+    # Cifar10
+    # import cifar10.seg_model as cs
+    # resnet = cs.get_network()
+    # pthPath = "cifar10/net_e100-fine.pth"
+    # resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
+
+    # Ship
+    import shipClassify.seg_model as ss
+    resnet = ss.get_network()
+    pthPath = "shipClassify/net_e100.ckpt"
     resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
 
     return resnet

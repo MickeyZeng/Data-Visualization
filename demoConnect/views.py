@@ -263,7 +263,7 @@ def saveScribble(request):
     # Got the json file by the path 0 => default JSON ; 1 => custom JSON
     if flag == 'True':
         jsonType = 1
-        jsonPath = "customNetwork/label.json"
+        jsonPath = "shipClassify/label.json"
     else:
         jsonType = 0
         jsonPath = "ResNet50/imagenet-simple-labels.json"

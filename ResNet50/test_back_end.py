@@ -14,6 +14,7 @@ import torchvision.transforms as transforms
 from PIL import Image
 from matplotlib import pyplot as plt
 from torchsummary import summary
+from demoConnect import transform_utils as dt
 
 import ResNet50.get_neural_network as gnn
 import ResNet50.json_to_dict as jtd
@@ -61,9 +62,12 @@ def mc_Resnet(img, netName, jsonType):
 
     # outputs有时候会有两个tensor的结果 一个为最后的分类结果 一个是attention map
     resultCAM = []
+    picCAM = []
     if len(outputs) == 2:
         attentionMap = outputs[1]
         # attentionMap = torch.softmax(attentionMap[0], dim=1)
+        # attentionMap = attentionMap[0].max(dim=1, keepdim=True)[0].repeat(1,10,1,1)
+        # test = augment_images(source_image, attentionMap)
         test = augment_images(source_image, attentionMap[0])
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
@@ -78,7 +82,8 @@ def mc_Resnet(img, netName, jsonType):
     if jsonType == 0:
         jsonPath = "ResNet50/imagenet-simple-labels.json"
     elif jsonType == 1:
-        jsonPath = "customNetwork/label.json"
+        jsonPath = "shipClassify/label.json"
+        # jsonPath = "customNetwork/label.json"
     else:
         return False
 
@@ -97,12 +102,14 @@ def mc_Resnet(img, netName, jsonType):
     dictionary = jtd.json_to_dict(jsonPath)
     result = []
     resultRate = []
+
     # for i in range(top_k_idx):
     #     resultRate.append(outputs_numpy[i])
 
     for i in range((top_k * (-1))):
         # 因为Json的是从1开始的 所以需要-1
         result.append(dictionary[top_k_idx[i]])
+        picCAM.append(resultCAM[top_k_idx[i]])
 
     if outputs_numpy.size == 1:
         if outputs_numpy > 0.5:
@@ -126,7 +133,7 @@ def mc_Resnet(img, netName, jsonType):
 
     print(resultDict)
 
-    return resultDict, resultCAM
+    return resultDict, picCAM
 
 
 def displayNet():
@@ -436,12 +443,23 @@ def preProcessImg(img):
     # pic = np.load("/Users/mickey/document/Master of computer science/Project/cifar10/data.npy")[18551]
     # pic = Image.fromarray(pic, 'RGB')
 
+    # t = transforms.Compose([
+    #     transforms.Resize(32, interpolation=Image.NEAREST),
+    #     # transforms.Resize(224, interpolation=Image.BICUBIC),
+    #     # transforms.CenterCrop(32),
+    #     transforms.ToTensor(),
+    #     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+    # ])
+
+    # pic = Image.open("/Users/mickey/Downloads/image_data/images/2890672.jpg")
+    # pic = pic.convert('RGB')
+    # pic = dt.border_padding(pic)
     t = transforms.Compose([
-        transforms.Resize(32, interpolation=Image.NEAREST),
-        # transforms.Resize(224, interpolation=Image.BICUBIC),
-        # transforms.CenterCrop(32),
+        transforms.Resize((256, 256)),
         transforms.ToTensor(),
-        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+        transforms.Normalize((0.485, 0.456, 0.406),
+                             (0.229, 0.224, 0.225)),
+        # T.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False),
     ])
 
     input_image = t(pic)
@@ -463,12 +481,12 @@ def augment_images(source_images, cams):
         # max_value = np.max(att_maps)
 
         # Mickey: 我手动改了min -> max了
-        for l in range(max(att_maps.shape[0], 10)):
+        for l in range(min(att_maps.shape[0], 10)):
             att_map = att_maps[l]
             att_map = cv2.resize(
                 att_map, source_images.shape[2:], interpolation=cv2.INTER_CUBIC)
 
-            # att_map = np.clip(att_map, 0, 1)
+            # att_map =∂ np.clip(att_map, 0, 1)
             min_value = np.min(
                 np.min(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
             max_value = np.max(
@@ -508,6 +526,12 @@ def augment_images(source_images, cams):
             # testImage = testImage.rotate(-90).transpose(Image.FLIP_LEFT_RIGHT)
             resultCAM.append(testImage)
     return resultCAM
+
+
+def reverseDim(array):
+    testArray = np.swapaxes(array, 0, 1)
+    testArray = np.swapaxes(testArray, 1, 2)
+    return testArray
 
 # if __name__ == "__main__":
 #     mc_Resnet50(file)

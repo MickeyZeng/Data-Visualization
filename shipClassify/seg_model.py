@@ -4,7 +4,7 @@ import torchvision.models as models
 from torch.nn import functional as F
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-from utils import plot
+# from utils import plot
 
 
 class Flatten(nn.Module):
@@ -129,9 +129,11 @@ class SegNet(nn.Module):
                 s_logits = F.interpolate(c_map, input.shape[2:], mode='bicubic', align_corners=True)
                 seg_logits.append(s_logits)
         seg_maps = seg_logits
+        #
+        # return regression_logits, binary_cls_logits, cls_logits, seg_logits, \
+        #        regression_maps, binary_cls_maps, cls_maps, seg_maps
+        return cls_logits, cls_maps
 
-        return regression_logits, binary_cls_logits, cls_logits, seg_logits, \
-               regression_maps, binary_cls_maps, cls_maps, seg_maps
 
     def loss(self, logits, targets):
         return self.loss_func(logits, targets)
@@ -172,5 +174,14 @@ class SegNet(nn.Module):
         return act_maps
 
 
-def get_network(target_info):
+def get_network():
+    target_info = {'gen_cam_map': 50,
+                   'seg_net_ver': -1,
+                   'seg_loss_ver': -1,
+                   'network': 'resnet50',
+                   'pretrained': 'True',
+                   'regression_cols': [],
+                   'binary_cls_cols': [],
+                   'cls_cols_dict': {'text_label': 5},
+                   'seg_cols_dict': {}}
     return SegNet(target_info)

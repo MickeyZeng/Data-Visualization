@@ -1,12 +1,7 @@
 [
-  "airplanes",
-  "cars",
-  "birds",
-  "cats",
-  "deer",
-  "dogs",
-  "frogs",
-  "horses",
-  "ships",
-  "trucks"
+  "Cargo",
+  "Carrier",
+  "Cruise",
+  "Military",
+  "Tankers"
 ]

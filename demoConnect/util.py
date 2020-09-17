@@ -144,7 +144,7 @@ def createNumpy(positive, negative, testNumpy):
             continue
         start_point = (int(positive['positive'][i]['x']), int(positive['positive'][i]['y']))
         end_point = (int(positive['positive'][i + 1]['x']), int(positive['positive'][i + 1]['y']))
-        thickness = 1
+        thickness = 2
         # Positive scribble is 2
         testNumpy = cv2.line(testNumpy, start_point, end_point, 2, thickness)
 
@@ -155,7 +155,7 @@ def createNumpy(positive, negative, testNumpy):
             continue
         start_point = (int(negative['negative'][i]['x']), int(negative['negative'][i]['y']))
         end_point = (int(negative['negative'][i + 1]['x']), int(negative['negative'][i + 1]['y']))
-        thickness = 1
+        thickness = 2
         # Negative scribble is 1
         testNumpy = cv2.line(testNumpy, start_point, end_point, 1, thickness)
 
