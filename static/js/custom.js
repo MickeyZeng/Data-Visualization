@@ -101,7 +101,7 @@ class DrawingObject {
 
     this.drawing_panel_ctx.lineJoin = "round";
     this.drawing_panel_ctx.lineCap = "round";
-    this.drawing_panel_ctx.lineWidth = 5;
+    this.drawing_panel_ctx.lineWidth = 10; //Default Setting is 5
     this.pen_trigger = pen_trigger;
     this.keydown = false; // This key down is for negative scribble, Alt key is the key to activate
   }

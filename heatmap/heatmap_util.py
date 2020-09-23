@@ -110,7 +110,7 @@ def scoreCAM(original_image, prep_img, target_class, file_name_to_export, pretra
     # Generate cam mask
     cam = score_cam.generate_cam(prep_img, target_class)
     # Save mask
-    heatmap, heatmap_on_image = mics.apply_colormap_on_image(original_image, cam, 'magma')
+    heatmap, heatmap_on_image = mics.apply_colormap_on_image(original_image, cam, 'viridis')
 
     if type == "onImage":
         heatmap_on_image = save_image(heatmap_on_image)

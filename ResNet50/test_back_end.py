@@ -45,7 +45,7 @@ def mc_Resnet(img, netName, jsonType):
 
     # The custom neural network has no attribute for eval
     # if netName != 'custom':
-    # resnet.eval()
+    resnet.eval()
 
     # print(">>>>> HERE?? >>>>>>")
 
@@ -69,8 +69,8 @@ def mc_Resnet(img, netName, jsonType):
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
         outputs = outputs[0][0]
-        outputs = torch.sigmoid(outputs)
-        # outputs = torch.softmax(outputs, dim=1)
+        # outputs = torch.sigmoid(outputs)
+        outputs = torch.softmax(outputs, dim=1)
         outputs = du.transfer_rate(outputs)
     else:
         outputs = nn.Softmax(dim=1)(outputs)
