@@ -99,12 +99,14 @@ def mc_Resnet(img, netName, jsonType):
     dictionary = jtd.json_to_dict(jsonPath)
     result = []
     resultRate = []
+    picCAM = []
     # for i in range(top_k_idx):
     #     resultRate.append(outputs_numpy[i])
 
     for i in range((top_k * (-1))):
         # 因为Json的是从1开始的 所以需要-1
         result.append(dictionary[top_k_idx[i]])
+        picCAM.append(resultCAM[top_k_idx[i]])
 
     if outputs_numpy.size == 1:
         if outputs_numpy > 0.5:
@@ -128,7 +130,7 @@ def mc_Resnet(img, netName, jsonType):
 
     print(resultDict)
 
-    return resultDict, resultCAM
+    return resultDict, picCAM
 
 
 def displayNet():
