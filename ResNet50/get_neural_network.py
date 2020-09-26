@@ -42,15 +42,15 @@ def get_custom_network():
     # resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
 
     # Cifar10
-    # import cifar10.seg_model as cs
-    # resnet = cs.get_network()
-    # pthPath = "cifar10/net_e100-fine.pth"
-    # resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
+    import cifar10.seg_model as cs
+    resnet = cs.get_network()
+    pthPath = "cifar10/net_e100.ckpt"
+    resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
 
     # Ship
-    import shipClassify.seg_model as ss
-    resnet = ss.get_network()
-    pthPath = "shipClassify/net_e100.ckpt"
-    resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
+    # import shipClassify.seg_model as ss
+    # resnet = ss.get_network()
+    # pthPath = "shipClassify/net_e100.ckpt"
+    # resnet.load_state_dict(torch.load(pthPath, map_location=torch.device('cpu')))
 
     return resnet

@@ -22,7 +22,7 @@ def dis_index(label, flag=None):
     TODO: This is to return the index of label
     """
     if flag == "True":
-        temp = json_to_dict("shipClassify/label.json")
+        temp = json_to_dict("customNetwork/label.json")
     else:
         temp = json_to_dict("ResNet50/imagenet-simple-labels.json")
 

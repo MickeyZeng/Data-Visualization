@@ -64,11 +64,14 @@ def mc_Resnet(img, netName, jsonType):
     resultCAM = []
     picCAM = []
     if len(outputs) == 2:
-        attentionMap = outputs[1]
+        attentionMap = outputs[1][0]
         # attentionMap = torch.softmax(attentionMap[0], dim=1)
         # attentionMap = attentionMap[0].max(dim=1, keepdim=True)[0].repeat(1,10,1,1)
-        # test = augment_images(source_image, attentionMap)
-        test = augment_images(source_image, attentionMap[0])
+        max_value = attentionMap.detach().numpy().max()
+        min_value = attentionMap.detach().numpy().min()
+
+        test = augment_images(source_image, attentionMap, max_value, min_value)
+        # test = augment_images(source_image, attentionMap[0])
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
         outputs = outputs[0][0]
@@ -82,7 +85,7 @@ def mc_Resnet(img, netName, jsonType):
     if jsonType == 0:
         jsonPath = "ResNet50/imagenet-simple-labels.json"
     elif jsonType == 1:
-        jsonPath = "shipClassify/label.json"
+        jsonPath = "customNetwork/label.json"
         # jsonPath = "customNetwork/label.json"
     else:
         return False
@@ -443,33 +446,35 @@ def preProcessImg(img):
     # pic = np.load("/Users/mickey/document/Master of computer science/Project/cifar10/data.npy")[18551]
     # pic = Image.fromarray(pic, 'RGB')
 
-    # t = transforms.Compose([
-    #     transforms.Resize(32, interpolation=Image.NEAREST),
-    #     # transforms.Resize(224, interpolation=Image.BICUBIC),
-    #     # transforms.CenterCrop(32),
-    #     transforms.ToTensor(),
-    #     transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
-    # ])
+    t = transforms.Compose([
+        transforms.Resize(32, interpolation=Image.NEAREST),
+        # transforms.Resize(224, interpolation=Image.BICUBIC),
+        # transforms.CenterCrop(32),
+        transforms.ToTensor(),
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+    ])
 
     # pic = Image.open("/Users/mickey/Downloads/image_data/images/2890672.jpg")
     # pic = pic.convert('RGB')
     # pic = dt.border_padding(pic)
-    t = transforms.Compose([
-        transforms.Resize((256, 256)),
-        transforms.ToTensor(),
-        transforms.Normalize((0.485, 0.456, 0.406),
-                             (0.229, 0.224, 0.225)),
-        # T.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False),
-    ])
+    # t = transforms.Compose([
+    #     transforms.Resize((256, 256)),
+    #     transforms.ToTensor(),
+    #     transforms.Normalize((0.485, 0.456, 0.406),
+    #                          (0.229, 0.224, 0.225)),
+    #     # T.RandomErasing(p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value=0, inplace=False),
+    # ])
 
     input_image = t(pic)
 
     return input_image
 
 
-def augment_images(source_images, cams):
+def augment_images(source_images, cams, max_value, min_value):
     augmented_images = list()
     resultCAM = list()
+
+
     for im_idx, sim in enumerate(source_images):
         # the image
         sim = sim.numpy()
@@ -481,17 +486,20 @@ def augment_images(source_images, cams):
         # max_value = np.max(att_maps)
 
         # Mickey: 我手动改了min -> max了
-        for l in range(min(att_maps.shape[0], 10)):
+        for l in range(max(att_maps.shape[0], 10)):
             att_map = att_maps[l]
             att_map = cv2.resize(
                 att_map, source_images.shape[2:], interpolation=cv2.INTER_CUBIC)
 
             # att_map =∂ np.clip(att_map, 0, 1)
-            min_value = np.min(
-                np.min(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
-            max_value = np.max(
-                np.max(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
+            # 用了Global Max后 这里不需要重新计算
+            # min_value = np.min(
+            #     np.min(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
+            # max_value = np.max(
+            #     np.max(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
             att_map = (att_map - min_value) / (max_value - min_value)
+
+            att_map = att_map.clip(0,1)
 
             # # text to display
             # l = labels[im_idx].item()
