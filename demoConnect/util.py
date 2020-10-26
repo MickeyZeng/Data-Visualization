@@ -51,7 +51,8 @@ def readFile(file, current_index, abs_path):
 
     resultName = name[int(current_index)]
     resultPath = abs_path + path[int(current_index)]
-    fileName = path[int(current_index)].split('/')[0]
+    fileName = path[int(current_index)].split('/')[-1]
+    fileName = path[int(current_index)].split('/')[0] + "_" + fileName.split('.')[0]
 
     print("the name of file is " + fileName)
 

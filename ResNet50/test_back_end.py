@@ -65,7 +65,11 @@ def mc_Resnet(img, netName, jsonType):
     if len(outputs) == 2:
         attentionMap = outputs[1]
         # attentionMap = torch.softmax(attentionMap[0], dim=1)
-        test = augment_images(source_image, attentionMap[0])
+
+        max_value = attentionMap[0].detach().numpy().max()
+        ming_value = attentionMap[0].detach().numpy().min()
+
+        test = augment_images(source_image, attentionMap[0], max_value, ming_value)
         for index in range(len(test)):
             resultCAM.append(np.array(test[index]).tolist())
         outputs = outputs[0][0]
@@ -106,7 +110,8 @@ def mc_Resnet(img, netName, jsonType):
     for i in range((top_k * (-1))):
         # 因为Json的是从1开始的 所以需要-1
         result.append(dictionary[top_k_idx[i]])
-        picCAM.append(resultCAM[top_k_idx[i]])
+        if jsonType == 1:
+            picCAM.append(resultCAM[top_k_idx[i]])
 
     if outputs_numpy.size == 1:
         if outputs_numpy > 0.5:
@@ -433,8 +438,8 @@ def preProcessImg(img):
     #     pic = pic.convert('RGB')
     # pic = border_padding(pic)
 
-    # normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
-    #                                  std=[0.229, 0.224, 0.225])
+    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                     std=[0.229, 0.224, 0.225])
     t = transforms.Compose([
         transforms.Resize(256),
         # transforms.CenterCrop(224),
@@ -496,7 +501,7 @@ def border_padding(image, padding_value=0, extra_padding_pixels=0):
     return padded_image
 
 
-def augment_images(source_images, cams):
+def augment_images(source_images, cams, max_value, min_value):
     augmented_images = list()
     resultCAM = list()
     for im_idx, sim in enumerate(source_images):
@@ -521,7 +526,7 @@ def augment_images(source_images, cams):
             max_value = np.max(
                 np.max(att_map, axis=0, keepdims=True), axis=1, keepdims=True)
             att_map = (att_map - min_value) / (max_value - min_value)
-
+            # att_map = att_map.clip(0, 1)
             # # text to display
             # l = labels[im_idx].item()
             # p = preds[im_idx].item()
