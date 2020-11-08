@@ -295,7 +295,7 @@ def saveScribble(request):
     # 数值 Value : box & line
     typeScribble = request.POST.get('typeScribble')
     # This code is for test!!
-    typeScribble = "boxd"
+    typeScribble = "box"
 
     # if len(groundTruth) == 0:
     #     groundTruth = -1
