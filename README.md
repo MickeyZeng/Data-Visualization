@@ -37,7 +37,23 @@ Execute: `./manage.py runserver`
 Open up a browser and visit: http://127.0.0.1:8000/ , the you will see the Web portal.
 
 
+## How to Use
+
+### Homepage
+
+user can upload the image or CSV file with provided format andupload the data to the server-side. The function of the upload CSV file can not onlyallow practitioner annotate a large number of pictures but also it can demonstratethe ground truth for displaying the image. When user upload folder or CSV file, thescribble tool offer two arrows button for switching picture to the previous one ornext one.
+
+### Network Architecture page
+
+With clicking the but-ton of “Display”, the interactive visualization diagram developed by a “Javascript”diagram framework called “Visjs”3for default neural network (in general, “resnet50”is default setting)(P.S. for other setting, there might have some issues in displaying) of scribble tool will be generated and illustrated in the attentiondisplaying window.
+
+### Custom Network page
+
+ 
+Network  architecture file must include the  function named  “get_network”,which is to initialize the network and return the instance of neural network.Moreover, the type of architecture file must be a Python file.
+Network parameters file must be Python file. Also, it should match the upload architecture file. Otherwise, there are some errors in the period of processing.
+Label dictionary must be JSON file. In addition, the numberof labels should be the same as the number of network result. The label of this file will be used by leader board in homepage.
 
 ## About the issues
 
-If you have any *question*, please use Issue or send problem descriptions to my email `a1752399@student.adelaide.edu.au.com`. I will reponse you as soon as possible. And, we recommend you to use Issue.
+If you have any *question*, please use Issue or send problem descriptions to my email `mickey96zeng@gmail.com`. I will reponse you as soon as possible. And, we recommend you to use Issue.
